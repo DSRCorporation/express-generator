@@ -5,7 +5,6 @@
   },
   "express": {
     "allowAllOrigins": true,
-    "jwtSecret": "jtscnB76hwlnGE4wrPSIZHtyIe0st3GiiJv6EhYXHbyQBbhxUkeL1rDjcWC0IbpX6tMSoQ4NHX82rsTzad34ga342gfd515sd",
     "serveStatic": true
   },
   "mongoose": {
