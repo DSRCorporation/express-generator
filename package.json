@@ -1,0 +1,16 @@
+{
+  "name": "generator-express-dsr",
+  "version": "1.0.0",
+  "description": "Yeoman generator for Express/NodeJS by DSR Corporation",
+  "files": [
+    "generators/app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "DSR Corporation",
+  "license": "MIT",
+  "dependencies": {
+    "yeoman-generator": "^1.1.0"
+  }
+}

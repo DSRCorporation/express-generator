@@ -1,0 +1,29 @@
+{
+  "urls":{
+    "siteBase": "http://eden.permaplate.com",
+    "staticBase": "http://static.permaplate.com"
+  },
+  "express": {
+    "allowAllOrigins": true,
+    "jwtSecret": "D5WVDDJI5Z7C3SqVc1amDIQkSk72oB1A643eYZm1z0ZoTC8HEiVACHcK5KjLyk97Q1gWgqvJcD1v3CHJqHeGfTjrlr9pL"
+  },
+  "mongoose": {
+    "uri": "override by environment variable"
+  },
+  "email": {
+    "options": {
+      "transport": "ses",
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable"
+    }
+  },
+  "storage": {
+    "type": "s3",
+    "config": {
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable",
+      "bucket": "permaplate-static",
+      "basePath": ""
+    }
+  }
+}

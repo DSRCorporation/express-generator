@@ -1,0 +1,75 @@
+{
+  "urls": {
+  },
+  "paths": {
+    "vehicleImages": "images/work-orders"
+  },
+  "nav": {
+  },
+  "express": {
+    "port": 3000,
+    "jwtTokenExpirationTime": 43200,
+    "jwtTokenReissueTime": 3600,
+    "serveStatic": false,
+    "staticUrl": "/public",
+    "staticPath": "/public"
+  },
+  "mongoose": {
+    "options": {
+      "server": {
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+  },
+  "sampleData": false,
+  "email": {
+    "addresses": {
+      "from": "noreply@permaplate.co"
+    },
+    "defaults": {}
+  },
+  "logger": {
+    "app": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "app",
+        "timestamp": true
+      }
+    },
+    "db": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "db",
+        "timestamp": true
+      }
+    },
+    "express": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "express",
+        "timestamp": true
+      }
+    },
+    "utils": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "utils",
+        "timestamp": true
+      }
+    },
+    "tests": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "tests",
+        "timestamp": true
+      }
+    }
+  }
+}
