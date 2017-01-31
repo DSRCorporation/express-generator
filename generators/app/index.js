@@ -1,6 +1,7 @@
 'use strict';
 
-var Generator = require('yeoman-generator');
+var Generator = require('yeoman-generator'),
+    crypto = require('crypto');
 
 module.exports = class extends Generator {
     prompting() {
@@ -30,6 +31,7 @@ module.exports = class extends Generator {
     writing() {
         var config = this.config.getAll();
 
+        this.config.set('jwtSecret', this._generateJwtSecret());
         this._addBaseProject();
     }
 
@@ -40,6 +42,11 @@ module.exports = class extends Generator {
 
     end() {
         this.log('Your app is ready!');
+    }
+
+    _generateJwtSecret() {
+        this.log('Generated jwtSecret.');
+        return crypto.randomBytes(256).toString('hex');
     }
 
     _addBaseProject() {

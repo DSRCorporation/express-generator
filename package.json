@@ -11,6 +11,7 @@
   "author": "DSR Corporation",
   "license": "MIT",
   "dependencies": {
+    "crypto": "0.0.3",
     "yeoman-generator": "^1.1.0"
   }
 }
