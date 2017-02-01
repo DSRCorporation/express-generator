@@ -1,0 +1,14 @@
+{
+  "model": "Cat",
+  "entities": [
+    {
+      "name": "Barsic"
+    },
+    {
+      "name": "Pushok"
+    },
+    {
+      "name": "Murka"
+    }
+  ]
+}
