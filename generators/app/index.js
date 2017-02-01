@@ -1,7 +1,8 @@
 'use strict';
 
 var Generator = require('yeoman-generator'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    rename = require('gulp-rename');
 
 module.exports = class extends Generator {
     prompting() {
@@ -32,7 +33,8 @@ module.exports = class extends Generator {
             {
                 type: 'confirm',
                 name: 'useMongo',
-                message: 'Would you like to use mongo database?'
+                message: 'Would you like to use mongo database?',
+                default: false
             },
             {
                 when: function (prompts) {
@@ -40,7 +42,8 @@ module.exports = class extends Generator {
                 },
                 type: 'confirm',
                 name: 'useJwt',
-                message: 'Would you like to use jwt?'
+                message: 'Would you like to use jwt?',
+                default: false
             }
         ]).then((answers) => {
             this.config.set(answers);
@@ -53,6 +56,7 @@ module.exports = class extends Generator {
 
         this.config.set('jwtSecret', this._generateJwtSecret());
         this._addBaseProject();
+        this._copyingAddOns();
     }
 
     install() {
@@ -74,12 +78,42 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             [
-                this.templatePath()
+                this.templatePath(),
+                '!' + this.templatePath('**/*-addon*')
             ],
             this.destinationRoot(),
             config
 
         );
         this.log('Added base project');
+    }
+
+    _copyingAddOns() {
+        this.log('Copying add-ons');
+
+        var config = this.config.getAll(),
+            addons = Object.keys(config),
+            copySrc = [];
+
+        addons = addons.filter(function (addon) {
+            return config[addon] === true;
+        });
+
+        addons.forEach(function (addon) {
+            this.registerTransformStream(rename(function (path) {
+                path.dirname = path.dirname.replace('.' + addon + '-addon', '');
+                path.basename = path.basename.replace('.' + addon + '-addon', '');
+                return path;
+            }));
+            copySrc.push(
+                this.templatePath('*.' + addon + '-addon*'),
+                this.templatePath('**/*.' + addon + '-addon*'),
+                this.templatePath('*.' + addon + '-addon/**'),
+                this.templatePath('**/*.' + addon + '-addon/**')
+            );
+        }.bind(this));
+        if (copySrc.length) {
+            this.fs.copy(copySrc, this.destinationRoot());
+        }
     }
 };

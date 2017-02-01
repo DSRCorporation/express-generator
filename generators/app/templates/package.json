@@ -8,7 +8,9 @@
     "moment": "^2.11.2",
     "winston": "^2.3.1",
     "express": "^4.13.4",
-    "http-status": "^0.2.0",
+    "http-status": "^0.2.0",<% if (useMongo) {%>
+    "mongoose": "^4.4.2",
+    "mongoose-auto-increment": "^5.0.1",<%}%>
     "express-jsonschema": "^1.1.0"
   },
   "scripts": {
