@@ -4,20 +4,16 @@
  * Main module. Setups express app, perform initiation phases and start listening.
  */
 
-// Add libs to modules search path
-require('app-module-path').addPath(__dirname + '/libs');
+const app = require('./express-async')(require('express')()),
+    logger = require('winston');
 
-const config = require('utils/config'),
-    logger = require('utils/logger').express,
-    express = require('express');
+async function main() {
 
-logger.info('Startup');
+    const port = process.env.PORT || 3000;
 
-var app = express();
+    app.listen(port, function () {
+        logger.info('Example app listening on port', port);
+    });
+}
 
-app.listen(config.get('express:port'), function () {
-    logger.info('Express listen port', config.get('express:port'));
-    app.emit('listen');
-});
-
-module.exports.getApp = app;
+main().catch(error => logger.error('Startup error', error));
