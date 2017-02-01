@@ -6,6 +6,7 @@ var Generator = require('yeoman-generator'),
 
 module.exports = class extends Generator {
     prompting() {
+        this.config.delete();
         return this.prompt([
             {
                 type     : 'input',
@@ -38,16 +39,16 @@ module.exports = class extends Generator {
             },
             {
                 when: function (prompts) {
+                    prompts.modelExample = false;
                     return prompts.useMongo;
                 },
                 type: 'confirm',
-                name: 'useJwt',
-                message: 'Would you like to use jwt?',
+                name: 'modelExample',
+                message: 'Would you like to have a model example?',
                 default: false
             }
         ]).then((answers) => {
             this.config.set(answers);
-            this.config.save();
         });
     }
 
