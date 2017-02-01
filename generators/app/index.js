@@ -11,8 +11,8 @@ module.exports = class extends Generator {
                 name     : 'appName',
                 message  : 'Enter project name',
                 validate : function (input) {
-                            var validateExp = new RegExp('^[0-9a-z]+$', 'i');
-                            return validateExp.test(input) ? true : 'The app name must consist only of latin letters and digits.';
+                            var validateExp = new RegExp('^[0-9a-z]+-?[0-9a-z]+$', 'i');
+                            return validateExp.test(input) ? true : 'The app name must consist only of latin letters, digits and single dash.';
                         }
             },
             {
@@ -28,6 +28,19 @@ module.exports = class extends Generator {
                 type     : 'input',
                 name     : 'version',
                 message  : 'Enter a version'
+            },
+            {
+                type: 'confirm',
+                name: 'useMongo',
+                message: 'Would you like to use mongo database?'
+            },
+            {
+                when: function (prompts) {
+                    return prompts.useMongo;
+                },
+                type: 'confirm',
+                name: 'useJwt',
+                message: 'Would you like to use jwt?'
             }
         ]).then((answers) => {
             this.config.set(answers);
