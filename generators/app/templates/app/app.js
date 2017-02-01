@@ -4,8 +4,12 @@
  * Main module. Setups express app, perform initiation phases and start listening.
  */
 
+require('app-module-path').addPath(__dirname + '/libs');
+
 const app = require('./express-async')(require('express')()),
-    logger = require('winston');
+    logger = require('winston'),
+    _ = require('lodash'),
+    initializers = _(require('initializers')).forIn(initializer => initializer());
 
 async function main() {
 
