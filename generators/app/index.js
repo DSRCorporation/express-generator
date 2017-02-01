@@ -5,24 +5,31 @@ var Generator = require('yeoman-generator'),
 
 module.exports = class extends Generator {
     prompting() {
-        return this.prompt([{
-            type     : 'input',
-            name     : 'appName',
-            message  : 'Your project name',
-            validate : function (input) {
-                        var validateExp = new RegExp('^[0-9a-z]+$', 'i');
-                        return validateExp.test(input) ? true : 'The app name must consist only of latin letters and digits.';
-                    }
-        },
-        {
-            type     : 'input',
-            name     : 'dbName',
-            message  : 'Your database name',
-            validate : function (input) {
-                var validateExp = new RegExp('^[0-9a-z]+$', 'i');
-                return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
+        return this.prompt([
+            {
+                type     : 'input',
+                name     : 'appName',
+                message  : 'Enter project name',
+                validate : function (input) {
+                            var validateExp = new RegExp('^[0-9a-z]+$', 'i');
+                            return validateExp.test(input) ? true : 'The app name must consist only of latin letters and digits.';
+                        }
+            },
+            {
+                type     : 'input',
+                name     : 'dbName',
+                message  : 'Enter database name',
+                validate : function (input) {
+                    var validateExp = new RegExp('^[0-9a-z]+$', 'i');
+                    return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
+                }
+            },
+            {
+                type     : 'input',
+                name     : 'version',
+                message  : 'Enter a version'
             }
-        }]).then((answers) => {
+        ]).then((answers) => {
             this.config.set(answers);
             this.config.save();
         });
@@ -54,7 +61,7 @@ module.exports = class extends Generator {
 
         this.fs.copyTpl(
             [
-                this.templatePath('**')
+                this.templatePath()
             ],
             this.destinationRoot(),
             config

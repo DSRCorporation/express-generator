@@ -1,11 +1,4 @@
 {
-  "urls": {
-  },
-  "paths": {
-    "vehicleImages": "images/work-orders"
-  },
-  "nav": {
-  },
   "express": {
     "port": 3000,
     "jwtTokenExpirationTime": 43200,
@@ -13,22 +6,6 @@
     "serveStatic": false,
     "staticUrl": "/public",
     "staticPath": "/public"
-  },
-  "mongoose": {
-    "options": {
-      "server": {
-        "socketOptions": {
-          "keepAlive": 1
-        }
-      }
-    }
-  },
-  "sampleData": false,
-  "email": {
-    "addresses": {
-      "from": "noreply@permaplate.co"
-    },
-    "defaults": {}
   },
   "logger": {
     "app": {
