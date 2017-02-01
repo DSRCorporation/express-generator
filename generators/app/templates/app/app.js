@@ -9,7 +9,7 @@ require('app-module-path').addPath(__dirname + '/libs');
 const app = require('./express-async')(require('express')()),
     logger = require('winston'),
     _ = require('lodash'),
-    initializers = _(require('initializers')).forIn(initializer => initializer());
+    initializers = _(require('initializers')).forIn(initializer => initializer(app));
 
 async function main() {
 

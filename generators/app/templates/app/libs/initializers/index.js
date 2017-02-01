@@ -1,1 +1,1 @@
-exports.routes = require('./routes');
+module.exports = require('utils/module-packer').packModule(__dirname);

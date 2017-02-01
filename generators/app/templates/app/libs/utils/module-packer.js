@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('utils/logger').app,
+const logger = require('winston'),
     fs = require('fs'),
     path = require('path');
 

@@ -3,7 +3,6 @@
 const fs = require('fs'),
     express = require('express'),
     middlwares = require('utils/middlewares'),
-    promise = require('utils/promise'),
     errors = require('errors'),
     _ = require('lodash');
 
@@ -45,15 +44,9 @@ function createRoute(path) {
             methodConfig.url
         ];
 
-        //Check whether user has a right role for an endpoint
-        if (methodConfig.secured) {
-            applyArray.push(promise.coMiddleware(middlwares.checkSignedIn));
-            applyArray.push(middlwares.checkRoles(methodConfig.roles));
-        }
-
         applyArray.push(middlwares.validateRequest(_fillMethodSchemaDefualts(methodConfig.scheme)));
         applyArray.push(middlwares.logRoute(path, methodHandler));
-        applyArray.push(_expresifyHandler(routeHandler[methodHandler]));
+        applyArray.push(routeHandler[methodHandler]);
 
         router[methodConfig.method].apply(router, applyArray);
     });
@@ -85,10 +78,6 @@ function _fillMethodSchemaDefualts(schema) {
     }
 
     return schema;
-}
-
-function _expresifyHandler(handler) {
-    return promise.isGenerator(handler) ? promise.coMiddleware(handler) : handler;
 }
 
 module.exports = {
