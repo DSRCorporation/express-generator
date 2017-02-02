@@ -2,11 +2,11 @@
 
 var Generator = require('yeoman-generator'),
     crypto = require('crypto'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    _ = require('lodash');
 
 module.exports = class extends Generator {
     prompting() {
-        this.config.delete();
         return this.prompt([
             {
                 type     : 'input',
@@ -39,25 +39,50 @@ module.exports = class extends Generator {
             },
             {
                 when: function (prompts) {
-                    prompts.modelExample = false;
                     return prompts.useMongo;
                 },
                 type: 'confirm',
                 name: 'modelExample',
                 message: 'Would you like to have a model example?',
                 default: false
-            }
+            },
+            {
+                type: 'checkbox',
+                name: 'promissifiedUtils',
+                message: 'Promissified utils:',
+                choices: [{
+                    name: 'Common. Some usefull lodash extensions',
+                    value: 'includeCommon',
+                    checked: false
+                }, {
+                    name: 'Bcrypt',
+                    value: 'includeBcrypt',
+                    checked: false
+                }, {
+                    name: 'Promissified fs-extra',
+                    value: 'includeFsExtra',
+                    checked: false
+                }]
+            },
         ]).then((answers) => {
-            this.config.set(answers);
+            var config = _.cloneDeep(answers);
+
+            _(answers).forIn((answer, key) => {
+               if (typeof answer === 'object') {
+                   _(answer).forEach(prop => {
+                       config[prop] = true;
+                   });
+                   delete config[key];
+               }
+            });
+            this._copyingFiles(config);
         });
     }
 
-    writing() {
-        var config = this.config.getAll();
-
-        this.config.set('jwtSecret', this._generateJwtSecret());
-        this._addBaseProject();
-        this._copyingAddOns();
+    _copyingFiles(config) {
+        config.jwtSecret = this._generateJwtSecret();
+        this._addBaseProject(config);
+        this._copyingAddOns(config);
     }
 
     install() {
@@ -74,9 +99,7 @@ module.exports = class extends Generator {
         return crypto.randomBytes(256).toString('hex');
     }
 
-    _addBaseProject() {
-        var config = this.config.getAll();
-
+    _addBaseProject(config) {
         this.fs.copyTpl(
             [
                 this.templatePath(),
@@ -89,11 +112,10 @@ module.exports = class extends Generator {
         this.log('Added base project');
     }
 
-    _copyingAddOns() {
+    _copyingAddOns(config) {
         this.log('Copying add-ons');
 
-        var config = this.config.getAll(),
-            addons = Object.keys(config),
+        var addons = Object.keys(config),
             copySrc = [];
 
         addons = addons.filter(function (addon) {
