@@ -15,10 +15,10 @@ async function main() {
 
     // Execute initializers
     <% if (useMongo) {%>await initializers.mongoose(app);<%}%>
-    <% if (modelExample) {%>await initializers.models(app);<%}%>
-    <% if (modelExample) {%>await initializers.dictionaries(app);<%}%>
+    <% if (useMongo && modelExample) {%>await initializers.models(app);<%}%>
+    <% if (useMongo && modelExample) {%>await initializers.dictionaries(app);<%}%>
     await initializers.routes(app);
-
+    await initializers.middlewares(app);
     const port = 3000;
 
     app.listen(port, function () {

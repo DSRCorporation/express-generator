@@ -35,7 +35,7 @@ module.exports = class extends Generator {
                 type: 'confirm',
                 name: 'useMongo',
                 message: 'Would you like to use mongo database?',
-                default: false
+                default: true
             },
             {
                 when: function (prompts) {
@@ -44,7 +44,7 @@ module.exports = class extends Generator {
                 type: 'confirm',
                 name: 'modelExample',
                 message: 'Would you like to have a model example?',
-                default: false
+                default: true
             },
             {
                 type: 'checkbox',

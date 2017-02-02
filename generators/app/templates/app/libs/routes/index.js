@@ -14,7 +14,7 @@ function createRoutes(app) {
     //API v1
     const endpoints = [
         {url: '/api/v1/system-info', file: '/api/v1/system-info'},
-        <% if (modelExample){%>{url: '/api/v1/cats', file: '/api/v1/cats'}<%}%>
+        <% if (useMongo && modelExample){%>{url: '/api/v1/cats', file: '/api/v1/cats'}<%}%>
     ];
 
     _(endpoints)
