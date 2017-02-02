@@ -3,5 +3,21 @@
     "method": "get",
     "url": "/",
     "secured": false
+  },
+  "get": {
+    "method": "get",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }

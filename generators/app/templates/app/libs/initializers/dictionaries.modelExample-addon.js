@@ -3,8 +3,8 @@
 var dictionariesLoader = require('utils/dictionaries-loader'),
     logger = require('winston');
 
-module.exports = async () => {
-    logger.info("Load dictionaries")
+module.exports = async function() {
+    logger.info("Load dictionaries");
     await dictionariesLoader.loadDictionaries();
-    logger.info("Load dictionaries -> done")
+    logger.info("Load dictionaries -> done");
 };

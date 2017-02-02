@@ -2,7 +2,8 @@
 
 const fs = require('fs'),
     express = require('express'),
-    middlwares = require('utils/middlewares'),
+    middlewares = require('utils/middlewares'),
+    asyncMiddleware = require('utils/promise').asyncMiddleware,
     errors = require('errors'),
     _ = require('lodash');
 
@@ -40,13 +41,25 @@ function createRoute(path) {
                 `Invalid method: ${methodConfig.url}. Method is not secured, but roles are defined`);
         }
 
-        var applyArray = [
+        let applyArray = [
             methodConfig.url
+        ],
+            middlewaresArray = [
+            {
+                fn: middlewares.validateRequest(_fillMethodSchemaDefaults(methodConfig.scheme)),
+                apply: true
+            },
+            {
+                fn: middlewares.logRoute(path, methodHandler),
+                apply: true
+            },
+            {
+                fn: routeHandler[methodHandler],
+                apply: true
+            }
         ];
 
-        applyArray.push(middlwares.validateRequest(_fillMethodSchemaDefualts(methodConfig.scheme)));
-        applyArray.push(middlwares.logRoute(path, methodHandler));
-        applyArray.push(routeHandler[methodHandler]);
+        middlewaresArray.forEach(middleware => middleware.apply ? applyArray.push(asyncMiddleware(middleware.fn)) : null);
 
         router[methodConfig.method].apply(router, applyArray);
     });
@@ -54,9 +67,9 @@ function createRoute(path) {
     return router;
 }
 
-function _fillMethodSchemaDefualts(schema) {
+function _fillMethodSchemaDefaults(schema) {
 
-    var defaultSchema = {
+    let defaultSchema = {
         type: 'object',
         additionalProperties: false,
         properties: {}

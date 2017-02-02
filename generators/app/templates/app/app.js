@@ -6,14 +6,20 @@
 
 require('app-module-path').addPath(__dirname + '/libs');
 
-const app = require('./express-async')(require('express')()),
+const app = require('express')(),
     logger = require('winston'),
     _ = require('lodash'),
-    initializers = _(require('initializers')).forIn(initializer => initializer(app));
+    initializers = require('initializers');
 
 async function main() {
 
-    const port = process.env.PORT || 3000;
+    // Execute initializers
+    <% if (useMongo) {%>await initializers.mongoose(app);<%}%>
+    <% if (modelExample) {%>await initializers.models(app);<%}%>
+    <% if (modelExample) {%>await initializers.dictionaries(app);<%}%>
+    await initializers.routes(app);
+
+    const port = 3000;
 
     app.listen(port, function () {
         logger.info('Example app listening on port', port);

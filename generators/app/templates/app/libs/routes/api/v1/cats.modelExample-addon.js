@@ -10,10 +10,23 @@ const models = require("models");
 
 async function list(req, res) {
     res.json({
-        cats: await models.Cat.findAsync({}, 'name')
+        cats: await models.Cat.find({}, 'name')
+    });
+}
+
+/**
+ * GET /api/v1/cats/:id
+ * @param req req
+ * @param res res
+ */
+
+async function get(req, res) {
+    res.json({
+        cat: await models.Cat.findById(req.params.id, 'name')
     });
 }
 
 module.exports = {
-    list: list
+    list: list,
+    get: get
 };

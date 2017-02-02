@@ -58,7 +58,7 @@ function validateRequest(scheme) {
  */
 function logRoute(className, methodName) {
     return (req, res, next) => {
-        logger.debug('Route:', className, '->', methodName);
+        logger.info('Route:', className, '->', methodName);
         next();
     };
 }
@@ -91,14 +91,14 @@ function cors(req, res, next) {
  * @param res res
  * @param next next
  */
-function* checkSignedIn(req, res, next) {
+async function checkSignedIn(req, res, next) {
     logger.debug('checkSignedIn');
 
     var token = jwt.parseAuthorizationHeader(req.headers);
 
     var decodedToken;
     try {
-        decodedToken = yield jwt.decodeToken(token);
+        decodedToken = await jwt.decodeToken(token);
     } catch (err) {
         throw new errors.SecurityError('Authorization required.');
     }
@@ -115,18 +115,19 @@ function* checkSignedIn(req, res, next) {
 
     var newToken =
         tokenLifeTime < jwtTokenReissueTime ?
-            yield jwt.generateToken(_.assign(_.pick(decodedToken, ['adminId', 'userId']), {expiresIn : moment().unix() + jwtTokenExpirationTime})) :
+            await jwt.generateToken(_.assign(_.pick(decodedToken, ['adminId', 'userId']), {expiresIn : moment().unix() + jwtTokenExpirationTime})) :
             token;
 
     jwt.setAuthorizationHeader(newToken, res);
 
     req.userId = decodedToken.userId;
-    req.user = yield models.User.findOneAsync({
+    req.user = await models.User.findOneAsync({
         '_id': decodedToken.userId
     });
 
     next();
 }
+
 /**
  * checkRoles checks if user has enough privileges
  */

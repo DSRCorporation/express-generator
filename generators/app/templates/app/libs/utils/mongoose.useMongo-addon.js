@@ -5,11 +5,8 @@
  */
 
 const mongoose = require('mongoose'),
-    bluebird = require('bluebird');
+    Promise = require('utils/promise').Promise;
 
-bluebird.Promise.promisifyAll(mongoose.Model);
-bluebird.Promise.promisifyAll(mongoose.Model.prototype);
-bluebird.Promise.promisifyAll(mongoose.Query.prototype);
-bluebird.Promise.promisifyAll(mongoose);
+mongoose.Promise = Promise;
 
 module.exports = mongoose;

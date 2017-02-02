@@ -15,13 +15,12 @@ async function loadDictionaries() {
 }
 
 async function _loadDictionary(dictionary) {
-
     logger.debug('dictionaries-loader._loadDictionary', dictionary.model);
 
-    if (!(await models[dictionary.model].countAsync())) {
+    if (!(await models[dictionary.model].count())) {
         logger.debug('dictionaries-loader._loadDictionary -> creation', dictionary.model);
 
-        await models[dictionary.model].createAsync(dictionary.entities);
+        await models[dictionary.model].create(dictionary.entities);
 
     }
 

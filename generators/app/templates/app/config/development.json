@@ -4,9 +4,9 @@
     "serveStatic": true
   },<% if (useMongo) {%>
   "mongoose": {
-    "uri": "mongodb://localhost/<%=dbName %>"
+    "uri": "mongodb://localhost/<%=dbName%>"
   },<%}%>
   "security": {
-    "jwtSecret": "<%=jwtSecret %>"
+    "jwtSecret": "<%=jwtSecret%>"
   }
 }
