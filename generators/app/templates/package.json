@@ -9,7 +9,7 @@
     "winston": "^2.3.1",
     "express": "^4.13.4",
     "http-status": "^0.2.0",<% if (useMongo) {%>
-    "mongoose": "^4.4.2",
+    "mongoose": "^4.8.1",
     "mongoose-auto-increment": "^5.0.1",<%}%>
     "express-jsonschema": "^1.1.0"
   },
