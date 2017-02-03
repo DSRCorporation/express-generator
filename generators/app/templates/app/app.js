@@ -14,9 +14,9 @@ const app = require('express')(),
 async function main() {
 
     // Execute initializers
-    <% if (useMongo) {%>await initializers.mongoose(app);<%}%>
-    <% if (useMongo && modelExample) {%>await initializers.models(app);<%}%>
-    <% if (useMongo && modelExample) {%>await initializers.dictionaries(app);<%}%>
+    <% if (locals.useMongo) {%>await initializers.mongoose(app);<%}%>
+    await initializers.models(app);
+    await initializers.dictionaries(app);
 
     await initializers.middlewares(app);
     await initializers.routes(app.route);

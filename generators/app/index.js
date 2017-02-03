@@ -32,19 +32,14 @@ module.exports = class extends Generator {
                 message  : 'Enter a version'
             },
             {
-                type: 'confirm',
-                name: 'useMongo',
-                message: 'Would you like to use mongo database?',
-                default: true
-            },
-            {
-                when: function (prompts) {
-                    return prompts.useMongo;
-                },
-                type: 'confirm',
-                name: 'modelExample',
-                message: 'Would you like to have a model example?',
-                default: true
+                type: 'list',
+                name: 'database',
+                message: 'What do you want to make today?',
+                choices: [
+                    {name: "MongoDB (Mongoose)", value: "useMongo"},
+                    {name: "MySql (Sequilize)", value: "useMysql"},
+                    {name: "Postgres (Sequilize)", value: "usePostgres"}
+                ]
             },
             {
                 type: 'checkbox',
@@ -65,6 +60,8 @@ module.exports = class extends Generator {
                 }]
             },
         ]).then((answers) => {
+            answers[answers.database] = true;
+            delete answers['database'];
             var config = _.cloneDeep(answers);
 
             _(answers).forIn((answer, key) => {
