@@ -3,6 +3,7 @@
 const logger = require('winston'),
     config = require('utils/config'),
     errors = require('errors'),
+    httpStatus = require('http-status'),
     requestValidator = require('express-jsonschema'),
     moment = require('moment'),
     _ = require('lodash');

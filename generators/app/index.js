@@ -118,7 +118,7 @@ module.exports = class extends Generator {
         addons = addons.filter(function (addon) {
             return config[addon] === true;
         });
-
+        //addons = _.pull(addons, "usePostgres");
         addons.forEach(function (addon) {
             this.registerTransformStream(rename(function (path) {
                 path.dirname = path.dirname.replace('.' + addon + '-addon', '');

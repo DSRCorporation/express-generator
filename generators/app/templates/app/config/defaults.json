@@ -7,6 +7,12 @@
     "staticUrl": "/public",
     "staticPath": "/public"
   },
+  "sequelize" : {
+    "postgres": {
+      "uri": "postgres://postgres:123@localhost:5432/postgres",
+      "options": {}
+    }
+  },
   "logger": {
     "app": {
       "console": {

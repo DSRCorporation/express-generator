@@ -1,5 +1,5 @@
 'use strict';
-
+<% if (locals.useMongo) {%>
 const mongoose = require('utils/mongoose');
 
 let catSchema = new mongoose.Schema({
@@ -7,3 +7,16 @@ let catSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Cat', catSchema);
+<%}%>
+
+<% if (locals.usePostgres) {%>
+const Sequelize = require('sequelize');
+
+let sequelize = new Sequelize('postgres://postgres:123@localhost:5432/postgres'),
+    catSchema = {
+        name: Sequelize.STRING
+    },
+    catModel = sequelize.define('Cat', catSchema);
+    catModel.sync({force: true});
+module.exports = catModel;
+<%}%>

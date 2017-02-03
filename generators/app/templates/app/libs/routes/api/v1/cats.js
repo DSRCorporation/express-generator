@@ -2,6 +2,7 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
+    Sequelize = require('sequelize'),
     _ = require('lodash');
 
 /**
@@ -24,7 +25,7 @@ async function list(req, res) {
 
 async function get(req, res) {
     res.json({
-        cat: await models.Cat.findById(req.params.id, 'name')
+        cat: await models.Cat.findById(req.params.id)
     });
 }
 
@@ -35,7 +36,14 @@ async function get(req, res) {
  */
 
 async function create(req, res) {
-    let newCat = await models.Cat.create(req.body);
+    //let newCat = await models.Cat.create(req.body);
+    let sequelize = new Sequelize('postgres://postgres:123@localhost:5432/postgres');
+    let newCat = await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            let cat = await models.Cat.create(req.body, {transaction: t});
+            return cat;
+        }
+    );
 
     res.json({
         id: newCat.id
