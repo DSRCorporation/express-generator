@@ -35,5 +35,30 @@
         }
       }
     }
+  },
+  "update": {
+    "method": "put",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      },
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "String"
+          }
+        }
+      }
+    }
   }
 }

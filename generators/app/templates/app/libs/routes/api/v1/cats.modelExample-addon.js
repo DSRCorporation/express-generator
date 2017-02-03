@@ -1,6 +1,8 @@
 'use strict';
 
-const models = require("models");
+const models = require("models"),
+    HTTPStatus = require('http-status'),
+    _ = require('lodash');
 
 /**
  * GET /api/v1/cats
@@ -40,8 +42,23 @@ async function create(req, res) {
     });
 }
 
+/**
+ * PUT /api/v1/cats/:id
+ * @param req req
+ * @param res res
+ */
+
+async function update(req, res) {
+    let cat = await models.Cat.findById(req.params.id);
+
+    _.assign(cat, req.body);
+    await cat.save();
+    res.status(HTTPStatus.NO_CONTENT).send();
+}
+
 module.exports = {
     list: list,
     get: get,
-    create: create
+    create: create,
+    update: update
 };
