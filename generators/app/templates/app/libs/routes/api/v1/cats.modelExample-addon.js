@@ -56,9 +56,22 @@ async function update(req, res) {
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
+/**
+ * DELETE /api/v1/cats/:id
+ * @param req req
+ * @param res res
+ */
+
+async function remove(req, res) {
+    await models.Cat.findByIdAndRemove(req.params.id);
+
+    res.status(HTTPStatus.NO_CONTENT).send();
+}
+
 module.exports = {
     list: list,
     get: get,
     create: create,
-    update: update
+    update: update,
+    remove: remove
 };

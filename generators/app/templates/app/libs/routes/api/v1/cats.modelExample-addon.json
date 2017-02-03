@@ -60,5 +60,21 @@
         }
       }
     }
+  },
+  "remove": {
+    "method": "delete",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }
