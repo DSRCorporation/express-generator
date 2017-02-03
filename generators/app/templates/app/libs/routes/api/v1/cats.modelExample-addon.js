@@ -26,7 +26,22 @@ async function get(req, res) {
     });
 }
 
+/**
+ * POST /api/v1/cats/
+ * @param req req
+ * @param res res
+ */
+
+async function create(req, res) {
+    let newCat = await models.Cat.create(req.body);
+
+    res.json({
+        id: newCat.id
+    });
+}
+
 module.exports = {
     list: list,
-    get: get
+    get: get,
+    create: create
 };
