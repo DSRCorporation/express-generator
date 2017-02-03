@@ -8,7 +8,7 @@ require('app-module-path').addPath(__dirname + '/libs');
 
 const app = require('express')(),
     logger = require('winston'),
-    _ = require('lodash'),
+    config = require('utils/config'),
     initializers = require('initializers');
 
 async function main() {
@@ -19,10 +19,9 @@ async function main() {
     <% if (useMongo && modelExample) {%>await initializers.dictionaries(app);<%}%>
     await initializers.routes(app);
     await initializers.middlewares(app);
-    const port = 3000;
 
-    app.listen(port, function () {
-        logger.info('Example app listening on port', port);
+    app.listen(config.get('express:port'), function () {
+        logger.info('Example app listening on port', config.get('express:port'));
     });
 }
 

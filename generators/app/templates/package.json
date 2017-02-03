@@ -5,6 +5,7 @@
     "app-module-path": "^1.0.5",
     "body-parser": "^1.14.2",
     "body-parser-xml": "^1.1.0",
+    <% if (locals.includeBcrypt) {%>"bcrypt": "^0.8.3",<%}%>
     "nconf": "^0.8.4",
     "lodash": "^4.17.4",
     "moment": "^2.11.2",
