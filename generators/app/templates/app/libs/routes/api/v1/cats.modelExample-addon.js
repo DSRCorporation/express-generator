@@ -27,7 +27,7 @@ async function get(req, res) {
 }
 
 /**
- * POST /api/v1/cats/
+ * POST /api/v1/cats
  * @param req req
  * @param res res
  */
