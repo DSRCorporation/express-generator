@@ -61,8 +61,11 @@ module.exports = class extends Generator {
             },
         ]).then((answers) => {
             answers[answers.database] = true;
+            if (answers.database === 'useMysql' || answers.database === 'usePostgres') {
+                answers.useSequelize = true;
+            }
             delete answers['database'];
-            var config = _.cloneDeep(answers);
+            let config = _.cloneDeep(answers);
 
             _(answers).forIn((answer, key) => {
                if (typeof answer === 'object') {
