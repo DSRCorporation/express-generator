@@ -2,7 +2,7 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
-    Sequelize = require('sequelize'),
+    sequelize = require('utils/sequelize'),
     _ = require('lodash');
 
 /**
@@ -12,8 +12,20 @@ const models = require("models"),
  */
 
 async function list(req, res) {
+    let cats;
+    <% if (locals.useMongo) {%>
+        cats = await models.Cat.find({})
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        //cats = await models.Cat.findAll({})
+        cats = await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                return await models.Cat.findAll({transaction: t});
+            }
+        );
+    <%}%>
     res.json({
-        cats: await models.Cat.find({}, 'name')
+        cats: cats
     });
 }
 
@@ -24,8 +36,24 @@ async function list(req, res) {
  */
 
 async function get(req, res) {
+    let cat;
+    <% if (locals.useMongo) {%>
+        cat = await models.Cat.findById(req.params.id);
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        cat = await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                return await models.Cat.find({
+                    where: {
+                        id : req.params.id
+                    },
+                    transaction: t
+                });
+            }
+        );
+    <%}%>
     res.json({
-        cat: await models.Cat.findById(req.params.id)
+        cat: cat
     });
 }
 
@@ -36,15 +64,17 @@ async function get(req, res) {
  */
 
 async function create(req, res) {
-    //let newCat = await models.Cat.create(req.body);
-    let sequelize = new Sequelize('postgres://postgres:123@localhost:5432/postgres');
-    let newCat = await sequelize.transaction(async t => {
+    let newCat;
+    <% if (locals.useMongo) {%>
+        newCat = await models.Cat.create(req.body);
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        newCat = await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
-            let cat = await models.Cat.create(req.body, {transaction: t});
-            return cat;
+            return await models.Cat.create(req.body, {transaction: t});
         }
     );
-
+    <%}%>
     res.json({
         id: newCat.id
     });
@@ -57,10 +87,35 @@ async function create(req, res) {
  */
 
 async function update(req, res) {
-    let cat = await models.Cat.findById(req.params.id);
+    let cat;
+    <% if (locals.useMongo) {%>
+        cat = await models.Cat.findById(req.params.id);
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        cat = await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                return await models.Cat.find({
+                    where: {
+                        id : req.params.id
+                    },
+                    transaction: t
+                });
+            }
+        );
+    <%}%>
 
     _.assign(cat, req.body);
-    await cat.save();
+
+    <% if (locals.useMongo) {%>
+        await cat.save();
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                await cat.save({transaction: t});
+            }
+        );
+    <%}%>
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
@@ -71,7 +126,21 @@ async function update(req, res) {
  */
 
 async function remove(req, res) {
-    await models.Cat.findByIdAndRemove(req.params.id);
+    <% if (locals.useMongo) {%>
+        await models.Cat.findByIdAndRemove(req.params.id);
+    <%}%>
+    <% if (locals.usePostgres) {%>
+        await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                await models.Cat.destroy({
+                    where: {
+                        id: req.params.id
+                    },
+                    transaction: t
+                });
+            }
+        );
+    <%}%>
 
     res.status(HTTPStatus.NO_CONTENT).send();
 }

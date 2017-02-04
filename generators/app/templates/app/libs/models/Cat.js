@@ -10,10 +10,10 @@ module.exports = mongoose.model('Cat', catSchema);
 <%}%>
 
 <% if (locals.usePostgres) {%>
-const Sequelize = require('sequelize');
+const sequelize = require('utils/sequelize'),
+    Sequelize = require('sequelize');
 
-let sequelize = new Sequelize('postgres://postgres:123@localhost:5432/postgres'),
-    catSchema = {
+    let catSchema = {
         name: Sequelize.STRING
     },
     catModel = sequelize.define('Cat', catSchema);
