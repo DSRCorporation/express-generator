@@ -6,11 +6,12 @@
     "serveStatic": false,
     "staticUrl": "/public",
     "staticPath": "/public"
-  },
+  },<% if (locals.useSequelize) {%>
   "sequelize" : {
-      "uri": "postgres://postgres:123@localhost:5432/postgres",
+      <% if (locals.usePostgres) {%>"uri": "postgres://postgres:123@localhost:5432/postgres",<%}%>
+      <% if (locals.useMysql) {%>"uri": "mysql://mysql:123@localhost:3306/mysql",<%}%>
       "options": {}
-  },
+  },<%}%>
   "logger": {
     "app": {
       "console": {

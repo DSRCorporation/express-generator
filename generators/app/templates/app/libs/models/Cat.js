@@ -9,7 +9,7 @@ let catSchema = new mongoose.Schema({
 module.exports = mongoose.model('Cat', catSchema);
 <%}%>
 
-<% if (locals.usePostgres) {%>
+<% if (locals.useSequelize) {%>
 const sequelize = require('utils/sequelize'),
     Sequelize = require('sequelize');
 

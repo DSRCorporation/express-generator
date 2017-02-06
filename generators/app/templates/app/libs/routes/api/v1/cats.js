@@ -16,7 +16,7 @@ async function list(req, res) {
     <% if (locals.useMongo) {%>
         cats = await models.Cat.find({})
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         //cats = await models.Cat.findAll({})
         cats = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
@@ -40,7 +40,7 @@ async function get(req, res) {
     <% if (locals.useMongo) {%>
         cat = await models.Cat.findById(req.params.id);
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         cat = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.find({
@@ -68,7 +68,7 @@ async function create(req, res) {
     <% if (locals.useMongo) {%>
         newCat = await models.Cat.create(req.body);
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         newCat = await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
             return await models.Cat.create(req.body, {transaction: t});
@@ -91,7 +91,7 @@ async function update(req, res) {
     <% if (locals.useMongo) {%>
         cat = await models.Cat.findById(req.params.id);
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         cat = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.find({
@@ -109,7 +109,7 @@ async function update(req, res) {
     <% if (locals.useMongo) {%>
         await cat.save();
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 await cat.save({transaction: t});
@@ -129,7 +129,7 @@ async function remove(req, res) {
     <% if (locals.useMongo) {%>
         await models.Cat.findByIdAndRemove(req.params.id);
     <%}%>
-    <% if (locals.usePostgres) {%>
+    <% if (locals.useSequelize) {%>
         await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 await models.Cat.destroy({
