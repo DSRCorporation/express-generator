@@ -17,7 +17,7 @@ async function main() {
     <% if (locals.useMongo) {%>await initializers.mongoose(app);<%}%>
     <% if (locals.usePostgres) {%>await initializers.postgres(app);<%}%>
     await initializers.models(app);
-    //await initializers.dictionaries(app);
+    await initializers.dictionaries(app);
 
     await initializers.middlewares(app);
     await initializers.routes(app.route);

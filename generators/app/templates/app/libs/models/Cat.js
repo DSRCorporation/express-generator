@@ -17,6 +17,5 @@ const sequelize = require('utils/sequelize'),
         name: Sequelize.STRING
     },
     catModel = sequelize.define('Cat', catSchema);
-    catModel.sync({force: true});
 module.exports = catModel;
 <%}%>
