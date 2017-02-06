@@ -32,9 +32,7 @@ module.exports = class extends Generator {
                     {name: "Postgres (Sequilize)", value: "usePostgres"}
                 ]
             },
-            {   when : function(prompts){
-                    return prompts.database === 'useMongo';
-                },
+            {
                 type     : 'input',
                 name     : 'dbName',
                 message  : 'Enter database name',
@@ -42,6 +40,20 @@ module.exports = class extends Generator {
                     var validateExp = new RegExp('^[0-9a-z]+$', 'i');
                     return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
                 }
+            },
+            {   when : function(prompts){
+                    return prompts.database === 'usePostgres' || prompts.database === 'useMysql';
+                },
+                type     : 'input',
+                name     : 'dbUsername',
+                message  : 'Enter database username'
+            },
+            {   when : function(prompts){
+                    return prompts.database === 'usePostgres' || prompts.database === 'useMysql';
+                },
+                type     : 'input',
+                name     : 'dbPassword',
+                message  : 'Enter database password'
             },
             {
                 type: 'checkbox',
