@@ -15,6 +15,7 @@ function createRoutes(app) {
     const endpoints = [
         {url: '/api/v1/system-info', file: '/api/v1/system-info'},
         <% if (jwtSupport) {%>{url: '/api/v1/users', file: '/api/v1/users'},<%}%>
+        <% if (jwtSupport) {%>{url: '/api/v1/security', file: '/api/v1/security'},<%}%>
         {url: '/api/v1/cats', file: '/api/v1/cats'}
     ];
 
