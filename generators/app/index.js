@@ -56,16 +56,18 @@ module.exports = class extends Generator {
                 message  : 'Enter database password'
             },
             {
+                type     : 'confirm',
+                name     : 'jwtSupport',
+                message  : 'Would you like a JWT support?',
+                default: true
+            },
+            {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
                 choices: [{
                     name: 'Common. Some usefull lodash extensions',
                     value: 'includeCommon',
-                    checked: false
-                }, {
-                    name: 'Bcrypt',
-                    value: 'includeBcrypt',
                     checked: false
                 }, {
                     name: 'Promissified fs-extra',
@@ -149,7 +151,7 @@ module.exports = class extends Generator {
             );
         }.bind(this));
         if (copySrc.length) {
-            this.fs.copy(copySrc, this.destinationRoot());
+            this.fs.copyTpl(copySrc, this.destinationRoot(), config);
         }
     }
 };

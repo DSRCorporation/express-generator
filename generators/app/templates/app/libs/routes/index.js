@@ -14,6 +14,7 @@ function createRoutes(app) {
     //API v1
     const endpoints = [
         {url: '/api/v1/system-info', file: '/api/v1/system-info'},
+        <% if (jwtSupport) {%>{url: '/api/v1/users', file: '/api/v1/users'},<%}%>
         {url: '/api/v1/cats', file: '/api/v1/cats'}
     ];
 

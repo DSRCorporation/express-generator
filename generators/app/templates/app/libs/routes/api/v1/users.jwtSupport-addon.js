@@ -3,46 +3,46 @@
 const models = require("models"),
     HTTPStatus = require('http-status'),
     <% if (locals.useSequelize) {%>sequelize = require('utils/sequelize'),<%}%>
-    _ = require('lodash');
+_ = require('lodash');
 
 /**
- * GET /api/v1/cats
+ * GET /api/v1/users
  * @param req req
  * @param res res
  */
 
 async function list(req, res) {
-    let cats;
+    let users;
     <% if (locals.useMongo) {%>
-        cats = await models.Cat.find({})
-    <%}%>
+        users = await models.User.find({})
+            <%}%>
     <% if (locals.useSequelize) {%>
-        cats = await sequelize.transaction(async t => {
+        users = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                return await models.Cat.findAll({transaction: t});
+                return await models.User.findAll({transaction: t});
             }
         );
     <%}%>
     res.json({
-        cats: cats
+        users: users
     });
 }
 
 /**
- * GET /api/v1/cats/:id
+ * GET /api/v1/users/:id
  * @param req req
  * @param res res
  */
 
 async function get(req, res) {
-    let cat;
+    let user;
     <% if (locals.useMongo) {%>
-        cat = await models.Cat.findById(req.params.id);
+        user = await models.User.findById(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        cat = await sequelize.transaction(async t => {
+        user = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                return await models.Cat.find({
+                return await models.User.find({
                     where: {
                         id : req.params.id
                     },
@@ -52,48 +52,48 @@ async function get(req, res) {
         );
     <%}%>
     res.json({
-        cat: cat
+        user: user
     });
 }
 
 /**
- * POST /api/v1/cats
+ * POST /api/v1/users
  * @param req req
  * @param res res
  */
 
 async function create(req, res) {
-    let newCat;
+    let newUser;
     <% if (locals.useMongo) {%>
-        newCat = await models.Cat.create(req.body);
+        newUser = await models.User.create(req.body);
     <%}%>
     <% if (locals.useSequelize) {%>
-        newCat = await sequelize.transaction(async t => {
-            // chain all your queries here. make sure you return them.
-            return await models.Cat.create(req.body, {transaction: t});
-        }
-    );
+        newUser = await sequelize.transaction(async t => {
+                // chain all your queries here. make sure you return them.
+                return await models.User.create(req.body, {transaction: t});
+            }
+        );
     <%}%>
     res.json({
-        id: newCat.id
+        id: newUser.id
     });
 }
 
 /**
- * PUT /api/v1/cats/:id
+ * PUT /api/v1/users/:id
  * @param req req
  * @param res res
  */
 
 async function update(req, res) {
-    let cat;
+    let user;
     <% if (locals.useMongo) {%>
-        cat = await models.Cat.findById(req.params.id);
+        user = await models.User.findById(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        cat = await sequelize.transaction(async t => {
+        user = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                return await models.Cat.find({
+                return await models.User.find({
                     where: {
                         id : req.params.id
                     },
@@ -103,15 +103,15 @@ async function update(req, res) {
         );
     <%}%>
 
-    _.assign(cat, req.body);
+    _.assign(user, req.body);
 
     <% if (locals.useMongo) {%>
-        await cat.save();
+        await user.save();
     <%}%>
     <% if (locals.useSequelize) {%>
         await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                await cat.save({transaction: t});
+                await user.save({transaction: t});
             }
         );
     <%}%>
@@ -119,19 +119,19 @@ async function update(req, res) {
 }
 
 /**
- * DELETE /api/v1/cats/:id
+ * DELETE /api/v1/users/:id
  * @param req req
  * @param res res
  */
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
-        await models.Cat.findByIdAndRemove(req.params.id);
+        await models.User.findByIdAndRemove(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
         await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                await models.Cat.destroy({
+                await models.User.destroy({
                     where: {
                         id: req.params.id
                     },

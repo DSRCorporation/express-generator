@@ -31,7 +31,7 @@ function asyncMiddleware(fn) {
 function asyncHook(asyncFn) {
     // Note: We can't use lamda as this reference is important for Mongoose
     return function (next) {
-        asyncFn.call(this).then(next).catch(next);
+        asyncFn(this).then(next).catch(next);
     };
 }
 

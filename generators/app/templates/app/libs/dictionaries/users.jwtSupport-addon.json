@@ -1,0 +1,17 @@
+{
+  "model": "User",
+  "entities": [
+    {
+      "login": "BarsicUser",
+      "password": "sosiska"
+    },
+    {
+      "login": "PushokUser",
+      "password": "sordelka"
+    },
+    {
+      "login": "MurkaUser",
+      "password": "kotletka"
+    }
+  ]
+}
