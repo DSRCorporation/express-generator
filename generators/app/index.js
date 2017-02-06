@@ -19,15 +19,6 @@ module.exports = class extends Generator {
             },
             {
                 type     : 'input',
-                name     : 'dbName',
-                message  : 'Enter database name',
-                validate : function (input) {
-                    var validateExp = new RegExp('^[0-9a-z]+$', 'i');
-                    return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
-                }
-            },
-            {
-                type     : 'input',
                 name     : 'version',
                 message  : 'Enter a version'
             },
@@ -40,6 +31,17 @@ module.exports = class extends Generator {
                     {name: "MySql (Sequilize)", value: "useMysql"},
                     {name: "Postgres (Sequilize)", value: "usePostgres"}
                 ]
+            },
+            {   when : function(prompts){
+                    return prompts.database === 'useMongo';
+                },
+                type     : 'input',
+                name     : 'dbName',
+                message  : 'Enter database name',
+                validate : function (input) {
+                    var validateExp = new RegExp('^[0-9a-z]+$', 'i');
+                    return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
+                }
             },
             {
                 type: 'checkbox',
@@ -121,7 +123,6 @@ module.exports = class extends Generator {
         addons = addons.filter(function (addon) {
             return config[addon] === true;
         });
-        //addons = _.pull(addons, "usePostgres");
         addons.forEach(function (addon) {
             this.registerTransformStream(rename(function (path) {
                 path.dirname = path.dirname.replace('.' + addon + '-addon', '');

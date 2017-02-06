@@ -2,7 +2,7 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
-    sequelize = require('utils/sequelize'),
+    <% if (locals.useSequelize) {%>sequelize = require('utils/sequelize'),<%}%>
     _ = require('lodash');
 
 /**
