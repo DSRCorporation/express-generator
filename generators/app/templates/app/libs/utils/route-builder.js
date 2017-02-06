@@ -45,19 +45,23 @@ function createRoute(path) {
             methodConfig.url
         ],
             middlewaresArray = [
-            {
-                fn: middlewares.validateRequest(_fillMethodSchemaDefaults(methodConfig.scheme)),
-                apply: true
-            },
-            {
-                fn: middlewares.logRoute(path, methodHandler),
-                apply: true
-            },
-            {
-                fn: routeHandler[methodHandler],
-                apply: true
-            }
-        ];
+                {
+                    fn: middlewares.checkSignedIn,
+                    apply: methodConfig.secured
+                },
+                {
+                    fn: middlewares.validateRequest(_fillMethodSchemaDefaults(methodConfig.scheme)),
+                    apply: true
+                },
+                {
+                    fn: middlewares.logRoute(path, methodHandler),
+                    apply: true
+                },
+                {
+                    fn: routeHandler[methodHandler],
+                    apply: true
+                }
+            ];
 
         middlewaresArray.forEach(middleware => middleware.apply ? applyArray.push(asyncMiddleware(middleware.fn)) : null);
 

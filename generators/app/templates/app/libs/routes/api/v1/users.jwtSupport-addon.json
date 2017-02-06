@@ -2,12 +2,12 @@
   "list": {
     "method": "get",
     "url": "/",
-    "secured": false
+    "secured": true
   },
   "get": {
     "method": "get",
     "url": "/:id",
-    "secured": false,
+    "secured": true,
     "scheme": {
       "params": {
         "type": "object",
@@ -23,7 +23,7 @@
   "create": {
     "method": "post",
     "url": "/",
-    "secured": false,
+    "secured": true,
     "scheme": {
       "body": {
         "type": "object",
@@ -44,7 +44,7 @@
   "update": {
     "method": "put",
     "url": "/:id",
-    "secured": false,
+    "secured": true,
     "scheme": {
       "params": {
         "type": "object",
@@ -69,7 +69,7 @@
   "remove": {
     "method": "delete",
     "url": "/:id",
-    "secured": false,
+    "secured": true,
     "scheme": {
       "params": {
         "type": "object",

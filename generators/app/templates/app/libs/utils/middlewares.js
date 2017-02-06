@@ -3,6 +3,10 @@
 const logger = require('winston'),
     config = require('utils/config'),
     errors = require('errors'),
+    <% if (locals.jwtSupport) {%>jwt = require('utils/jwt'),
+    jwtTokenExpirationTime = config.get('express:jwtTokenExpirationTime'),
+    models = require('models'),
+    jwtTokenReissueTime = config.get('express:jwtTokenReissueTime'),<%}%>
     httpStatus = require('http-status'),
     requestValidator = require('express-jsonschema'),
     moment = require('moment'),
@@ -122,7 +126,7 @@ async function checkSignedIn(req, res, next) {
     jwt.setAuthorizationHeader(newToken, res);
 
     req.userId = decodedToken.userId;
-    req.user = await models.User.findOneAsync({
+    req.user = await models.User.findOne({
         '_id': decodedToken.userId
     });
 
