@@ -1,13 +1,13 @@
 {
-  "list": {
+  <% if (locals.includeRouteBuilder) {%>"list": {
     "method": "get",
     "url": "/",
     "secured": true
-  },
+  },<%}%>
   "get": {
-    "method": "get",
+<% if (locals.includeRouteBuilder) {%>"method": "get",
     "url": "/:id",
-    "secured": true,
+    "secured": true,<%}%>
     "scheme": {
       "params": {
         "type": "object",
@@ -21,9 +21,9 @@
     }
   },
   "create": {
-    "method": "post",
+<% if (locals.includeRouteBuilder) {%>"method": "post",
     "url": "/",
-    "secured": true,
+    "secured": true,<%}%>
     "scheme": {
       "body": {
         "type": "object",
@@ -42,9 +42,9 @@
     }
   },
   "update": {
-    "method": "put",
+<% if (locals.includeRouteBuilder) {%>"method": "put",
     "url": "/:id",
-    "secured": true,
+    "secured": true,<%}%>
     "scheme": {
       "params": {
         "type": "object",
@@ -67,9 +67,9 @@
     }
   },
   "remove": {
-    "method": "delete",
+<% if (locals.includeRouteBuilder) {%>"method": "delete",
     "url": "/:id",
-    "secured": true,
+    "secured": true,<%}%>
     "scheme": {
       "params": {
         "type": "object",
