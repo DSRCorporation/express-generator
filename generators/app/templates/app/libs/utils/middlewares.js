@@ -148,36 +148,9 @@ function checkRoles(requiredRoles) {
         }
     };
 }
-<% if (!locals.includeRouteBuilder) {%>
-function fillMethodSchemaDefaults(schema) {
 
-    let defaultSchema = {
-        type: 'object',
-        additionalProperties: false,
-        properties: {}
-    };
-
-    if (!schema) {
-        schema = {};
-    }
-
-    if (!schema.body) {
-        schema.body = defaultSchema;
-    }
-    if (!schema.query) {
-        schema.query = defaultSchema;
-    }
-
-    if (!schema.params) {
-        schema.params = defaultSchema;
-    }
-
-    return schema;
-}
-<%}%>
 module.exports = {
     notFoundHandler: notFoundHandler,
-    <% if (!locals.includeRouteBuilder) {%>fillMethodSchemaDefaults: fillMethodSchemaDefaults,<%}%>
     errorHandler: errorHandler,
     validateRequest: validateRequest,
     logRoute: logRoute,

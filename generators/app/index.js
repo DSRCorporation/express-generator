@@ -73,10 +73,6 @@ module.exports = class extends Generator {
                     name: 'Promissified fs-extra',
                     value: 'includeFsExtra',
                     checked: false
-                }, {
-                    name: 'Route-Builder',
-                    value: 'includeRouteBuilder',
-                    checked: false
                 }]
             },
         ]).then((answers) => {
