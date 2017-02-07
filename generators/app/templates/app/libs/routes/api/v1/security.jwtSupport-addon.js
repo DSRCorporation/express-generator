@@ -4,7 +4,7 @@ const models = require('models'),
     jwt = require('utils/jwt'),
     HTTPStatus = require('http-status'),
     config = require('utils/config'),
-    jwtTokenExpirationTime = config.get('express:jwtTokenExpirationTime'),
+    jwtTokenExpirationTime = config.get('security:jwtTokenExpirationTime'),
     moment = require('moment'),
     errors = require('errors');
 
