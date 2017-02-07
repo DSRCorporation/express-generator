@@ -1,7 +1,7 @@
-{
+<% if (locals.includeRouteBuilder) {%>{
   "get": {
     "method": "get",
     "url": "/",
     "secured": false
   }
-}
+}<%}%>

@@ -5,6 +5,8 @@
  */
 
 require('app-module-path').addPath(__dirname + '/libs');
+<% if (!locals.includeRouteBuilder) {%>require('app-module-path').addPath(__dirname + '/libs/routes/api/v1');<%}%>
+
 
 const app = require('express')(),
     logger = require('winston'),
