@@ -16,7 +16,8 @@ const models = require('models'),
 async function login(req, res) {
 
     let user = await models.User.findOne({
-        login: req.body.login
+        <% if (locals.useMongo) {%>login: req.body.login<%}%>
+        <% if (locals.useSequelize) {%>where: {login: req.body.login}<%}%>
     });
 
     if (!user) {
@@ -28,7 +29,8 @@ async function login(req, res) {
     }
 
     let token = await jwt.generateToken({
-        userId: user._id,
+        <% if (locals.useMongo) {%>userId: user._id,<%}%>
+        <% if (locals.useSequelize) {%>userId: user.id,<%}%>
         expiresIn: moment().unix() + jwtTokenExpirationTime
     });
 
