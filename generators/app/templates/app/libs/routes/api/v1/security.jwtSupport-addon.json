@@ -1,8 +1,8 @@
 {
   "login": {
-    <% if (locals.includeRouteBuilder) {%>"method": "post",
+    "method": "post",
     "url": "/login",
-    "secured": false,<%}%>
+    "secured": false,
     "scheme": {
       "body": {
         "type": "object",
