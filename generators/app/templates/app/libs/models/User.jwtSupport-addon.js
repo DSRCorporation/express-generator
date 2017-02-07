@@ -13,10 +13,9 @@ const promise = require('utils/promise'),
  * User entity scheme.
  * @type {*|Schema}
  */
-let userSchema;
 
 <% if (locals.useMongo) {%>
-    userSchema = new mongoose.Schema({
+    let userSchema = new mongoose.Schema({
         login: {
             type: String,
             required: true,
@@ -54,11 +53,35 @@ let userSchema;
     module.exports = mongoose.model('User', userSchema);
 <%}%>
 <% if (locals.useSequelize) {%>
-    let userSchema = {
-            login: Sequelize.STRING,
-            password: Sequelize.STRING
-        };
-    module.exports = sequelize.define('User', userSchema);
+    let userModel = sequelize.define('User', {
+        login: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        password: {
+            type: Sequelize.STRING,
+            allowNull: false
+        }
+    }, {
+        instanceMethods: {
+            comparePasswordAsync: async function (candidatePassword) {
+                return await bcrypt.compareAsync(candidatePassword || '', this.password);
+            }
+        }
+    });
+
+    /**
+     * Save-hook that fills password field with bcrypt hash.
+     */
+    userModel.addHook('beforeCreate', async function (user) {
+        if (!user.changed('password')) {
+            return;
+        }
+
+        user.password = await bcrypt.hashAsync(user.password, await bcrypt.genSaltAsync(SALT_WORK_FACTOR));
+    });
+
+    module.exports = userModel;
 <%}%>
 
 

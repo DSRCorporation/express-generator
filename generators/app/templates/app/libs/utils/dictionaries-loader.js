@@ -27,7 +27,7 @@ async function _loadDictionary(dictionary) {
             await models[dictionary.model].create(dictionary.entities);
         <%}%>
         <% if (locals.useSequelize){%>
-            await models[dictionary.model].bulkCreate(dictionary.entities);
+            await models[dictionary.model].bulkCreate(dictionary.entities, {individualHooks: true});
         <%}%>
     }
 
