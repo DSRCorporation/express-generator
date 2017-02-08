@@ -7,7 +7,7 @@
 require('app-module-path').addPath(__dirname + '/libs');
 
 const app = require('express')(),
-    logger = require('winston'),
+    logger = require('utils/logger').app,
     config = require('utils/config'),
     initializers = require('initializers');
 

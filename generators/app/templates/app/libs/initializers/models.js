@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('winston');
+const logger = require('utils/logger').app;
 
 module.exports = async () => {
     logger.info('Models initialize');

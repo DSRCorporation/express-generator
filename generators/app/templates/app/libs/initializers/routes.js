@@ -1,4 +1,4 @@
-const logger = require('winston');
+const logger = require('utils/logger').app;
     routes = require('routes');
 
 module.exports = async function(app) {

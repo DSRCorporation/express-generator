@@ -4,7 +4,7 @@
  * Loads all routes.
  */
 
-const logger = require('winston'),
+const logger = require('utils/logger').app,
     routeBuilder = require('utils/route-builder'),
     path = require('path'),
     _ = require('lodash');

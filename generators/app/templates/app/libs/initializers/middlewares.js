@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('winston'),
+const logger = require('utils/logger').app,
     config = require('utils/config').get('express'),
     middlewares = require('utils/middlewares'),
     express = require('express'),

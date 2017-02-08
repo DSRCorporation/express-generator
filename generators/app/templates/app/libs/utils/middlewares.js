@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('winston'),
+const logger = require('utils/logger').utils,
     config = require('utils/config'),
     errors = require('errors'),
     <% if (locals.jwtSupport) {%>jwt = require('utils/jwt'),
