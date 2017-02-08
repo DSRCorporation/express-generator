@@ -6,23 +6,35 @@
     "bluebird": "^3.2.2",
     "body-parser": "^1.14.2",
     "body-parser-xml": "^1.1.0",
-    <% if (locals.jwtSupport) {%>"bcrypt": "^0.8.3",<%}%>
-    <% if (locals.jwtSupport) {%>"jsonwebtoken": "^5.5.4",<%}%>
+    <% if (locals.jwtSupport) {%>
+    "bcrypt": "^0.8.3",
+    <%}%>
+    <% if (locals.jwtSupport) {%>
+    "jsonwebtoken": "^5.5.4",
+    <%}%>
     "nconf": "^0.8.4",
     "lodash": "^4.17.4",
     "moment": "^2.11.2",
     "winston": "^2.3.1",
     "express": "^4.13.4",
-    <% if (locals.includeFsExtra) {%>"fs-extra": "^1.0.0",<%}%>
+    <% if (locals.includeFsExtra) {%>
+    "fs-extra": "^1.0.0",
+    <%}%>
     "express-winston": "^1.2.0",
-    "http-status": "^0.2.0",<% if (locals.useMongo) {%>
+    "http-status": "^0.2.0",
+    <% if (locals.useMongo) {%>
     "mongoose": "^4.8.1",
-    "mongoose-auto-increment": "^5.0.1",<%}%>
-    <% if (locals.useSequelize) {%>"sequelize": "^3.30.1",<%}%>
+    "mongoose-auto-increment": "^5.0.1",
+    <%}%>
+    <% if (locals.useSequelize) {%>
+    "sequelize": "^3.30.1",
+    <%}%>
     <% if (locals.usePostgres) {%>
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",<%}%>
-    <% if (locals.useMysql) {%>"mysql": "^2.13.0",<%}%>
+    <% if (locals.useMysql) {%>
+    "mysql": "^2.13.0",
+    <%}%>
     "express-jsonschema": "^1.1.0"
   },
   "scripts": {

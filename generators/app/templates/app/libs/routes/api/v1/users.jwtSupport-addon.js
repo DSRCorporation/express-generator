@@ -2,7 +2,9 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
-    <% if (locals.useSequelize) {%>sequelize = require('utils/sequelize'),<%}%>
+    <% if (locals.useSequelize) {%>
+    sequelize = require('utils/sequelize'),
+    <%}%>
 _ = require('lodash');
 
 /**
@@ -12,20 +14,21 @@ _ = require('lodash');
  */
 
 async function list(req, res) {
-    let users;
     <% if (locals.useMongo) {%>
-        users = await models.User.find({})
-            <%}%>
+    res.json({
+        users: await models.User.find({})
+    });
+    <%}%>
     <% if (locals.useSequelize) {%>
-        users = await sequelize.transaction(async t => {
+    let users = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.User.findAll({transaction: t});
             }
         );
-    <%}%>
     res.json({
         users: users
     });
+    <%}%>
 }
 
 /**
@@ -35,12 +38,13 @@ async function list(req, res) {
  */
 
 async function get(req, res) {
-    let user;
     <% if (locals.useMongo) {%>
-        user = await models.User.findById(req.params.id);
+    res.json({
+        user: await models.User.findById(req.params.id)
+    });
     <%}%>
     <% if (locals.useSequelize) {%>
-        user = await sequelize.transaction(async t => {
+    let user = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.User.find({
                     where: {
@@ -50,10 +54,10 @@ async function get(req, res) {
                 });
             }
         );
-    <%}%>
     res.json({
         user: user
     });
+    <%}%>
 }
 
 /**
@@ -63,12 +67,11 @@ async function get(req, res) {
  */
 
 async function create(req, res) {
-    let newUser;
     <% if (locals.useMongo) {%>
-        newUser = await models.User.create(req.body);
+    let newUser = await models.User.create(req.body);
     <%}%>
     <% if (locals.useSequelize) {%>
-        newUser = await sequelize.transaction(async t => {
+    let newUser = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.User.create(req.body, {transaction: t});
             }
@@ -86,12 +89,11 @@ async function create(req, res) {
  */
 
 async function update(req, res) {
-    let user;
     <% if (locals.useMongo) {%>
-        user = await models.User.findById(req.params.id);
+    let user = await models.User.findById(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        user = await sequelize.transaction(async t => {
+    let user = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.User.find({
                     where: {

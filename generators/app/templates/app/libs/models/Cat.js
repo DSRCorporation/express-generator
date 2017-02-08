@@ -13,9 +13,8 @@ module.exports = mongoose.model('Cat', catSchema);
 const sequelize = require('utils/sequelize'),
     Sequelize = require('sequelize');
 
-    let catSchema = {
-        name: Sequelize.STRING
-    },
-    catModel = sequelize.define('Cat', catSchema);
-module.exports = catModel;
+let catSchema = {
+    name: Sequelize.STRING
+};
+module.exports = sequelize.define('Cat', catSchema);
 <%}%>

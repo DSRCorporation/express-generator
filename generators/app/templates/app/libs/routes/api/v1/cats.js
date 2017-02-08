@@ -2,7 +2,9 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
-    <% if (locals.useSequelize) {%>sequelize = require('utils/sequelize'),<%}%>
+    <% if (locals.useSequelize) {%>
+    sequelize = require('utils/sequelize'),
+    <%}%>
     _ = require('lodash');
 
 /**
@@ -12,20 +14,21 @@ const models = require("models"),
  */
 
 async function list(req, res) {
-    let cats;
     <% if (locals.useMongo) {%>
-        cats = await models.Cat.find({})
+    res.json({
+        cats: await models.Cat.find({})
+    });
     <%}%>
     <% if (locals.useSequelize) {%>
-        cats = await sequelize.transaction(async t => {
+    let cats = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.findAll({transaction: t});
             }
         );
-    <%}%>
     res.json({
         cats: cats
     });
+    <%}%>
 }
 
 /**
@@ -35,12 +38,13 @@ async function list(req, res) {
  */
 
 async function get(req, res) {
-    let cat;
     <% if (locals.useMongo) {%>
-        cat = await models.Cat.findById(req.params.id);
+    res.json({
+        cat: await models.Cat.findById(req.params.id)
+    });
     <%}%>
     <% if (locals.useSequelize) {%>
-        cat = await sequelize.transaction(async t => {
+    let cat = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.find({
                     where: {
@@ -50,10 +54,10 @@ async function get(req, res) {
                 });
             }
         );
-    <%}%>
     res.json({
         cat: cat
     });
+    <%}%>
 }
 
 /**
@@ -63,12 +67,11 @@ async function get(req, res) {
  */
 
 async function create(req, res) {
-    let newCat;
     <% if (locals.useMongo) {%>
-        newCat = await models.Cat.create(req.body);
+    let newCat = await models.Cat.create(req.body);
     <%}%>
     <% if (locals.useSequelize) {%>
-        newCat = await sequelize.transaction(async t => {
+    let newCat = await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
             return await models.Cat.create(req.body, {transaction: t});
         }
@@ -86,12 +89,11 @@ async function create(req, res) {
  */
 
 async function update(req, res) {
-    let cat;
     <% if (locals.useMongo) {%>
-        cat = await models.Cat.findById(req.params.id);
+    let cat = await models.Cat.findById(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        cat = await sequelize.transaction(async t => {
+    let cat = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.find({
                     where: {
@@ -106,14 +108,14 @@ async function update(req, res) {
     _.assign(cat, req.body);
 
     <% if (locals.useMongo) {%>
-        await cat.save();
+    await cat.save();
     <%}%>
     <% if (locals.useSequelize) {%>
-        await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                await cat.save({transaction: t});
-            }
-        );
+    await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            await cat.save({transaction: t});
+        }
+    );
     <%}%>
     res.status(HTTPStatus.NO_CONTENT).send();
 }
@@ -126,19 +128,19 @@ async function update(req, res) {
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
-        await models.Cat.findByIdAndRemove(req.params.id);
+    await models.Cat.findByIdAndRemove(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                await models.Cat.destroy({
-                    where: {
-                        id: req.params.id
-                    },
-                    transaction: t
-                });
-            }
-        );
+    await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            await models.Cat.destroy({
+                where: {
+                    id: req.params.id
+                },
+                transaction: t
+            });
+        }
+    );
     <%}%>
 
     res.status(HTTPStatus.NO_CONTENT).send();

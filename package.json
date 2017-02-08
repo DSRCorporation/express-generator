@@ -12,8 +12,9 @@
   "license": "MIT",
   "dependencies": {
     "crypto": "0.0.3",
+    "gulp-remove-empty-lines": "0.0.8",
     "gulp-rename": "^1.2.2",
-    "yeoman-generator": "^1.1.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "yeoman-generator": "^1.1.0"
   }
 }
