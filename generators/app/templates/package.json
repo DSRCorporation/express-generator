@@ -13,6 +13,7 @@
     "moment": "^2.11.2",
     "winston": "^2.3.1",
     "express": "^4.13.4",
+    <% if (locals.includeFsExtra) {%>"fs-extra": "^1.0.0",<%}%>
     "express-winston": "^1.2.0",
     "http-status": "^0.2.0",<% if (locals.useMongo) {%>
     "mongoose": "^4.8.1",
