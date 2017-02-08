@@ -103,11 +103,6 @@ module.exports = class extends Generator {
         this._copyingAddOns(config);
     }
 
-    install() {
-        this.log('Installing dependencies');
-        this.npmInstall();
-    }
-
     end() {
         this.log('Your app is ready!');
     }
@@ -118,6 +113,10 @@ module.exports = class extends Generator {
     }
 
     _addBaseProject(config) {
+        this.registerTransformStream(rename(function (path) {
+            path.basename = path.basename.replace('appName', config.appName);
+            return path;
+        }));
         this.fs.copyTpl(
             [
                 this.templatePath(),

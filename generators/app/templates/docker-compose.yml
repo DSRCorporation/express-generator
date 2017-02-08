@@ -1,0 +1,25 @@
+version: '2'
+services:
+  <%= appName%>:
+    build:
+      context: .
+      dockerfile: <%= appName%>.dockerfile
+    command: nodemon -L -e js,json --debug=5858 --harmony-async-await ./app/index.js
+    image: <%= appName%>:development
+    volumes:
+      - "./app:/usr/src/<%= appName%>/app"
+    container_name: <%= appName%>
+    environment:
+      NODE_ENV: "development"
+      MONGOOSE_URI: "<%= appName%>-mongo"
+      PORT: 3030
+    ports:
+      - "3030:3030"
+      - "5858:5858"
+    links:
+      - <%= appName%>-mongo
+  <%= appName%>-mongo:
+    image: mongo
+    container_name: <%= appName%>-mongo
+    ports:
+      - "27017:27017"
