@@ -30,7 +30,8 @@
         "additionalProperties": false,
         "properties": {
           "name": {
-            "type": "String"
+            "type": "String",
+            "required": true
           }
         }
       }

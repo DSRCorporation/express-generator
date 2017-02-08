@@ -60,7 +60,8 @@
         "additionalProperties": false,
         "properties": {
           "password": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       }

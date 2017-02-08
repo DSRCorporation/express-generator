@@ -2,6 +2,7 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
+    objectValidator = require('utils/object-validator'),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -67,6 +68,14 @@ async function get(req, res) {
  */
 
 async function create(req, res) {
+    //@f:off
+    objectValidator.createValidator(req.body)
+        .field('login')
+            .isLength('Login must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('password')
+            .isLength('Password must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .validate();
+    //@f:on
     <% if (locals.useMongo) {%>
     let newUser = await models.User.create(req.body);
     <%}%>
@@ -89,6 +98,12 @@ async function create(req, res) {
  */
 
 async function update(req, res) {
+    //@f:off
+    objectValidator.createValidator(req.body)
+        .field('password')
+            .isLength('Password must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .validate();
+    //@f:on
     <% if (locals.useMongo) {%>
     let user = await models.User.findById(req.params.id);
     <%}%>

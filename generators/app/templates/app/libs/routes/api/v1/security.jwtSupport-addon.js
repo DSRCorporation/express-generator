@@ -4,6 +4,7 @@ const models = require('models'),
     jwt = require('utils/jwt'),
     HTTPStatus = require('http-status'),
     config = require('utils/config'),
+    objectValidator = require('utils/object-validator'),
     jwtTokenExpirationTime = config.get('security:jwtTokenExpirationTime'),
     moment = require('moment'),
     errors = require('errors');
@@ -14,7 +15,14 @@ const models = require('models'),
  * @param res res
  */
 async function login(req, res) {
-
+    //@f:off
+    objectValidator.createValidator(req.body)
+        .field('login')
+            .isNotEmpty('Login is required.')
+        .field('password')
+            .isNotEmpty('Password is required.')
+        .validate();
+    //@f:on
     let user = await models.User.findOne({
         <% if (locals.useMongo) {%>login: req.body.login<%}%>
         <% if (locals.useSequelize) {%>where: {login: req.body.login}<%}%>
