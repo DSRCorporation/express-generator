@@ -10,7 +10,7 @@ const logger = require('utils/logger').app,
 
 require('body-parser-xml')(bodyParser);
 
-module.exports = async function (app) {
+module.exports = async app => {
     logger.info('Setup Express middlewares', config);
 
     // Disable x-powered-by header
