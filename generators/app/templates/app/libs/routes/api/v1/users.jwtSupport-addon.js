@@ -108,14 +108,14 @@ async function update(req, res) {
     _.assign(user, req.body);
 
     <% if (locals.useMongo) {%>
-        await user.save();
+    await user.save();
     <%}%>
     <% if (locals.useSequelize) {%>
-        await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                await user.save({transaction: t});
-            }
-        );
+    await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            await user.save({transaction: t});
+        }
+    );
     <%}%>
     res.status(HTTPStatus.NO_CONTENT).send();
 }
@@ -128,19 +128,19 @@ async function update(req, res) {
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
-        await models.User.findByIdAndRemove(req.params.id);
+    await models.User.findByIdAndRemove(req.params.id);
     <%}%>
     <% if (locals.useSequelize) {%>
-        await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                await models.User.destroy({
-                    where: {
-                        id: req.params.id
-                    },
-                    transaction: t
-                });
-            }
-        );
+    await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            await models.User.destroy({
+                where: {
+                    id: req.params.id
+                },
+                transaction: t
+            });
+        }
+    );
     <%}%>
 
     res.status(HTTPStatus.NO_CONTENT).send();
