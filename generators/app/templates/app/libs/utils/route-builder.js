@@ -50,6 +50,10 @@ function createRoute(path) {
                     apply: methodConfig.secured
                 },
                 {
+                    fn: middlewares.checkRoles(methodConfig.roles),
+                    apply: methodConfig.secured
+                },
+                {
                     fn: middlewares.validateRequest(_fillMethodSchemaDefaults(methodConfig.scheme)),
                     apply: true
                 },
