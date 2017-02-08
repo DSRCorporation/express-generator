@@ -25,7 +25,7 @@ module.exports = class extends Generator {
             {
                 type: 'list',
                 name: 'database',
-                message: 'What do you want to make today?',
+                message: 'What database you want to use?',
                 choices: [
                     {name: "MongoDB (Mongoose)", value: "useMongo"},
                     {name: "MySql (Sequilize)", value: "useMysql"},
@@ -58,7 +58,7 @@ module.exports = class extends Generator {
             {
                 type     : 'confirm',
                 name     : 'jwtSupport',
-                message  : 'Would you like a JWT support?',
+                message  : 'Would you like a JWT authorization?',
                 default: true
             },
             {
