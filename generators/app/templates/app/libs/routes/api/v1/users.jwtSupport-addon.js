@@ -3,6 +3,7 @@
 const models = require("models"),
     HTTPStatus = require('http-status'),
     objectValidator = require('utils/object-validator'),
+    errors = require('errors'),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -40,21 +41,28 @@ async function list(req, res) {
 
 async function get(req, res) {
     <% if (locals.useMongo) {%>
+    let user = await models.User.findById(req.params.id);
+    if (!user) {
+        throw new errors.NotFoundError('User is not found.', req.params.id);
+    }
     res.json({
-        user: await models.User.findById(req.params.id)
+        user: user
     });
     <%}%>
     <% if (locals.useSequelize) {%>
     let user = await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                return await models.User.find({
-                    where: {
-                        id : req.params.id
-                    },
-                    transaction: t
-                });
-            }
-        );
+            // chain all your queries here. make sure you return them.
+            return await models.User.find({
+                where: {
+                    id : req.params.id
+                },
+                transaction: t
+            });
+        }
+    );
+    if (!user) {
+        throw new errors.NotFoundError('User is not found.', req.params.id);
+    }
     res.json({
         user: user
     });
@@ -119,7 +127,9 @@ async function update(req, res) {
             }
         );
     <%}%>
-
+    if (!user) {
+        throw new errors.NotFoundError('User is not found.', req.params.id);
+    }
     _.assign(user, req.body);
 
     <% if (locals.useMongo) {%>
@@ -143,17 +153,25 @@ async function update(req, res) {
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
-    await models.User.findByIdAndRemove(req.params.id);
+    let user = await models.User.findById(req.params.id);
+    if (!user) {
+        throw new errors.NotFoundError('User is not found.', req.params.id);
+    }
+    user.remove();
     <%}%>
     <% if (locals.useSequelize) {%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
-            await models.User.destroy({
+            let user = await models.User.find({
                 where: {
                     id: req.params.id
                 },
                 transaction: t
             });
+            if (!user) {
+                throw new errors.NotFoundError('User is not found.', req.params.id);
+            }
+            user.destroy();
         }
     );
     <%}%>

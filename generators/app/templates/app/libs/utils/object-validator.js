@@ -3,7 +3,9 @@
 const logger = require('utils/logger').utils,
     errors = require('errors'),
     validator = require('validator'),
+    <% if (locals.useMongo) {%>
     mongoose = require('utils/mongoose'),
+    <%}%>
     _ = require('lodash');
 
 /**
@@ -118,8 +120,9 @@ validator.extend('isBase64Image',
     val => val.match(/data:image\/png;base64,/i) || val.match(/data:image\/jpg;base64,/i) ||
     val.match(/data:image\/jpeg;base64,/i));
 validator.extend('isEmail', val => val.match(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/));
+<% if (locals.useMongo) {%>
 validator.extend('isObjectId', val => mongoose.Types.ObjectId.isValid(val));
-
+<%}%>
 // validators and sanitizers not prefixed with is/to
 var additionalValidators = ['includes', 'equals', 'matches'];
 var additionalSanitizers = ['trim', 'ltrim', 'rtrim', 'escape', 'stripLow', 'whitelist', 'blacklist', 'normalizeEmail'];

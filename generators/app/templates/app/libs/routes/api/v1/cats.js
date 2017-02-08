@@ -3,6 +3,7 @@
 const models = require("models"),
     HTTPStatus = require('http-status'),
     objectValidator = require('utils/object-validator'),
+    errors = require('errors'),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -40,8 +41,12 @@ async function list(req, res) {
 
 async function get(req, res) {
     <% if (locals.useMongo) {%>
+    let cat = await models.Cat.findById(req.params.id);
+    if (!cat) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     res.json({
-        cat: await models.Cat.findById(req.params.id)
+        cat: cat
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -55,6 +60,9 @@ async function get(req, res) {
                 });
             }
         );
+    if (!cat) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     res.json({
         cat: cat
     });
@@ -104,6 +112,9 @@ async function update(req, res) {
     //@f:on
     <% if (locals.useMongo) {%>
     let cat = await models.Cat.findById(req.params.id);
+    if (!cat) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     <%}%>
     <% if (locals.useSequelize) {%>
     let cat = await sequelize.transaction(async t => {
@@ -117,7 +128,9 @@ async function update(req, res) {
             }
         );
     <%}%>
-
+    if (!cat) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     _.assign(cat, req.body);
 
     <% if (locals.useMongo) {%>
@@ -141,17 +154,25 @@ async function update(req, res) {
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
-    await models.Cat.findByIdAndRemove(req.params.id);
+    let cat = await models.Cat.findById(req.params.id);
+    if (!cat) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
+    await cat.remove();
     <%}%>
     <% if (locals.useSequelize) {%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
-            await models.Cat.destroy({
+            let cat = await models.Cat.find({
                 where: {
                     id: req.params.id
                 },
                 transaction: t
             });
+            if (!cat) {
+                throw new errors.NotFoundError('Cat is not found.', req.params.id);
+            }
+            await cat.destroy();
         }
     );
     <%}%>
