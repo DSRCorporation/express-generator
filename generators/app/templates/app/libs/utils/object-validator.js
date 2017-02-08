@@ -184,9 +184,8 @@ function _makeValidator(methodName) {
         validatorArgs.push(_.get(this._testObj, _makePath(this._prefixStack, this._fieldProperty)) + '');
         validatorArgs = validatorArgs.concat(_.slice(arguments, 1));
 
-        var isValid = (this._fieldOptional &&
-            _.get(this._testObj, _makePath(this._prefixStack, this._fieldProperty)) === undefined) ||
-            _.get(this._testObj, _makePath(this._prefixStack, this._fieldProperty)) === '' ||
+        var isValid =
+            (this._fieldOptional && !_.get(this._testObj, _makePath(this._prefixStack, this._fieldProperty))) ||
             validator[methodName].apply(validator, validatorArgs);
 
         if (!isValid) {
