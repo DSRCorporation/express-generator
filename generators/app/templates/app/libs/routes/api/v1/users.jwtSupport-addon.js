@@ -114,34 +114,30 @@ async function update(req, res) {
     //@f:on
     <% if (locals.useMongo) {%>
     let user = await models.User.findById(req.params.id);
-    <%}%>
-    <% if (locals.useSequelize) {%>
-    let user = await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                return await models.User.find({
-                    where: {
-                        id : req.params.id
-                    },
-                    transaction: t
-                });
-            }
-        );
-    <%}%>
     if (!user) {
         throw new errors.NotFoundError('User is not found.', req.params.id);
     }
     _.assign(user, req.body);
-
-    <% if (locals.useMongo) {%>
     await user.save();
     <%}%>
     <% if (locals.useSequelize) {%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
+            let user = await models.User.find({
+                where: {
+                    id : req.params.id
+                },
+                transaction: t
+            });
+            if (!user) {
+                throw new errors.NotFoundError('User is not found.', req.params.id);
+            }
+            _.assign(user, req.body);
             await user.save({transaction: t});
         }
     );
     <%}%>
+
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
@@ -171,7 +167,7 @@ async function remove(req, res) {
             if (!user) {
                 throw new errors.NotFoundError('User is not found.', req.params.id);
             }
-            user.destroy();
+            await user.destroy({transaction: t});
         }
     );
     <%}%>

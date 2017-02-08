@@ -115,34 +115,27 @@ async function update(req, res) {
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
-    <%}%>
-    <% if (locals.useSequelize) {%>
-    let cat = await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                return await models.Cat.find({
-                    where: {
-                        id : req.params.id
-                    },
-                    transaction: t
-                });
-            }
-        );
-    <%}%>
-    if (!cat) {
-        throw new errors.NotFoundError('Cat is not found.', req.params.id);
-    }
     _.assign(cat, req.body);
-
-    <% if (locals.useMongo) {%>
     await cat.save();
     <%}%>
     <% if (locals.useSequelize) {%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
+            let cat = await models.Cat.find({
+                where: {
+                    id : req.params.id
+                },
+                transaction: t
+            });
+            if (!cat) {
+                throw new errors.NotFoundError('Cat is not found.', req.params.id);
+            }
+            _.assign(cat, req.body);
             await cat.save({transaction: t});
         }
     );
     <%}%>
+
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
@@ -172,7 +165,7 @@ async function remove(req, res) {
             if (!cat) {
                 throw new errors.NotFoundError('Cat is not found.', req.params.id);
             }
-            await cat.destroy();
+            await cat.destroy({transaction: t});
         }
     );
     <%}%>
