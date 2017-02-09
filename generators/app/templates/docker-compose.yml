@@ -47,6 +47,7 @@ services:
     container_name: <%= appName%>-mysql
     environment:
       MYSQL_DATABASE: "<%= dbName%>"
+      MYSQL_ROOT_PASSWORD: "root_password"
     ports:
       - "3306:3306"
   <%}%>
