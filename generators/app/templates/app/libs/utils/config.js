@@ -5,7 +5,7 @@
  */
 
 const config = require('nconf')
-        .overrides({express: {port: process.env.PORT}, mongoose: {uri: `mongodb://${process.env.MONGOOSE_URI}/<%=dbName%>`}})
+        .overrides({express: {port: process.env.PORT}})
         .argv()
         .env()
         .file('environment', __dirname + `/../../config/${process.env.NODE_ENV || (process.env.NODE_ENV = 'development')}.json`)

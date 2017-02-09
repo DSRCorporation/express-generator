@@ -4,12 +4,12 @@
     "serveStatic": true
   },<% if (locals.useMongo) {%>
   "mongoose": {
-    "uri": "mongodb://localhost/<%=dbName%>"
+    "uri": "mongodb://<%= appName%>-mongo/<%=dbName%>"
   },<%}%>
   <% if (locals.useSequelize) {%>
     "sequelize" : {
-      <% if (locals.usePostgres) {%>"uri": "postgres://<%=dbUsername%>:<%=dbPassword%>@localhost:5432/<%=dbName%>",<%}%>
-      <% if (locals.useMysql) {%>"uri": "mysql://<%=dbUsername%>:<%=dbPassword%>@localhost:3306/<%=dbName%>",<%}%>
+      <% if (locals.usePostgres) {%>"uri": "postgres://postgres@<%= appName%>-postgres:5432/<%=dbName%>",<%}%>
+      <% if (locals.useMysql) {%>"uri": "mysql://<%=dbUsername%>:<%=dbPassword%>@<%= appName%>-mysql:3306/<%=dbName%>",<%}%>
       "options": {}
   },<%}%>
   "security": {

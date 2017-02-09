@@ -11,15 +11,42 @@ services:
     container_name: <%= appName%>
     environment:
       NODE_ENV: "development"
-      MONGOOSE_URI: "<%= appName%>-mongo"
       PORT: 3030
     ports:
       - "3030:3030"
       - "5858:5858"
     links:
+    <% if (locals.useMongo) {%>
       - <%= appName%>-mongo
+    <%}%>
+    <% if (locals.usePostgres) {%>
+      - <%= appName%>-postgres
+    <%}%>
+    <% if (locals.useMysql) {%>
+      - <%= appName%>-mysql
+    <%}%>
+  <% if (locals.useMongo) {%>
   <%= appName%>-mongo:
     image: mongo
     container_name: <%= appName%>-mongo
     ports:
       - "27017:27017"
+  <%}%>
+  <% if (locals.usePostgres) {%>
+  <%= appName%>-postgres:
+    image: postgres
+    container_name: <%= appName%>-postgres
+    environment:
+      POSTGRES_DB: "<%= dbName%>"
+    ports:
+      - "5432:5432"
+  <%}%>
+  <% if (locals.useMysql) {%>
+  <%= appName%>-mysql:
+    image: mysql
+    container_name: <%= appName%>-mysql
+    environment:
+      MYSQL_DATABASE: "<%= dbName%>"
+    ports:
+      - "3306:3306"
+  <%}%>
