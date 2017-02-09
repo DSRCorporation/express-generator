@@ -22,9 +22,9 @@ module.exports = async app => {
         meta: false,
         msg: '{{req.method}} {{req.url}} {{res.statusCode}} - {{res.responseTime}} ms'
     }));
-    app.use(bodyParser.json({limit: '10mb'}));
-    app.use(bodyParser.xml({limit: '10mb'}));
-    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(bodyParser.json({limit: config.limit}));
+    app.use(bodyParser.xml({limit: config.limit}));
+    app.use(bodyParser.urlencoded({extended: false, limit: config.limit}));
 
     // CORS support
     if (config.allowAllOrigins) {

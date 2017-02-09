@@ -1,6 +1,7 @@
 {
   "express": {
     "port": 3000,
+    "limit": "10mb",
     "serveStatic": false,
     "staticUrl": "/public",
     "staticPath": "/public"
