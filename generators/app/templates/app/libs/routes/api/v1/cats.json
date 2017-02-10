@@ -32,6 +32,12 @@
           "name": {
             "type": "String",
             "required": true
+          },
+          "bossName": {
+            "type": "String"
+          },
+          "birthDate": {
+            "type": "date-time"
           }
         }
       }
@@ -57,6 +63,12 @@
         "properties": {
           "name": {
             "type": "String"
+          },
+          "bossName": {
+            "type": "String"
+          },
+          "birthDate": {
+            "type": "date-time"
           }
         }
       }

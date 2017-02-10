@@ -16,7 +16,7 @@ services:
       - "3030:3030"
       - "5858:5858"
     <% if (locals.useSequelize) {%>
-    entrypoint: ./wait-for-it.sh
+    entrypoint: /usr/src/<%= appName%>/wait-for-it.sh
     <%}%>
     links:
     <% if (locals.useMongo) {%>

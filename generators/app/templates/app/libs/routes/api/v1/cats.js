@@ -80,8 +80,16 @@ async function create(req, res) {
     objectValidator.createValidator(req.body)
         .field('name')
             .isLength('Name must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('bossName', true)
+            .isLength('Boss Name must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('birthDate', true)
+            .isDate('Invalid date.')
         .validate();
     //@f:on
+
+    //It was made in order to not create empty fields in database
+    Object.keys(req.body).forEach(key => req.body[key] === '' && delete req.body[key]);
+
     <% if (locals.useMongo) {%>
     let newCat = await models.Cat.create(req.body);
     <%}%>
@@ -108,14 +116,21 @@ async function update(req, res) {
     objectValidator.createValidator(req.body, true)
         .field('name')
             .isLength('Name must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('bossName', true)
+            .isLength('Boss Name must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('birthDate', true)
+            .isDate('Invalid date.')
         .validate();
     //@f:on
+
     <% if (locals.useMongo) {%>
     let cat = await models.Cat.findById(req.params.id);
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
     _.assign(cat, req.body);
+    //it was made in order to delete empty fields from database
+    Object.keys(req.body).forEach(key => (req.body[key] === '') && (cat[key] = undefined));
     await cat.save();
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -131,6 +146,8 @@ async function update(req, res) {
                 throw new errors.NotFoundError('Cat is not found.', req.params.id);
             }
             _.assign(cat, req.body);
+            //it was made in order to delete empty fields from database
+            Object.keys(req.body).forEach(key => (req.body[key] === '') && (cat[key] = null));
             await cat.save({transaction: t});
         }
     );
