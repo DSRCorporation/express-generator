@@ -113,7 +113,6 @@ module.exports = class extends Generator {
             ],
             this.destinationRoot(),
             config
-
         );
         this.log('Added base project');
     }
