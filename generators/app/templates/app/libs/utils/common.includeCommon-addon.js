@@ -123,10 +123,22 @@ function getDifferentFields(oldObj, newObj) {
     let [targetObject, checkObject] = _.isEmpty(newObj) ? [oldObj, newObj] : [newObj, oldObj];
 
     return _.reduce(targetObject,
-        (result, value, key) =>
-            (moment(value, moment.ISO_8601, true).isValid() ? _.isEqual(new Date(value), checkObject[key]) : _.isEqual(value, checkObject[key])) ?
-                result : result.concat(key),
-        []);
+        (result, value, key) => {
+            if (moment(value, moment.ISO_8601, true).isValid()) {
+                if (_.isEqual(new Date(value), checkObject[key])) {
+                    return result;
+                }
+                else {
+                    return result.concat(key);
+                }
+            }
+            else if (_.isEqual(value, checkObject[key])) {
+                return result;
+            }
+            else {
+                return result.concat(key);
+            }
+        }, []);
 }
 
 function isJson(str) {
