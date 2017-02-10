@@ -1,6 +1,6 @@
 'use strict';
 
-const constants = require('utils/config').constants,
+const errors = require('utils/config').constants.errors,
     HTTPStatus = require('http-status'),
     AbstractError = require('errors/AbstractError');
 
@@ -9,7 +9,7 @@ class ValidationError extends AbstractError {
         super(message, Array.prototype.slice.call(arguments, 2));
 
         this.fields = fields ? fields : [];
-        this.code = constants.VALIDATION_ERROR;
+        this.code = errors.VALIDATION_ERROR;
         this.status = HTTPStatus.BAD_REQUEST;
     }
 }

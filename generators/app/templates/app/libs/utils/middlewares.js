@@ -32,7 +32,7 @@ function errorHandler(err, req, res, next) {
     }
 
     var errorDetails = {
-        code: err.code || config.constants.UNKNOWN_ERROR
+        code: err.code || config.constants.errors.UNKNOWN_ERROR
     };
 
     errorDetails.message = err.message;
@@ -41,7 +41,7 @@ function errorHandler(err, req, res, next) {
     // Convert JsonSchemaValidation to our SchemaValidationError output
     if (err.name === 'JsonSchemaValidation') {
         err.status = httpStatus.BAD_REQUEST;
-        errorDetails.code = config.constants.SCHEMA_VALIDATION_ERROR;
+        errorDetails.code = config.constants.errors.SCHEMA_VALIDATION_ERROR;
         errorDetails.message = err.message + ' ' + JSON.stringify(err.validations);
     }
 
