@@ -23,9 +23,13 @@ async function main() {
     await initializers.routes(app.route);
 
 
-    app.listen(config.get('express:port'), function () {
-        logger.info('Example app listening on port', config.get('express:port'));
-    });
+    return new Promise(function(resolve, reject) {
+        app.on('error', reject)
+        app.listen(config.get('express:port'), function () {
+            logger.info('Example app listening on port', config.get('express:port'));
+            resolve()
+        });
+    })
 }
 
 main().catch(error => logger.error('Startup error', error));
