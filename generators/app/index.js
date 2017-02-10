@@ -40,13 +40,16 @@ module.exports = class extends Generator {
                 validate : function (input) {
                     var validateExp = new RegExp('^[0-9a-z]+$', 'i');
                     return validateExp.test(input) ? true : 'The database name must consist only of latin letters and digits.';
+                },
+                default  : function(prompts) {
+                    return prompts.appName;
                 }
             },
             {
                 type     : 'confirm',
                 name     : 'jwtSupport',
                 message  : 'Would you like a JWT authorization?',
-                default: true
+                default  : true
             },
             {
                 type: 'checkbox',
