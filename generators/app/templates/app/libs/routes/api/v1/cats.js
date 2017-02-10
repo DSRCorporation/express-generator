@@ -105,7 +105,7 @@ async function create(req, res) {
 
 async function update(req, res) {
     //@f:off
-    objectValidator.createValidator(req.body)
+    objectValidator.createValidator(req.body, true)
         .field('name')
             .isLength('Name must be from 1 to 255 symbols.', {min: 1, max: 255})
         .validate();
