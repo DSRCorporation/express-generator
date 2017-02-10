@@ -1,9 +1,11 @@
 
 #ignore thumbnails created by windows
 Thumbs.db
-#Ignore files build by Visual Studio
-node_modules
+#Ignore files build by IDE
 *.idea
+#Ignore files build by npm
+node_modules
+#Ignore files build by Visual Studio
 *.obj
 *.exe
 *.pdb
