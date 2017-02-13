@@ -14,7 +14,8 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       }
@@ -53,7 +54,8 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       },
@@ -84,7 +86,8 @@
         "additionalProperties": false,
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "required": true
           }
         }
       }
