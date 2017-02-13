@@ -56,10 +56,6 @@ module.exports = class extends Generator {
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
                 choices: [{
-                    name: 'Common. Some usefull lodash extensions',
-                    value: 'includeCommon',
-                    checked: false
-                }, {
                     name: 'Promissified fs-extra',
                     value: 'includeFsExtra',
                     checked: false
