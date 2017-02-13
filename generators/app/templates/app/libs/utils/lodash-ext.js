@@ -33,7 +33,7 @@ function mapObject(object, map) {
  * @param properties array of result object properties
  * @returns {object}
  */
-function pick(object, properties) {
+function pickExt(object, properties) {
     object = Object(object);
     return _.reduce(properties, (result, key)=> {
         if (typeof(key) === 'string') {
@@ -77,7 +77,7 @@ function pick(object, properties) {
  * @param properties array of result object properties
  * @returns {Array}
  */
-function pickArray(array, properties) {
+function pickArrayExt(array, properties) {
     return _.map(array, item => pick(item, properties));
 }
 
@@ -87,7 +87,7 @@ function pickArray(array, properties) {
  * @param newObj new object
  * @returns {Array}
  */
-function getDifferentFields(oldObj, newObj) {
+function differentFields(oldObj, newObj) {
 
     let [targetObject, checkObject] = _.isEmpty(newObj) ? [oldObj, newObj] : [newObj, oldObj];
 
@@ -133,12 +133,16 @@ function filterEmptyFields(obj, fields) {
     })
 }
 
+_.mixin({
+    differentFields: differentFields,
+    pickExt: pickExt,
+    pickArrayExt: pickArrayExt
+});
+
 module.exports = {
     sleep: sleep,
     mapObject: mapObject,
-    pick: pick,
-    pickArray: pickArray,
-    getDifferentFields: getDifferentFields,
     isJson: isJson,
-    filterEmptyFields: filterEmptyFields
+    filterEmptyFields: filterEmptyFields,
+    _: _
 };
