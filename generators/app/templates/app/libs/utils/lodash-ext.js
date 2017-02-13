@@ -1,10 +1,10 @@
 'use strict';
 
 const _ = require('lodash'),
-    errors = require('errors'),
     moment = require('moment'),
-    logger = require('utils/logger').utils;
-
+    logger = require('utils/logger').utils,
+    //it was made in order to avoid the loop (errors module needs lodash-ext)
+    InternalServerError = require('errors/InternalServerError');
 
 /**
  * Creates a new object with the same values as original one but with the keys from a map
@@ -50,12 +50,12 @@ function pickExt(object, properties) {
                     _.set(result, newKey, oldKey(object));
                 }
                 else {
-                    throw new errors.InternalServerError();
+                    throw new InternalServerError();
                 }
             });
         }
         else {
-            throw new errors.InternalServerError();
+            throw new InternalServerError();
         }
         return result;
     }, {});
