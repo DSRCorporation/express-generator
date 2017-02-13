@@ -31,7 +31,7 @@ let userSchema = new mongoose.Schema({
 /**
  * Save-hook that fills password field with bcrypt hash.
  */
-userSchema.pre('save', promise.asyncHook(async function (user) {
+userSchema.pre('save', promise.asyncHook(async user => {
 
     if (!user.isModified('password')) {
         return;
@@ -73,7 +73,7 @@ let userModel = sequelize.define('User', {
 /**
  * Save-hook that fills password field with bcrypt hash.
  */
-userModel.addHook('beforeCreate', async function (user) {
+userModel.addHook('beforeCreate', async user => {
     if (!user.changed('password')) {
         return;
     }
