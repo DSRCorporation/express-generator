@@ -71,17 +71,19 @@ module.exports = class extends Generator {
                 answers.useSequelize = true;
             }
             delete answers['database'];
-            let config = _.cloneDeep(answers);
 
-            _(answers).forIn((answer, key) => {
-               if (typeof answer === 'object') {
-                   _(answer).forEach(prop => {
-                       config[prop] = true;
-                   });
-                   delete config[key];
-               }
+            answers = _.transform(answers, function (result, value, key) {
+                if (typeof answers[key] === 'object') {
+                    _(answers[key]).forEach(prop => {
+                        result[prop] = true;
+                    });
+                }
+                else {
+                    result[key] = value;
+                }
             });
-            this._copyingFiles(config);
+
+            this._copyingFiles(answers);
         });
     }
 
