@@ -5,16 +5,6 @@ const _ = require('lodash'),
     moment = require('moment'),
     logger = require('utils/logger').utils;
 
-/**
- * Returns promise that resolves after configured time
- * @param ms time to waite before resolve
- * @returns {Promise}
- */
-function sleep(ms) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), ms);
-    });
-}
 
 /**
  * Creates a new object with the same values as original one but with the keys from a map
@@ -140,7 +130,6 @@ _.mixin({
 });
 
 module.exports = {
-    sleep: sleep,
     mapObject: mapObject,
     isJson: isJson,
     filterEmptyFields: filterEmptyFields,

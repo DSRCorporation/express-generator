@@ -3,8 +3,15 @@
 const Promise = require('utils/promise').Promise;
 
 
-async function sleep(timeout) {
-    return await new Promise(resolve => setTimeout(resolve, timeout));
+/**
+ * Returns promise that resolves after configured time
+ * @param ms time to waite before resolve
+ * @returns {Promise}
+ */
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(), ms);
+    });
 }
 
 function toPascalCase(string) {
