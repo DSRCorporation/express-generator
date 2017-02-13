@@ -7,7 +7,7 @@ const models = require("models"),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
-    _ = require('lodash');
+    _ = require('utils/lodash-ext');
 
 /**
  * GET /api/v1/cats
@@ -17,8 +17,9 @@ const models = require("models"),
 
 async function list(req, res) {
     <% if (locals.useMongo) {%>
+    let cats = await models.Cat.find({});
     res.json({
-        cats: await models.Cat.find({})
+        cats: _.pickArrayExt(cats, ['name', 'bossName', 'birthDate', '_id'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -28,7 +29,7 @@ async function list(req, res) {
             }
         );
     res.json({
-        cats: cats
+        cats: _.pickArrayExt(cats, ['name', 'bossName', 'birthDate', 'id'])
     });
     <%}%>
 }

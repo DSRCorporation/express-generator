@@ -68,7 +68,7 @@ function pickExt(object, properties) {
  * @returns {Array}
  */
 function pickArrayExt(array, properties) {
-    return _.map(array, item => pick(item, properties));
+    return _.map(array, item => _.pick(item, properties));
 }
 
 /**
