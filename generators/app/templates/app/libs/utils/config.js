@@ -10,7 +10,6 @@ const config = require('nconf')
         .env()
         .file('environment', __dirname + `/../../config/${process.env.NODE_ENV || (process.env.NODE_ENV = 'development')}.json`)
         .file('defaults', __dirname + '/../../config/defaults.json'),
-    version = require(__dirname + '/../../config/version.json').version,
     constants = require(__dirname + '/../../config/constants.json');
 
 /**
@@ -23,7 +22,6 @@ function get(key) {
 }
 
 module.exports = {
-    version: version,
     constants: constants,
     get: get
 };

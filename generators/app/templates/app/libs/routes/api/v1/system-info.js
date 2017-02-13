@@ -1,6 +1,8 @@
 'use strict';
 
-const version = require("utils/config").version;
+const path = require('path'),
+    appRoot = path.dirname(require.main.filename),
+    version = require(appRoot + '/../package.json').version;
 
 /**
  * GET /api/v1/system-info
