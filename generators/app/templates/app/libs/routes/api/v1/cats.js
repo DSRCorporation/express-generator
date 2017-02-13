@@ -80,9 +80,11 @@ async function create(req, res) {
     objectValidator.createValidator(req.body)
         .field('name')
             .isLength('Name must be from 1 to 255 symbols.', {min: 1, max: 255})
-        .field('bossName', true)
+        .field('bossName')
+            .optional()
             .isLength('Boss Name must be from 1 to 255 symbols.', {min: 1, max: 255})
-        .field('birthDate', true)
+        .field('birthDate')
+            .optional()
             .isDate('Invalid date.')
         .validate();
     //@f:on
@@ -113,12 +115,14 @@ async function create(req, res) {
 
 async function update(req, res) {
     //@f:off
-    objectValidator.createValidator(req.body, true)
+    objectValidator.createValidator(req.body, {allowUndefined: true})
         .field('name')
             .isLength('Name must be from 1 to 255 symbols.', {min: 1, max: 255})
-        .field('bossName', true)
+        .field('bossName')
+            .optional()
             .isLength('Boss Name must be from 1 to 255 symbols.', {min: 1, max: 255})
-        .field('birthDate', true)
+        .field('birthDate')
+            .optional()
             .isDate('Invalid date.')
         .validate();
     //@f:on

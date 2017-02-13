@@ -21,14 +21,14 @@ class ValidatorChain {
      * Constructs new validator chain
      * @param testObj object to validate
      */
-    constructor(testObj, allowUndefined) {
+    constructor(testObj, options) {
+        this._options = options || {};
         this._testObj = testObj;
         this._fieldErrors = [];
         this._fieldProperty = undefined;
         this._fieldOptional = false;
         this._fieldValid = false;
         this._prefixStack = [];
-        this._allowUndefined = allowUndefined;
     }
 
     /**
@@ -47,14 +47,25 @@ class ValidatorChain {
      * @return {object}
      */
 
-    field(property, optional) {
+    field(property) {
         if (!property) {
             logger.error('ValidatorChain.field -> is empty');
             throw new errors.InternalServerError('object-validator->ValidatorChain.field is empty');
         }
         this._fieldProperty = property;
         this._fieldValid = true;
-        this._fieldOptional = optional || false;
+        this._fieldOptional = false;
+
+        return this;
+    }
+
+
+    /**
+     * Sets optional property of field to true
+     * @returns {ValidatorChain}
+     */
+    optional() {
+        this._fieldOptional = true;
 
         return this;
     }
@@ -144,8 +155,8 @@ _.forEach(validator, (method, methodName) => {
  * @param testObj
  * @returns {ValidatorChain}
  */
-function createValidator(testObj, allowUndefined) {
-    return new ValidatorChain(testObj, allowUndefined);
+function createValidator(testObj, options) {
+    return new ValidatorChain(testObj, options);
 }
 
 /**
@@ -189,7 +200,7 @@ function _makeValidator(methodName) {
         validatorArgs = validatorArgs.concat(_.slice(arguments, 1));
 
         var isValid;
-        if (this._allowUndefined || this._fieldOptional) {
+        if (this._options.allowUndefined || this._fieldOptional) {
             if (_.get(this._testObj, _makePath(this._prefixStack, this._fieldProperty)) === undefined) {
                 isValid = true;
             }
