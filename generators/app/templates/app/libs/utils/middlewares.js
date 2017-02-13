@@ -49,8 +49,6 @@ function errorHandler(err, req, res, next) {
     res.json(errorDetails);
 }
 
-
-
 /**
  * Request json-scheme checker for express chain.
  */
@@ -127,9 +125,13 @@ async function checkSignedIn(req, res, next) {
 
     req.userId = decodedToken.userId;
     req.user = await models.User.findOne({
+        <% if (locals.useMongo) {%>
         '_id': decodedToken.userId
+        <%}%>
+        <% if (locals.useSequelize) {%>
+        'id': decodedToken.userId
+        <%}%>
     });
-
     next();
 }
 
