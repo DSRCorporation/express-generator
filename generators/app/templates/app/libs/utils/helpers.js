@@ -7,10 +7,6 @@ async function sleep(timeout) {
     return await new Promise(resolve => setTimeout(resolve, timeout));
 }
 
-function toCamelCase(string) {
-    return string.split('-').map((val, i) => i ? val.charAt(0).toUpperCase() + val.slice(1) : val).join('');
-}
-
 function toPascalCase(string) {
     return string.split('-').map(val => val.charAt(0).toUpperCase() + val.slice(1)).join('');
 }
@@ -57,7 +53,6 @@ async function attempt(coroutine, params, times, sleepTime) {
 module.exports = {
     sleep: sleep,
     attempt: attempt,
-    toCamelCase: toCamelCase,
     toPascalCase: toPascalCase,
     randomChoice: randomChoice,
     randomInt: randomInt
