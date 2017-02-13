@@ -14,14 +14,6 @@ function sleep(ms) {
     });
 }
 
-function randomChoice(list) {
-    return Math.trunc(Math.random() * list.length);
-}
-
-function randomInt(range = 1000000) {
-    return Math.trunc(Math.random() * range);
-}
-
 /**
  * Executes coroutine configured times before first success. If no success latest error throw.
  * @param coroutine coroutine to execute
@@ -55,7 +47,5 @@ async function attempt(coroutine, params, times, sleepTime) {
 
 module.exports = {
     sleep: sleep,
-    attempt: attempt,
-    randomChoice: randomChoice,
-    randomInt: randomInt
+    attempt: attempt
 };

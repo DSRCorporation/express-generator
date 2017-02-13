@@ -1,5 +1,5 @@
 'use strict';
 
-const helpers = require('utils/helpers');
+const _ = require('utils/lodash-ext')._;
 
-module.exports = require('utils/module-packer').packModule(__dirname, helpers.toPascalCase);
+module.exports = require('utils/module-packer').packModule(__dirname, _.toPascalCase);

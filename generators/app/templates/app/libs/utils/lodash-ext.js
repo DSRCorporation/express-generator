@@ -130,11 +130,21 @@ function toPascalCase(string) {
     return str;
 }
 
+function randomInt(range = 1000000) {
+    return Math.trunc(Math.random() * range);
+}
+
+function randomChoice(list) {
+    return Math.trunc(Math.random() * list.length);
+}
+
 _.mixin({
     differentFields: differentFields,
     pickExt: pickExt,
     pickArrayExt: pickArrayExt,
-    toPascalCase: toPascalCase
+    toPascalCase: toPascalCase,
+    randomInt: randomInt,
+    randomChoice: randomChoice
 });
 
 module.exports = {
