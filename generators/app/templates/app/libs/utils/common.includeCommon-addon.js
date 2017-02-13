@@ -17,37 +17,6 @@ function sleep(ms) {
 }
 
 /**
- * Executes coroutine configured times before first success. If no success latest error throw.
- * @param coroutine coroutine to execute
- * @param params coroutine params
- * @param times attempts count
- * @param sleepTime sleep time in ms between attempts
- * @returns {*}
- */
-function* attempt(coroutine, params, times, sleepTime) {
-
-    let latestError;
-
-    while (times) {
-
-        try {
-            return yield coroutine(params);
-        } catch (error) {
-            logger.debug('common.attempt -> coroutine error', times, error);
-            times--;
-            latestError = error;
-        }
-
-        if (sleepTime) {
-            yield sleep(sleepTime);
-        }
-    }
-
-    logger.debug('common.attempt -> coroutine latest error', latestError);
-    throw latestError;
-}
-
-/**
  * Creates a new object with the same values as original one but with the keys from a map
  * @param object coroutine to execute
  * @param map coroutine params
@@ -166,11 +135,10 @@ function filterEmptyFields(obj, fields) {
 
 module.exports = {
     sleep: sleep,
-    attempt: attempt,
     mapObject: mapObject,
     pick: pick,
     pickArray: pickArray,
     getDifferentFields: getDifferentFields,
     isJson: isJson,
-    filterEmptyFields
+    filterEmptyFields: filterEmptyFields
 };
