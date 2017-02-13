@@ -47,7 +47,7 @@ async function get(req, res) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
     res.json({
-        cat: cat
+        cat: _.pickExt(cat, ['name', 'bossName', 'birthDate', '_id'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -65,7 +65,7 @@ async function get(req, res) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
     res.json({
-        cat: cat
+        cat: _.pickExt(cat, ['name', 'bossName', 'birthDate', 'id'])
     });
     <%}%>
 }

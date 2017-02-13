@@ -7,7 +7,7 @@ const models = require("models"),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
-_ = require('lodash');
+    _ = require('utils/lodash-ext');
 
 /**
  * GET /api/v1/users
@@ -17,8 +17,9 @@ _ = require('lodash');
 
 async function list(req, res) {
     <% if (locals.useMongo) {%>
+    let users = await models.User.find({});
     res.json({
-        users: await models.User.find({})
+        users: _.pickArrayExt(users, ['login', '_id'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -28,7 +29,7 @@ async function list(req, res) {
             }
         );
     res.json({
-        users: users
+        users: _.pickArrayExt(users, ['login', 'id'])
     });
     <%}%>
 }
@@ -46,7 +47,7 @@ async function get(req, res) {
         throw new errors.NotFoundError('User is not found.', req.params.id);
     }
     res.json({
-        user: user
+        user: _.pickExt(user, ['login', '_id'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -64,7 +65,7 @@ async function get(req, res) {
         throw new errors.NotFoundError('User is not found.', req.params.id);
     }
     res.json({
-        user: user
+        user: _.pickExt(user, ['login', 'id'])
     });
     <%}%>
 }
