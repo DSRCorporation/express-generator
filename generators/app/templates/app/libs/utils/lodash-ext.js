@@ -12,7 +12,7 @@ const _ = require('lodash'),
  * @param map coroutine params
  * @returns {object}
  */
-function mapObject(object, map) {
+function mapObjectExt(object, map) {
 
     return _.mapKeys(object, (val, key) => map[key] !== undefined ? map[key] : key);
 }
@@ -100,7 +100,7 @@ function differentFields(oldObj, newObj) {
         }, []);
 }
 
-function isJson(str) {
+function isJsonExt(str) {
     try {
         JSON.parse(str);
     } catch (e) {
@@ -115,7 +115,7 @@ function isJson(str) {
  * @param fields array of fields
  * @returns {Obj}
  */
-function filterEmptyFields(obj, fields) {
+function filterEmptyFieldsExt(obj, fields) {
     return _.forEach(fields, function (field) {
         if (_.get(obj, field) === '') {
             _.set(obj, field, undefined)
@@ -144,12 +144,10 @@ _.mixin({
     pickArrayExt: pickArrayExt,
     toPascalCase: toPascalCase,
     randomInt: randomInt,
-    randomChoice: randomChoice
+    randomChoice: randomChoice,
+    mapObjectExt: mapObjectExt,
+    isJsonExt: isJsonExt,
+    filterEmptyFieldsExt: filterEmptyFieldsExt
 });
 
-module.exports = {
-    mapObject: mapObject,
-    isJson: isJson,
-    filterEmptyFields: filterEmptyFields,
-    _: _
-};
+module.exports = _;
