@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('utils/module-packer').packModule(__dirname);
+const helpers = require('utils/helpers');
+
+module.exports = require('utils/module-packer').packModule(__dirname, helpers.toPascalCase);

@@ -1,8 +1,8 @@
 'use strict';
 
 const fs = require('fs'),
-    helpers = require('utils/helpers'),
-    path = require('path');
+    path = require('path'),
+    _ =  require('lodash');
 
 /**
  * Requires all files (instead of index.js) in passed module directory and returns it as assotiated array.
@@ -10,7 +10,7 @@ const fs = require('fs'),
  * @param transformFn file name transformation function
  * @returns {{}}
  */
-function packModule(dirname, transformFn = helpers.toCamelCase) {
+function packModule(dirname, transformFn = _.camelCase) {
     var classes = {};
 
     fs
