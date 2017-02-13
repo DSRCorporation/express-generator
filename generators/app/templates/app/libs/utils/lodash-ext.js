@@ -123,10 +123,18 @@ function filterEmptyFields(obj, fields) {
     })
 }
 
+function toPascalCase(string) {
+    let str = _.camelCase(string);
+
+    str = str.charAt(0).toUpperCase() + str.slice(1, str.length);
+    return str;
+}
+
 _.mixin({
     differentFields: differentFields,
     pickExt: pickExt,
-    pickArrayExt: pickArrayExt
+    pickArrayExt: pickArrayExt,
+    toPascalCase: toPascalCase
 });
 
 module.exports = {

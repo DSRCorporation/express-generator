@@ -14,10 +14,6 @@ function sleep(ms) {
     });
 }
 
-function toPascalCase(string) {
-    return string.split('-').map(val => val.charAt(0).toUpperCase() + val.slice(1)).join('');
-}
-
 function randomChoice(list) {
     return Math.trunc(Math.random() * list.length);
 }
@@ -60,7 +56,6 @@ async function attempt(coroutine, params, times, sleepTime) {
 module.exports = {
     sleep: sleep,
     attempt: attempt,
-    toPascalCase: toPascalCase,
     randomChoice: randomChoice,
     randomInt: randomInt
 };
