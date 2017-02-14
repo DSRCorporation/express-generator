@@ -15,7 +15,7 @@ Express generator uses docker containers. If you want to start application in do
 docker-compose up
 ```
 
-## Architecture
+## Directories structure
 
 - config
 - libs
@@ -29,8 +29,8 @@ docker-compose up
 
 
 ## Features
-
-- MongoDB, Postgres, Mysql support
+- Smart structure for NodeJS applications
+- Mongoose (MongoDB), Sequelize (Postgres, Mysql) support
 - JWT Authorization
 - ObjectValidator (used in routes for data validation)
 - RouteBuilder (easy and smart interface for creating routes)
