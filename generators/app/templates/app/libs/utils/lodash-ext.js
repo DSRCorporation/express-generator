@@ -109,18 +109,10 @@ function isJsonExt(str) {
     return true;
 }
 
-/**
- * Change object's filed's value from empty to undefined
- * @param obj object
- * @param fields array of fields
- * @returns {Obj}
- */
-function filterEmptyFieldsExt(obj, fields) {
-    return _.forEach(fields, function (field) {
-        if (_.get(obj, field) === '') {
-            _.set(obj, field, undefined)
-        }
-    })
+function removeEmptyFieldsExt(object, properties, value) {
+    return _(properties.split(' '))
+        .filter(property => _.get(object, property) === '')
+        .forEach(property => _.set(object, property, value));
 }
 
 function toPascalCase(string) {
@@ -147,7 +139,7 @@ _.mixin({
     randomChoice: randomChoice,
     mapObjectExt: mapObjectExt,
     isJsonExt: isJsonExt,
-    filterEmptyFieldsExt: filterEmptyFieldsExt
+    removeEmptyFieldsExt: removeEmptyFieldsExt
 });
 
 module.exports = _;

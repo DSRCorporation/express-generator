@@ -91,7 +91,7 @@ async function create(req, res) {
     //@f:on
 
     //It was made in order to not create empty fields in database
-    Object.keys(req.body).forEach(key => req.body[key] === '' && delete req.body[key]);
+    _.removeEmptyFieldsExt(req.body, 'bossName birthDate', undefined);
 
     <% if (locals.useMongo) {%>
     let newCat = await models.Cat.create(req.body);
@@ -133,9 +133,12 @@ async function update(req, res) {
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
-    _.assign(cat, req.body);
+
     //it was made in order to delete empty fields from database
-    Object.keys(req.body).forEach(key => (req.body[key] === '') && (cat[key] = undefined));
+    _.removeEmptyFieldsExt(req.body, 'bossName birthDate', undefined);
+
+    _.assign(cat, req.body);
+
     await cat.save();
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -150,9 +153,11 @@ async function update(req, res) {
             if (!cat) {
                 throw new errors.NotFoundError('Cat is not found.', req.params.id);
             }
-            _.assign(cat, req.body);
             //it was made in order to delete empty fields from database
-            Object.keys(req.body).forEach(key => (req.body[key] === '') && (cat[key] = null));
+            _.removeEmptyFieldsExt(req.body, 'bossName birthDate', null);
+
+            _.assign(cat, req.body);
+
             await cat.save({transaction: t});
         }
     );
