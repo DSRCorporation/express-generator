@@ -18,18 +18,15 @@ async function main() {
     <% if (locals.useSequelize) {%>await initializers.sequelize(app);<%}%>
     await initializers.models(app);
     await initializers.dictionaries(app);
-
     await initializers.middlewares(app);
     await initializers.routes(app.route);
 
+    await new Promise((resolve, reject) =>
+        app
+        .listen(config.get('express:port'), resolve)
+        .on('error', reject));
 
-    return new Promise(function(resolve, reject) {
-        app.on('error', reject)
-        app.listen(config.get('express:port'), function () {
-            logger.info('Example app listening on port', config.get('express:port'));
-            resolve()
-        });
-    })
+    logger.info('<%= appName%> application listening on port', config.get('express:port'))
 }
 
 main().catch(error => logger.error('Startup error', error));
