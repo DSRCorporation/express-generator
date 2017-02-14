@@ -11,6 +11,15 @@ services:
     container_name: <%= appName%>
     environment:
       NODE_ENV: "development"
+      <% if (locals.useMongo) {%>
+      "mongoose:uri": "<%= appName%>-mongo"
+      <%}%>
+      <% if (locals.usePostgres) {%>
+      "sequelize:uri": "<%= appName%>-postgres"
+      <%}%>
+      <% if (locals.useMysql) {%>
+      "sequelize:uri": "<%= appName%>-mysql"
+      <%}%>
       PORT: 3030
     ports:
       - "3030:3030"
