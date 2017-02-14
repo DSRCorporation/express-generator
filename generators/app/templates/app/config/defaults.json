@@ -1,0 +1,51 @@
+{
+  "express": {
+    "port": 3000,
+    "limit": "10mb",
+    "serveStatic": false,
+    "staticUrl": "/public",
+    "staticPath": "/public"
+  },
+  "logger": {
+    "app": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "app",
+        "timestamp": true
+      }
+    },
+    "db": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "db",
+        "timestamp": true
+      }
+    },
+    "express": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "express",
+        "timestamp": true
+      }
+    },
+    "utils": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "utils",
+        "timestamp": true
+      }
+    },
+    "tests": {
+      "console": {
+        "level": "debug",
+        "colorize": true,
+        "label": "tests",
+        "timestamp": true
+      }
+    }
+  }
+}

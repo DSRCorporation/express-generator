@@ -1,0 +1,45 @@
+{
+  "get": {
+    "method": "get",
+    "url": "/",
+    "secured": true
+  },
+  "create": {
+    "method": "post",
+    "url": "/",
+    "secured": true,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "login": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
+  "update": {
+    "method": "put",
+    "url": "/",
+    "secured": true,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

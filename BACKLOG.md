@@ -5,7 +5,10 @@
  * Mongoose event handler helpers
 * Common errors classes
 * Serial initialization. Simple async/await based solution.
-* Mongoose configuration
+* Database configuration
+  * MongoDb (Mongoose)
+  * MySql (Sequilize)
+  * Postgres (Sequilize)
   * Skip promisification. Use mongoose promise API
   * Provide promise implementation to mongoose config
   * Sequence support

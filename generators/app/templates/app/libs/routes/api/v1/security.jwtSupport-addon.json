@@ -1,0 +1,23 @@
+{
+  "login": {
+    "method": "post",
+    "url": "/login",
+    "secured": false,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "login": {
+            "type": "string",
+            "required": true
+          },
+          "password": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

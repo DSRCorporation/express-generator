@@ -1,0 +1,20 @@
+{
+  "model": "Cat",
+  "entities": [
+    {
+      "name": "Barsic",
+      "bossName": "Akakiy",
+      "birthDate": "1298-01-01T00:00:00Z"
+    },
+    {
+      "name": "Pushok",
+      "bossName": "Ermolay",
+      "birthDate": "1300-01-01T00:00:00Z"
+    },
+    {
+      "name": "Murka",
+      "bossName": "Dobrinya",
+      "birthDate": "1350-01-01T00:00:00Z"
+    }
+  ]
+}

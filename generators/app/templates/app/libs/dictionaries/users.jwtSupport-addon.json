@@ -1,0 +1,20 @@
+{
+  "model": "User",
+  "entities": [
+    {
+      "login": "BarsicUser",
+      "password": "sosiska",
+      "status": "ACTIVE"
+    },
+    {
+      "login": "PushokUser",
+      "password": "sordelka",
+      "status": "ACTIVE"
+    },
+    {
+      "login": "MurkaUser",
+      "password": "kotletka",
+      "status": "BLOCKED"
+    }
+  ]
+}

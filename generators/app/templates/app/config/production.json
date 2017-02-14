@@ -1,0 +1,11 @@
+{
+  "express": {
+    "allowAllOrigins": true
+  },<% if (locals.useMongo) {%>
+  "mongoose": {
+    "uri": "override by environment variable"
+  },<%}%>
+  "security": {
+    "jwtSecret": "<%=jwtSecret %>"
+  }
+}

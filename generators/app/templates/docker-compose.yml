@@ -1,0 +1,65 @@
+version: '2'
+services:
+  <%= appName%>:
+    build:
+      context: .
+      dockerfile: <%= appName%>.dockerfile
+    command: nodemon -L -e js,json --debug=5858 --harmony-async-await ./app/index.js
+    image: <%= appName%>:development
+    volumes:
+      - "./app:/usr/src/<%= appName%>/app"
+    container_name: <%= appName%>
+    environment:
+      NODE_ENV: "development"
+      <% if (locals.useMongo) {%>
+      "mongoose:uri": "mongodb://<%= appName%>-mongo/<%=dbName%>"
+      <%}%>
+      <% if (locals.usePostgres) {%>
+      "sequelize:uri": "postgres://postgres@<%= appName%>-postgres:5432/<%=dbName%>"
+      <%}%>
+      <% if (locals.useMysql) {%>
+      "sequelize:uri": "mysql://root:root_password@<%= appName%>-mysql:3306/<%=dbName%>"
+      <%}%>
+      PORT: 3030
+    ports:
+      - "3030:3030"
+      - "5858:5858"
+    <% if (locals.useSequelize) {%>
+    entrypoint: /usr/src/<%= appName%>/wait-for-it.sh
+    <%}%>
+    links:
+    <% if (locals.useMongo) {%>
+      - <%= appName%>-mongo
+    <%}%>
+    <% if (locals.usePostgres) {%>
+      - <%= appName%>-postgres
+    <%}%>
+    <% if (locals.useMysql) {%>
+      - <%= appName%>-mysql
+    <%}%>
+  <% if (locals.useMongo) {%>
+  <%= appName%>-mongo:
+    image: mongo
+    container_name: <%= appName%>-mongo
+    ports:
+      - "27017:27017"
+  <%}%>
+  <% if (locals.usePostgres) {%>
+  <%= appName%>-postgres:
+    image: postgres
+    container_name: <%= appName%>-postgres
+    environment:
+      POSTGRES_DB: "<%= dbName%>"
+    ports:
+      - "5432:5432"
+  <%}%>
+  <% if (locals.useMysql) {%>
+  <%= appName%>-mysql:
+    image: mysql
+    container_name: <%= appName%>-mysql
+    environment:
+      MYSQL_DATABASE: "<%= dbName%>"
+      MYSQL_ROOT_PASSWORD: "root_password"
+    ports:
+      - "3306:3306"
+  <%}%>

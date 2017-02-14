@@ -1,0 +1,96 @@
+{
+  "list": {
+    "method": "get",
+    "url": "/",
+    "secured": false
+  },
+  "get": {
+    "method": "get",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
+  "create": {
+    "method": "post",
+    "url": "/",
+    "secured": false,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "String",
+            "required": true
+          },
+          "bossName": {
+            "type": "String"
+          },
+          "birthDate": {
+            "type": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "update": {
+    "method": "put",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      },
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "String"
+          },
+          "bossName": {
+            "type": "String"
+          },
+          "birthDate": {
+            "type": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "remove": {
+    "method": "delete",
+    "url": "/:id",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}
