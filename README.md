@@ -1,5 +1,5 @@
 # Yeoman generator for Express/NodeJS by DSR Corporation
-An ExpressJs generator for Yeoman.
+An (Express)[http://expressjs.com/] generator for Yeoman.
 
 ## Install
 
@@ -29,7 +29,7 @@ docker-compose up
 
 
 ## Features
-- Smart structure for NodeJS applications
+- Smart structure for Express based applications
 - Mongoose (MongoDB), Sequelize (Postgres, Mysql) support
 - JWT Authorization
 - ObjectValidator (used in routes for data validation)
