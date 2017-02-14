@@ -4,6 +4,9 @@ const models = require("models"),
     HTTPStatus = require('http-status'),
     objectValidator = require('utils/object-validator'),
     errors = require('errors'),
+    <% if (locals.useMongo){%>
+    mongooseTypes = require('mongoose').Types,
+    <%}%>
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -42,6 +45,9 @@ async function list(req, res) {
 
 async function get(req, res) {
     <% if (locals.useMongo) {%>
+    if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     let cat = await models.Cat.findById(req.params.id);
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
@@ -129,6 +135,9 @@ async function update(req, res) {
     //@f:on
 
     <% if (locals.useMongo) {%>
+    if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     let cat = await models.Cat.findById(req.params.id);
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
@@ -174,6 +183,9 @@ async function update(req, res) {
 
 async function remove(req, res) {
     <% if (locals.useMongo) {%>
+    if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
+        throw new errors.NotFoundError('Cat is not found.', req.params.id);
+    }
     let cat = await models.Cat.findById(req.params.id);
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
