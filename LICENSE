@@ -1,44 +1,3 @@
-# Yeoman generator for Express/NodeJS by DSR Corporation
-An [Express](http://expressjs.com/) generator for Yeoman.
-
-## Install
-
-```
-npm install generator-express-dsr
-yo express-dsr
-```
-During the installation process you are going to be asked a few questions.
-
-## Run
-Express generator uses docker containers. If you want to start application in docker, you should use:
-```
-docker-compose up
-```
-
-## Directories structure
-
-- config
-- libs
- - dictionaries 
- - errors
- - initializers
- - models
- - routes
- - utils
-- root files
-
-
-## Features
-- Smart structure for Express based applications
-- Mongoose (MongoDB), Sequelize (Postgres, Mysql) support
-- JWT Authorization
-- ObjectValidator (used in routes for data validation)
-- RouteBuilder (easy and smart interface for creating routes)
-- LodashExt (extends lodash library with several useful functions)
-- Ability to run the application in docker container
-
-
-## License
 The MIT License (MIT)
 
 Copyright (c) 2016 DSR Corporation
@@ -60,4 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
