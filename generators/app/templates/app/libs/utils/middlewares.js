@@ -110,6 +110,22 @@ async function checkSignedIn(req, res, next) {
         throw new errors.SecurityError('Incorrect token', decodedToken);
     }
 
+    <% if (locals.useMongo) {%>
+    let user = await models.User.findById(decodedToken.userId);
+    <%}%>
+    <% if (locals.useSequelize) {%>
+    let user = await models.User.find({
+        where: {
+            'id': decodedToken.userId
+        }
+    });
+    <%}%>
+
+
+    if (user.status === 'BLOCKED') {
+        throw new errors.SecurityError('User is Blocked.');
+    }
+
     var tokenLifeTime = decodedToken.expiresIn - moment().unix();
 
     if (tokenLifeTime < 0) {
@@ -124,31 +140,8 @@ async function checkSignedIn(req, res, next) {
     jwt.setAuthorizationHeader(newToken, res);
 
     req.userId = decodedToken.userId;
-    req.user = await models.User.findOne({
-        <% if (locals.useMongo) {%>
-        '_id': decodedToken.userId
-        <%}%>
-        <% if (locals.useSequelize) {%>
-        'id': decodedToken.userId
-        <%}%>
-    });
+
     next();
-}
-
-/**
- * checkRoles checks if user has enough privileges
- */
-function checkRoles(requiredRoles) {
-    return (req, res, next) => {
-
-        logger.debug('checkRoles. Required:', requiredRoles, 'Available:', req.user.roles);
-
-        if (!requiredRoles.length === 0 || _.intersection(requiredRoles, req.user.roles).length >= 1 ) {
-            next();
-        } else {
-            next(new errors.SecurityError(`Required priveleges: ${requiredRoles}. You have: ${req.user.roles}.`));
-        }
-    };
 }
 
 module.exports = {
@@ -157,6 +150,5 @@ module.exports = {
     validateRequest: validateRequest,
     logRoute: logRoute,
     cors: cors,
-    checkSignedIn: checkSignedIn,
-    checkRoles: checkRoles
+    checkSignedIn: checkSignedIn
 };

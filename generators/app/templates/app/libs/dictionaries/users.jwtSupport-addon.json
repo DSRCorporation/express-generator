@@ -3,15 +3,18 @@
   "entities": [
     {
       "login": "BarsicUser",
-      "password": "sosiska"
+      "password": "sosiska",
+      "status": "ACTIVE"
     },
     {
       "login": "PushokUser",
-      "password": "sordelka"
+      "password": "sordelka",
+      "status": "ACTIVE"
     },
     {
       "login": "MurkaUser",
-      "password": "kotletka"
+      "password": "kotletka",
+      "status": "BLOCKED"
     }
   ]
 }

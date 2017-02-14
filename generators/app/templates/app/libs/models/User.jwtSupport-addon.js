@@ -25,7 +25,13 @@ let userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    status: {
+        type: String,
+        enum: ['ACTIVE', 'BLOCKED'],
+        default: 'ACTIVE',
+        required: true
+    },
 });
 
 /**
@@ -61,7 +67,13 @@ let userModel = sequelize.define('User', {
     password: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
+    status: {
+        type: Sequelize.ENUM,
+        values: ['ACTIVE', 'BLOCKED'],
+        defaultValue: 'ACTIVE',
+        allowNull: false
+    },
 }, {
     instanceMethods: {
         comparePasswordAsync: async function (candidatePassword) {
