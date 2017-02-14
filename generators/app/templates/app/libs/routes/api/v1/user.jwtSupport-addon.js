@@ -10,41 +10,16 @@ const models = require("models"),
     _ = require('utils/lodash-ext');
 
 /**
- * GET /api/v1/users
- * @param req req
- * @param res res
- */
-
-async function list(req, res) {
-    <% if (locals.useMongo) {%>
-    let users = await models.User.find({});
-    res.json({
-        users: _.pickArrayExt(users, ['login', '_id'])
-    });
-    <%}%>
-    <% if (locals.useSequelize) {%>
-    let users = await sequelize.transaction(async t => {
-                // chain all your queries here. make sure you return them.
-                return await models.User.findAll({transaction: t});
-            }
-        );
-    res.json({
-        users: _.pickArrayExt(users, ['login', 'id'])
-    });
-    <%}%>
-}
-
-/**
- * GET /api/v1/users/:id
+ * GET /api/v1/user
  * @param req req
  * @param res res
  */
 
 async function get(req, res) {
     <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.params.id);
+    let user = await models.User.findById(req.userId);
     if (!user) {
-        throw new errors.NotFoundError('User is not found.', req.params.id);
+        throw new errors.InternalServerError('No user for request.');
     }
     res.json({
         user: _.pickExt(user, ['login', '_id'])
@@ -55,14 +30,14 @@ async function get(req, res) {
             // chain all your queries here. make sure you return them.
             return await models.User.find({
                 where: {
-                    id : req.params.id
+                    id : req.userId
                 },
                 transaction: t
             });
         }
     );
     if (!user) {
-        throw new errors.NotFoundError('User is not found.', req.params.id);
+        throw new errors.NotFoundError('No user for request.');
     }
     res.json({
         user: _.pickExt(user, ['login', 'id'])
@@ -71,7 +46,7 @@ async function get(req, res) {
 }
 
 /**
- * POST /api/v1/users
+ * POST /api/v1/user
  * @param req req
  * @param res res
  */
@@ -101,7 +76,7 @@ async function create(req, res) {
 }
 
 /**
- * PUT /api/v1/users/:id
+ * PUT /api/v1/user
  * @param req req
  * @param res res
  */
@@ -114,9 +89,9 @@ async function update(req, res) {
         .validate();
     //@f:on
     <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.params.id);
+    let user = await models.User.findById(req.userId);
     if (!user) {
-        throw new errors.NotFoundError('User is not found.', req.params.id);
+        throw new errors.NotFoundError('No user for request.');
     }
     _.assign(user, req.body);
     await user.save();
@@ -126,12 +101,12 @@ async function update(req, res) {
             // chain all your queries here. make sure you return them.
             let user = await models.User.find({
                 where: {
-                    id : req.params.id
+                    id : req.userId
                 },
                 transaction: t
             });
             if (!user) {
-                throw new errors.NotFoundError('User is not found.', req.params.id);
+                throw new errors.NotFoundError('No user for request.');
             }
             _.assign(user, req.body);
             await user.save({transaction: t});
@@ -142,44 +117,8 @@ async function update(req, res) {
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
-/**
- * DELETE /api/v1/users/:id
- * @param req req
- * @param res res
- */
-
-async function remove(req, res) {
-    <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.params.id);
-    if (!user) {
-        throw new errors.NotFoundError('User is not found.', req.params.id);
-    }
-    user.remove();
-    <%}%>
-    <% if (locals.useSequelize) {%>
-    await sequelize.transaction(async t => {
-            // chain all your queries here. make sure you return them.
-            let user = await models.User.find({
-                where: {
-                    id: req.params.id
-                },
-                transaction: t
-            });
-            if (!user) {
-                throw new errors.NotFoundError('User is not found.', req.params.id);
-            }
-            await user.destroy({transaction: t});
-        }
-    );
-    <%}%>
-
-    res.status(HTTPStatus.NO_CONTENT).send();
-}
-
 module.exports = {
-    list: list,
     get: get,
     create: create,
-    update: update,
-    remove: remove
+    update: update
 };
