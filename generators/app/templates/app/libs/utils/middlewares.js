@@ -121,6 +121,9 @@ async function checkSignedIn(req, res, next) {
     });
     <%}%>
 
+    if (!user) {
+        throw new errors.NotFoundError('User is not found.');
+    }
 
     if (user.status === 'BLOCKED') {
         throw new errors.SecurityError('User is Blocked.');
