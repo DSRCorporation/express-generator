@@ -77,7 +77,7 @@ function pickArrayExt(array, properties) {
  * @param newObj new object
  * @returns {Array}
  */
-function differentFields(oldObj, newObj) {
+function differentFieldsExt(oldObj, newObj) {
 
     let [targetObject, checkObject] = _.isEmpty(newObj) ? [oldObj, newObj] : [newObj, oldObj];
 
@@ -115,28 +115,28 @@ function removeEmptyFieldsExt(object, properties, value) {
         .forEach(property => _.set(object, property, value));
 }
 
-function toPascalCase(string) {
+function toPascalCaseExt(string) {
     let str = _.camelCase(string);
 
     str = str.charAt(0).toUpperCase() + str.slice(1, str.length);
     return str;
 }
 
-function randomInt(range = 1000000) {
+function randomIntExt(range = 1000000) {
     return Math.trunc(Math.random() * range);
 }
 
-function randomChoice(list) {
+function randomChoiceExt(list) {
     return Math.trunc(Math.random() * list.length);
 }
 
 _.mixin({
-    differentFields: differentFields,
+    differentFieldsExt: differentFieldsExt,
     pickExt: pickExt,
     pickArrayExt: pickArrayExt,
-    toPascalCase: toPascalCase,
-    randomInt: randomInt,
-    randomChoice: randomChoice,
+    toPascalCaseExt: toPascalCaseExt,
+    randomIntExt: randomIntExt,
+    randomChoiceExt: randomChoiceExt,
     mapObjectExt: mapObjectExt,
     isJsonExt: isJsonExt,
     removeEmptyFieldsExt: removeEmptyFieldsExt
