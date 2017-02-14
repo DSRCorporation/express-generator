@@ -22,7 +22,7 @@ async function get(req, res) {
         throw new errors.InternalServerError('No user for request.');
     }
     res.json({
-        user: _.pickExt(user, ['login', '_id'])
+        user: _.pickExt(user, ['login', 'id:_id'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>

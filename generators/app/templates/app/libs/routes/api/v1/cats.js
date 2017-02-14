@@ -22,7 +22,7 @@ async function list(req, res) {
     <% if (locals.useMongo) {%>
     let cats = await models.Cat.find({});
     res.json({
-        cats: _.pickArrayExt(cats, ['name', 'bossName', 'birthDate', '_id'])
+        cats: _.pickArrayExt(cats, ['id:_id', 'name', 'bossName', 'birthDate'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
@@ -53,7 +53,7 @@ async function get(req, res) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
     res.json({
-        cat: _.pickExt(cat, ['name', 'bossName', 'birthDate', '_id'])
+        cat: _.pickExt(cat, ['id:_id', 'name', 'bossName', 'birthDate'])
     });
     <%}%>
     <% if (locals.useSequelize) {%>
