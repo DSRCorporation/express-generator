@@ -10,7 +10,7 @@ const promise = require('utils/promise'),
 promise.promisifyAll(redis.RedisClient.prototype);
 
 async function createClient() {
-    return await new Promise(function(resolve) {
+    return await new promise.Promise(function(resolve) {
         logger.info(`redis.createClient -> Connecting ${redisConf.host}:${redisConf.port}`);
         let client = redis.createClient(_.merge(redisConf, {retry_strategy: retryStrategy}));
 
