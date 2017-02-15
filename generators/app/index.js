@@ -55,11 +55,18 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
-                choices: [{
+                choices: [
+                    {
                     name: 'Promissified fs-extra',
                     value: 'includeFsExtra',
                     checked: false
-                }]
+                    },
+                    {
+                        name: 'Redis',
+                        value: 'includeRedis',
+                        checked: false
+                    }
+                ]
             },
         ]).then((answers) => {
             answers[answers.database] = true;

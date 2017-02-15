@@ -12,6 +12,12 @@
       <% if (locals.useMysql) {%>"uri": "mysql://root:root_password@localhost:3306/<%=dbName%>",<%}%>
       "options": {}
   },<%}%>
+  <% if (locals.includeRedis) {%>
+  "redis" : {
+    "host": "localhost",
+    "port": 6379,
+    "options": {}
+  },<%}%>
   "security": {
     "jwtSecret": "<%=jwtSecret%>",
     "jwtTokenExpirationTime": 43200,
