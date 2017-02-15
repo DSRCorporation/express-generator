@@ -6,6 +6,6 @@ const logger = require('utils/logger').app,
 
 module.exports = async function() {
     logger.info('Redis connecting');
-    await redis.createClient();
+    await redis.initClients();
     logger.info('Redis connecting -> done');
 };
