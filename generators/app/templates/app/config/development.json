@@ -16,10 +16,6 @@
   "redis" : {
     "host": "localhost",
     "port": 6379,
-    "reconnect": {
-      "maxAttempts": 50,
-      "timeout": 1000
-    },
     "options": {}
   },<%}%>
   "security": {

@@ -6,6 +6,13 @@
     "staticUrl": "/public",
     "staticPath": "/public"
   },
+  <% if (locals.includeRedis) {%>
+  "redis": {
+    "reconnect": {
+      "maxAttempts": 50,
+      "timeout": 1000
+    }
+  },<%}%>
   "logger": {
     "app": {
       "console": {
