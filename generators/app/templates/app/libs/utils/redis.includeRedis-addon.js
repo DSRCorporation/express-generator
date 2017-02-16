@@ -10,7 +10,18 @@ promise.promisifyAll(redis.RedisClient.prototype);
 promise.promisifyAll(redis.Multi.prototype);
 
 function createClient() {
-    return redis.createClient(redisConfig.port, redisConfig.host, redisConfig.options);
+    return redis.createClient(_.merge(redisConfig, {retry_strategy: retryStrategy}));
+}
+
+function retryStrategy(options) {
+    let attempt = options.attempt,
+        maxAttempts  = redisConfig.reconnect.maxAttempts;
+
+    logger.error(`redis.retryStrategy -> Trying to reconnect. Attempt ${attempt}`);
+    if (attempt < maxAttempts) {
+        return redisConfig.reconnect.timeout;
+    }
+    return new errors.InternalServerError(`redis.retryStrategy -> Reconnecting failed after ${maxAttempts} attempts.`,  logger);
 }
 
 module.exports ={
