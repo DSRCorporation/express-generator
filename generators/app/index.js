@@ -138,7 +138,6 @@ module.exports = class extends Generator {
                 return path;
             }));
             copySrc.push(
-                this.templatePath('.'+ addon + '-addon*'),
                 this.templatePath('*.' + addon + '-addon*'),
                 this.templatePath('**/*.' + addon + '-addon*'),
                 this.templatePath('*.' + addon + '-addon/**'),
