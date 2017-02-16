@@ -15,11 +15,11 @@ function createClient() {
 
 function retryStrategy(options) {
     let attempt = options.attempt,
-        maxAttempts  = redisConfig.reconnect.maxAttempts;
+        maxAttempts  = redisConfig.options.reconnect.maxAttempts;
 
     logger.error(`redis.retryStrategy -> Trying to reconnect. Attempt ${attempt}`);
     if (attempt < maxAttempts) {
-        return redisConfig.reconnect.timeout;
+        return redisConfig.options.reconnect.timeout;
     }
     return new errors.InternalServerError(`redis.retryStrategy -> Reconnecting failed after ${maxAttempts} attempts.`,  logger);
 }

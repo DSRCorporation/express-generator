@@ -6,11 +6,22 @@
     "staticUrl": "/public",
     "staticPath": "/public"
   },
+  <% if (locals.useMongo) {%>
+  "mongoose": {
+    "options": {}
+  },<%}%>
+  <% if (locals.useSequelize) {%>
+  "sequelize" : {
+    "options": {}
+  },
+  <%}%>
   <% if (locals.includeRedis) {%>
   "redis": {
-    "reconnect": {
-      "maxAttempts": 50,
-      "timeout": 1000
+    "options": {
+      "reconnect": {
+        "maxAttempts": 50,
+        "timeout": 1000
+      }
     }
   },<%}%>
   "logger": {
