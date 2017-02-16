@@ -55,11 +55,18 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
-                choices: [{
-                    name: 'Promissified fs-extra',
-                    value: 'includeFsExtra',
-                    checked: false
-                }]
+                choices: [
+                    {
+                        name: 'Promissified fs-extra',
+                        value: 'includeFsExtra',
+                        checked: false
+                    },
+                    {
+                        name: 'Use Babel with Node LTS',
+                        value: 'includeBabel',
+                        checked: false
+                    }
+                ]
             },
         ]).then((answers) => {
             answers[answers.database] = true;
@@ -131,6 +138,7 @@ module.exports = class extends Generator {
                 return path;
             }));
             copySrc.push(
+                this.templatePath('.'+ addon + '-addon*'),
                 this.templatePath('*.' + addon + '-addon*'),
                 this.templatePath('**/*.' + addon + '-addon*'),
                 this.templatePath('*.' + addon + '-addon/**'),

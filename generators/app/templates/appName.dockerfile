@@ -1,6 +1,9 @@
 # Development
+<% if (locals.includeBabel) {%>
+FROM node:6.9.5
+<% } else { %>
 FROM node:7.3.0
-
+<%}%>
 RUN npm install -g nodemon
 <% if (locals.usePostgres) {%>
 RUN apt-get update && apt-get install -y postgresql
