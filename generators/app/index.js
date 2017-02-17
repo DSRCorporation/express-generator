@@ -52,6 +52,12 @@ module.exports = class extends Generator {
                 default  : true
             },
             {
+                type     : 'confirm',
+                name     : 'includeRedis',
+                message  : 'Would you like to use Redis?',
+                default  : false
+            },
+            {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
@@ -60,11 +66,6 @@ module.exports = class extends Generator {
                     name: 'Promissified fs-extra',
                     value: 'includeFsExtra',
                     checked: false
-                    },
-                    {
-                        name: 'Redis',
-                        value: 'includeRedis',
-                        checked: false
                     }
                 ]
             },
