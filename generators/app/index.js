@@ -52,6 +52,12 @@ module.exports = class extends Generator {
                 default  : true
             },
             {
+                type     : 'confirm',
+                name     : 'includeBabel',
+                message  : 'Would you like to use Babel with Node LTS?',
+                default  : false
+            },
+            {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
@@ -59,11 +65,6 @@ module.exports = class extends Generator {
                     {
                         name: 'Promissified fs-extra',
                         value: 'includeFsExtra',
-                        checked: false
-                    },
-                    {
-                        name: 'Use Babel with Node LTS',
-                        value: 'includeBabel',
                         checked: false
                     }
                 ]
