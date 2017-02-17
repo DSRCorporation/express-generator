@@ -54,7 +54,7 @@ module.exports = class extends Generator {
             {
                 type     : 'confirm',
                 name     : 'ejsSupport',
-                message  : 'Would you like render ejs views?',
+                message  : 'Would you like to render ejs views?',
                 default  : false
             },
             {
