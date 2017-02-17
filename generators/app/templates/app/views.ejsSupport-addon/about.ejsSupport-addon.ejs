@@ -3,6 +3,14 @@
         <title><%%= title %%></title>
     </head>
     <body>
-        <h1><%%= message %%></h1>
+        <h1><%%= message %%> ^ↀᴥↀ^</h1>
+        <ul>
+            <%% cats.forEach(function(cat) { %%>
+            <li><b>Name</b>: <%%= cat.name %%> </br>
+                <b>Boss</b>: <%%= cat.bossName %%> </br>
+                <b>Birth date</b>: <%%= cat.birthDate %%>
+            </li>
+            <%% }); %%>
+        </ul>
     </body>
 </html>

@@ -55,7 +55,7 @@ module.exports = class extends Generator {
                 type     : 'confirm',
                 name     : 'ejsSupport',
                 message  : 'Would you like render ejs views?',
-                default  : true
+                default  : false
             },
             {
                 type: 'checkbox',

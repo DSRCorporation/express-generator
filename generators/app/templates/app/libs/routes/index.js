@@ -7,6 +7,9 @@
 const logger = require('utils/logger').app,
     routeBuilder = require('utils/route-builder'),
     path = require('path'),
+    <% if (locals.ejsSupport) {%>
+    views = require('routes/views'),
+    <%}%>
     _ = require('lodash');
 
 function createRoutes(app) {
@@ -26,6 +29,20 @@ function createRoutes(app) {
         });
 }
 
+<% if (locals.ejsSupport) {%>
+function createViews(app) {
+    app.set('views', 'app/views');
+    app.set('view engine', 'ejs');
+    _.forEach(views, (view, key) => {
+        app.route.get(view.route, async function(req, res) {
+            res.render(key, await view.getConfig());
+        });
+    });
+}
+<%}%>
 module.exports = {
+    <% if (locals.ejsSupport) {%>
+    createViews: createViews,
+    <%}%>
     createRoutes: createRoutes
 };
