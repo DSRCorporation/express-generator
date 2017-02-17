@@ -52,6 +52,12 @@ module.exports = class extends Generator {
                 default  : true
             },
             {
+                type     : 'confirm',
+                name     : 'ejsSupport',
+                message  : 'Would you like render ejs views?',
+                default  : true
+            },
+            {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
