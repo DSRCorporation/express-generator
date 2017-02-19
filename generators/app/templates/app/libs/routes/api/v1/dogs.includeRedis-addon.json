@@ -1,0 +1,24 @@
+{
+  "list": {
+    "method": "get",
+    "url": "/",
+    "secured": false
+  },
+  "create": {
+    "method": "post",
+    "url": "/",
+    "secured": false,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "String",
+            "required": true
+          }
+        }
+      }
+    }
+  }
+}

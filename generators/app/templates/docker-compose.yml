@@ -20,6 +20,9 @@ services:
       <% if (locals.useMysql) {%>
       "sequelize:uri": "mysql://root:root_password@<%= appName%>-mysql:3306/<%=dbName%>"
       <%}%>
+      <% if (locals.includeRedis) {%>
+      "redis:host": "<%= appName%>-redis"
+      <%}%>
       PORT: 3030
     ports:
       - "3030:3030"
@@ -36,6 +39,9 @@ services:
     <%}%>
     <% if (locals.useMysql) {%>
       - <%= appName%>-mysql
+    <%}%>
+    <% if (locals.includeRedis) {%>
+      - <%= appName%>-redis
     <%}%>
   <% if (locals.useMongo) {%>
   <%= appName%>-mongo:
@@ -62,4 +68,11 @@ services:
       MYSQL_ROOT_PASSWORD: "root_password"
     ports:
       - "3306:3306"
+  <%}%>
+  <% if (locals.includeRedis) {%>
+  <%= appName%>-redis:
+    image: redis
+    container_name: <%= appName%>-redis
+    ports:
+      - "6379:6379"
   <%}%>
