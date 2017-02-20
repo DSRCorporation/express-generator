@@ -140,8 +140,51 @@ async function update(req, res) {
     res.status(HTTPStatus.NO_CONTENT).send();
 }
 
+/**
+ * GET /api/v1/user/:id/verify
+ * @param req req
+ * @param res res
+ */
+
+async function verifyEmail(req, res) {
+<% if (locals.useMongo) {%>
+    let user = await models.User.findById(req.body.id);
+    if (!user) {
+        throw new errors.NotFoundError('User not found.');
+    }
+    if ((moment() - req.params.token) > 0) {
+        throw new errors.SecurityError('The email verification link has expired.');
+    }
+    _.assign(user, {verified: true});
+    await user.save();
+    res.status(HTTPStatus.NO_CONTENT).send();
+<%}%>
+<% if (locals.useSequelize) {%>
+    let user = await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            return await models.User.find({
+                where: {
+                    id : req.body.id
+                },
+                transaction: t
+            });
+        }
+    );
+    if (!user) {
+        throw new errors.NotFoundError('User not found.');
+    }
+    if ((moment() - req.params.token) > 0) {
+        throw new errors.SecurityError('The email verification link has expired.');
+    }
+    _.assign(user, {verified: true});
+    await user.save();
+    res.status(HTTPStatus.NO_CONTENT).send();
+<%}%>
+}
+
 module.exports = {
     get: get,
     create: create,
-    update: update
+    update: update,
+    verifyEmail: verifyEmail
 };

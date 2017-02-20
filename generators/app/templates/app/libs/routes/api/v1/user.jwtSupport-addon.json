@@ -4,6 +4,23 @@
     "url": "/",
     "secured": true
   },
+  "verifyEmail": {
+    "method": "get",
+    "url": "/:id/verify",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
   "create": {
     "method": "post",
     "url": "/",
