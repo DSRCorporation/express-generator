@@ -7,7 +7,7 @@
   "create": {
     "method": "post",
     "url": "/",
-    "secured": true,
+    "secured": false,
     "scheme": {
       "body": {
         "type": "object",

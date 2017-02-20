@@ -5,7 +5,7 @@
     <div class="page__main">
         <p>A new user <%%= login %%> has been created.</p>
         <p>Please verify your Email Address by clicking the button below.</p>
-        <a href="yandex.ru" class="button__confirm">Confirm my account</a>
+        <a href="<%%= urls.siteBase %%>/api/v1/user/%%= id %%>/verify?token=<%%= token %%>" class="button__confirm">Confirm my account</a>
         <p class="step">
             Sincerely yours, <br/>
             The "Example" Team

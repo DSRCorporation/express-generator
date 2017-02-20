@@ -5,6 +5,8 @@ const models = require("models"),
     objectValidator = require('utils/object-validator'),
     errors = require('errors'),
     mailer = require('utils/mailer'),
+    moment = require('moment'),
+    crypto = require('crypto'),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -69,6 +71,17 @@ async function create(req, res) {
             })
         .validate();
     //@f:on
+    let token = crypto.randomBytes(100).toString('hex');
+
+    _.assign(req.body,
+        {
+            verified: false,
+            verifyLink: {
+                token: token,
+                expired: moment().add('days', 1)
+            }
+        }
+    );
     <% if (locals.useMongo) {%>
     let newUser = await models.User.create(req.body);
     <%}%>
@@ -79,7 +92,7 @@ async function create(req, res) {
             }
         );
     <%}%>
-    await mailer.send('new-user', newUser.email, {login: newUser.login});
+    await mailer.send('new-user', newUser.email, {login: newUser.login, token: token, id: newUser.id});
     res.json({
         id: newUser.id
     });

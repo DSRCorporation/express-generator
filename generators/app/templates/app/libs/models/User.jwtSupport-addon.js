@@ -36,6 +36,13 @@ let userSchema = new mongoose.Schema({
         default: 'ACTIVE',
         required: true
     },
+    verified: {
+        type: String,
+        required: true
+    },
+    verifyLink: {
+        type: Object
+    }
 });
 
 /**
