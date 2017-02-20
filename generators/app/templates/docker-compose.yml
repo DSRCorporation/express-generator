@@ -4,7 +4,11 @@ services:
     build:
       context: .
       dockerfile: <%= appName%>.dockerfile
-    command: nodemon -L -e js,json --debug=5858 --harmony-async-await ./app/index.js
+    <% if (locals.includeBabel) {%>
+    command: nodemon -L -e js,json --debug=5858 app/app.js --exec babel-node
+    <%} else {%>
+    command: nodemon -L -e js,json --debug=5858 --harmony-async-await app/app.js
+    <%}%>
     image: <%= appName%>:development
     volumes:
       - "./app:/usr/src/<%= appName%>/app"
