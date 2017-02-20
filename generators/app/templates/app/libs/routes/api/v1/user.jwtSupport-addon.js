@@ -148,11 +148,11 @@ async function update(req, res) {
 
 async function verifyEmail(req, res) {
 <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.body.id);
+    let user = await models.User.findById(req.params.id);
     if (!user) {
         throw new errors.NotFoundError('User not found.');
     }
-    if ((moment() - req.params.token) > 0) {
+    if ((moment() - req.query.token) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
     _.assign(user, {verified: true});
@@ -164,7 +164,7 @@ async function verifyEmail(req, res) {
             // chain all your queries here. make sure you return them.
             return await models.User.find({
                 where: {
-                    id : req.body.id
+                    id : req.params.id
                 },
                 transaction: t
             });
@@ -173,7 +173,7 @@ async function verifyEmail(req, res) {
     if (!user) {
         throw new errors.NotFoundError('User not found.');
     }
-    if ((moment() - req.params.token) > 0) {
+    if ((moment() - req.query.token) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
     _.assign(user, {verified: true});

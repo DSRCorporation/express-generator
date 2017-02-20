@@ -18,6 +18,16 @@
             "required": true
           }
         }
+      },
+      "query": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "token": {
+            "type": "string",
+            "required": true
+          }
+        }
       }
     }
   },
