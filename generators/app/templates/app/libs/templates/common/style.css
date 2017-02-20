@@ -67,6 +67,15 @@ body {
 }
 
 .button__confirm {
-    background-color: green;
+    background-color: #00c9c9;
     color: white;
+    cursor: pointer;
+    height: 50px;
+    width: 200px;
+    border-radius: 30px;
+    font-style: italic;
+    font-weight: bold;
+    display: inline-block;
+    text-decoration: none;
+    line-height: 50px;
 }
