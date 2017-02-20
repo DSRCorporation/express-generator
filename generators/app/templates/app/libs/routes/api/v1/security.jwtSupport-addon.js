@@ -36,6 +36,10 @@ async function login(req, res) {
         throw new errors.SecurityError('Login and password combination is not found.');
     }
 
+    if (!user.verified) {
+        throw new errors.SecurityError('Email is not verified.');
+    }
+
     let token = await jwt.generateToken({
         <% if (locals.useMongo) {%>userId: user._id,<%}%>
         <% if (locals.useSequelize) {%>userId: user.id,<%}%>
