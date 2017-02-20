@@ -1,0 +1,7 @@
+{
+  "get": {
+    "method": "get",
+    "url": "/",
+    "secured": false
+  }
+}

@@ -7,6 +7,9 @@
 const logger = require('utils/logger').app,
     routeBuilder = require('utils/route-builder'),
     path = require('path'),
+    <% if (locals.ejsSupport) {%>
+    views = require('routes/views'),
+    <%}%>
     _ = require('lodash');
 
 function createRoutes(app) {
@@ -27,6 +30,22 @@ function createRoutes(app) {
         });
 }
 
+<% if (locals.ejsSupport) {%>
+function createViews(app) {
+    const endpoints = [
+        {url: '/about', file: '/views/about'}
+    ];
+
+    _(endpoints)
+        .each(endpoint => {
+            app.use(endpoint.url, routeBuilder.createRoute(path.join(__dirname, endpoint.file)));
+            logger.info('Endpoint added:', endpoint.url);
+        });
+}
+<%}%>
 module.exports = {
+    <% if (locals.ejsSupport) {%>
+    createViews: createViews,
+    <%}%>
     createRoutes: createRoutes
 };

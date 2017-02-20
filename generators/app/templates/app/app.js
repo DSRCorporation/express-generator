@@ -20,7 +20,7 @@ async function main() {
     await initializers.models(app);
     await initializers.dictionaries(app);
     await initializers.middlewares(app);
-    await initializers.routes(app.route);
+    await initializers.routes(app);
 
     await new Promise((resolve, reject) =>
         app

@@ -12,6 +12,9 @@
     <% if (locals.jwtSupport) {%>
     "jsonwebtoken": "^5.5.4",
     <%}%>
+    <% if (locals.ejsSupport) {%>
+    "ejs": "^2.5.5",
+    <%}%>
     "nconf": "^0.8.4",
     "lodash": "^4.17.4",
     "moment": "^2.11.2",
