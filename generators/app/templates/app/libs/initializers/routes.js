@@ -1,4 +1,4 @@
-const logger = require('utils/logger').app;
+const logger = require('utils/logger').app,
     routes = require('routes');
 
 module.exports = async app => {

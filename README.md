@@ -30,12 +30,14 @@ docker-compose up
 
 ## Features
 - Smart structure for Express based applications
-- Mongoose (MongoDB), Sequelize (Postgres, Mysql) support
+- Mongoose (MongoDB), Sequelize (Postgres, Mysql), Redis support
 - JWT Authorization
 - ObjectValidator (used in routes for data validation)
 - RouteBuilder (easy and smart interface for creating routes)
 - LodashExt (extends lodash library with several useful functions)
 - Ability to run the application in docker container
+- Application uses async/await feature with NodeJS 7.3.0,
+  but you can also use it with NodeJS 6.9.5 LTS through Babel
 
 
 ## License

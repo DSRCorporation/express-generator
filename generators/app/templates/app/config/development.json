@@ -7,10 +7,14 @@
     "uri": "mongodb://localhost/<%=dbName%>"
   },<%}%>
   <% if (locals.useSequelize) {%>
-    "sequelize" : {
-      <% if (locals.usePostgres) {%>"uri": "postgres://postgres@localhost:5432/<%=dbName%>",<%}%>
-      <% if (locals.useMysql) {%>"uri": "mysql://root:root_password@localhost:3306/<%=dbName%>",<%}%>
-      "options": {}
+  "sequelize" : {
+    <% if (locals.usePostgres) {%>"uri": "postgres://postgres@localhost:5432/<%=dbName%>"<%}%>
+    <% if (locals.useMysql) {%>"uri": "mysql://root:root_password@localhost:3306/<%=dbName%>"<%}%>
+  },<%}%>
+  <% if (locals.includeRedis) {%>
+  "redis" : {
+    "host": "localhost",
+    "port": 6379
   },<%}%>
   "security": {
     "jwtSecret": "<%=jwtSecret%>",

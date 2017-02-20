@@ -4,7 +4,11 @@ services:
     build:
       context: .
       dockerfile: <%= appName%>.dockerfile
-    command: nodemon -L -e js,json --debug=5858 --harmony-async-await ./app/index.js
+    <% if (locals.includeBabel) {%>
+    command: nodemon -L -e js,json --debug=5858 app/app.js --exec babel-node
+    <%} else {%>
+    command: nodemon -L -e js,json --debug=5858 --harmony-async-await app/app.js
+    <%}%>
     image: <%= appName%>:development
     volumes:
       - "./app:/usr/src/<%= appName%>/app"
@@ -19,6 +23,9 @@ services:
       <%}%>
       <% if (locals.useMysql) {%>
       "sequelize:uri": "mysql://root:root_password@<%= appName%>-mysql:3306/<%=dbName%>"
+      <%}%>
+      <% if (locals.includeRedis) {%>
+      "redis:host": "<%= appName%>-redis"
       <%}%>
       PORT: 3030
     ports:
@@ -36,6 +43,9 @@ services:
     <%}%>
     <% if (locals.useMysql) {%>
       - <%= appName%>-mysql
+    <%}%>
+    <% if (locals.includeRedis) {%>
+      - <%= appName%>-redis
     <%}%>
   <% if (locals.useMongo) {%>
   <%= appName%>-mongo:
@@ -62,4 +72,11 @@ services:
       MYSQL_ROOT_PASSWORD: "root_password"
     ports:
       - "3306:3306"
+  <%}%>
+  <% if (locals.includeRedis) {%>
+  <%= appName%>-redis:
+    image: redis
+    container_name: <%= appName%>-redis
+    ports:
+      - "6379:6379"
   <%}%>

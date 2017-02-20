@@ -53,6 +53,18 @@ module.exports = class extends Generator {
             },
             {
                 type     : 'confirm',
+                name     : 'includeRedis',
+                message  : 'Would you like to use Redis?',
+                default  : false
+            },
+            {
+                type     : 'confirm',
+                name     : 'includeBabel',
+                message  : 'Would you like to use Babel with Node LTS?',
+                default  : false
+            },
+            {
+                type     : 'confirm',
                 name     : 'ejsSupport',
                 message  : 'Would you like to render ejs views?',
                 default  : false
@@ -61,11 +73,13 @@ module.exports = class extends Generator {
                 type: 'checkbox',
                 name: 'promissifiedUtils',
                 message: 'Promissified utils:',
-                choices: [{
-                    name: 'Promissified fs-extra',
-                    value: 'includeFsExtra',
-                    checked: false
-                }]
+                choices: [
+                    {
+                        name: 'Promissified fs-extra',
+                        value: 'includeFsExtra',
+                        checked: false
+                    }
+                ]
             },
         ]).then((answers) => {
             answers[answers.database] = true;
