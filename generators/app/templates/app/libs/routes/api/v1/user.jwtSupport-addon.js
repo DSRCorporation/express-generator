@@ -4,6 +4,7 @@ const models = require("models"),
     HTTPStatus = require('http-status'),
     objectValidator = require('utils/object-validator'),
     errors = require('errors'),
+    mailer = require('utils/mailer'),
     <% if (locals.useSequelize) {%>
     sequelize = require('utils/sequelize'),
     <%}%>
@@ -58,6 +59,14 @@ async function create(req, res) {
             .isLength('Login must be from 1 to 255 symbols.', {min: 1, max: 255})
         .field('password')
             .isLength('Password must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('email')
+            .isLength('Email field must be from 1 to 255 symbols.', {min: 1, max: 255})
+            .isEmail('Please provide valid e-mail.')
+            .normalizeEmail({
+                lowercase: true,
+                remove_dots: false,
+                remove_extension: false
+            })
         .validate();
     //@f:on
     <% if (locals.useMongo) {%>
@@ -70,6 +79,7 @@ async function create(req, res) {
             }
         );
     <%}%>
+    await mailer.send('new-user', newUser.email, {login: newUser.login, password: newUser.password});
     res.json({
         id: newUser.id
     });

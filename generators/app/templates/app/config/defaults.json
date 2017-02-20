@@ -6,6 +6,12 @@
     "staticUrl": "/public",
     "staticPath": "/public"
   },
+  "email": {
+    "addresses": {
+      "from": "noreply@example.com"
+    },
+    "defaults": {}
+  }
   <% if (locals.useMongo) {%>
   "mongoose": {
     "options": {}

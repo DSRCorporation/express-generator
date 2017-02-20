@@ -2,7 +2,20 @@
   "express": {
     "allowAllOrigins": true,
     "serveStatic": true
-  },<% if (locals.useMongo) {%>
+  },
+  "email": {
+    "options": {
+      "host": "",
+      "port": 587,
+      "secure": false,
+      "ignoreTLS": true,
+      "auth": {
+        "user": "",
+        "pass": ""
+      }
+    }
+  },
+  <% if (locals.useMongo) {%>
   "mongoose": {
     "uri": "mongodb://localhost/<%=dbName%>"
   },<%}%>

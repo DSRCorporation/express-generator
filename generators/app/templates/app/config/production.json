@@ -1,7 +1,15 @@
 {
   "express": {
     "allowAllOrigins": true
-  },<% if (locals.useMongo) {%>
+  },
+  "email": {
+    "options": {
+      "transport": "ses",
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable"
+    }
+  },
+  <% if (locals.useMongo) {%>
   "mongoose": {
     "uri": "override by environment variable"
   },<%}%>
