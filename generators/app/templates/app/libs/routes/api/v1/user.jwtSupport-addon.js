@@ -79,7 +79,7 @@ async function create(req, res) {
             }
         );
     <%}%>
-    await mailer.send('new-user', newUser.email, {login: newUser.login, password: newUser.password});
+    await mailer.send('new-user', newUser.email, {login: newUser.login});
     res.json({
         id: newUser.id
     });
