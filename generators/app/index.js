@@ -53,6 +53,12 @@ module.exports = class extends Generator {
             },
             {
                 type     : 'confirm',
+                name     : 'includeRedis',
+                message  : 'Would you like to use Redis?',
+                default  : false
+            },
+            {
+                type     : 'confirm',
                 name     : 'includeBabel',
                 message  : 'Would you like to use Babel with Node LTS?',
                 default  : false

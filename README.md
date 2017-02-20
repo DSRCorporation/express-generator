@@ -30,7 +30,7 @@ docker-compose up
 
 ## Features
 - Smart structure for Express based applications
-- Mongoose (MongoDB), Sequelize (Postgres, Mysql) support
+- Mongoose (MongoDB), Sequelize (Postgres, Mysql), Redis support
 - JWT Authorization
 - ObjectValidator (used in routes for data validation)
 - RouteBuilder (easy and smart interface for creating routes)

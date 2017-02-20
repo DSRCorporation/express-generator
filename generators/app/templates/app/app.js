@@ -16,6 +16,7 @@ async function main() {
     // Execute initializers
     <% if (locals.useMongo) {%>await initializers.mongoose(app);<%}%>
     <% if (locals.useSequelize) {%>await initializers.sequelize(app);<%}%>
+    <% if (locals.includeRedis) {%>await initializers.redis(app);<%}%>
     await initializers.models(app);
     await initializers.dictionaries(app);
     await initializers.middlewares(app);

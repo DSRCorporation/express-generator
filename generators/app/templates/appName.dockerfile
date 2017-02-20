@@ -5,6 +5,7 @@ FROM node:6.9.5
 FROM node:7.3.0
 <%}%>
 RUN npm install -g nodemon
+RUN npm install -g yarn
 <% if (locals.includeBabel) {%>
 RUN npm install -g babel-cli
 <%}%>
@@ -22,4 +23,4 @@ ADD wait-for-it.sh /usr/src/<%= appName%>/wait-for-it.sh
 RUN chmod +x /usr/src/<%= appName%>/wait-for-it.sh
 <%}%>
 WORKDIR /usr/src/<%= appName%>
-RUN npm install
+RUN yarn
