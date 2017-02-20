@@ -32,13 +32,15 @@ function createRoutes(app) {
 
 <% if (locals.ejsSupport) {%>
 function createViews(app) {
-    app.set('views', 'app/views');
-    app.set('view engine', 'ejs');
-    _.forEach(views, (view, key) => {
-        app.route.get(view.route, async function(req, res) {
-            res.render(key, await view.getConfig());
+    const endpoints = [
+        {url: '/about', file: '/views/about'}
+    ];
+
+    _(endpoints)
+        .each(endpoint => {
+            app.use(endpoint.url, routeBuilder.createRoute(path.join(__dirname, endpoint.file)));
+            logger.info('Endpoint added:', endpoint.url);
         });
-    });
 }
 <%}%>
 module.exports = {

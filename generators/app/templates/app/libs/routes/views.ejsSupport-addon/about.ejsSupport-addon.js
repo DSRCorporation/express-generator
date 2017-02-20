@@ -21,15 +21,14 @@ async function getCats() {
 <%}%>
 }
 
-async function getConfig() {
-    return {
+async function get(req, res) {
+    res.render('about', {
         title: 'Cats page',
         message: 'All we have are cats',
         cats: await getCats()
-    }
+    });
 }
 
 module.exports = {
-  getConfig: getConfig,
-  route: '/about'
+  get: get
 };
