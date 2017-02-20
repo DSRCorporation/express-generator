@@ -3,6 +3,9 @@
     "allowAllOrigins": true,
     "serveStatic": true
   },
+  "urls": {
+    "siteBase": "http://localhost:3030"
+  },
   "email": {
     "options": {
       "host": "",

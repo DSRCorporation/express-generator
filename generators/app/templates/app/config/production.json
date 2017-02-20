@@ -2,6 +2,9 @@
   "express": {
     "allowAllOrigins": true
   },
+  "urls":{
+    "siteBase": "override by environment variable"
+  },
   "email": {
     "options": {
       "transport": "ses",

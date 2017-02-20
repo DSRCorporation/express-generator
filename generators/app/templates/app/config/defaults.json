@@ -11,7 +11,7 @@
       "from": "noreply@example.com"
     },
     "defaults": {}
-  }
+  },
   <% if (locals.useMongo) {%>
   "mongoose": {
     "options": {}
