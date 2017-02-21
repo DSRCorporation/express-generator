@@ -40,8 +40,11 @@ let userSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
-    verifyLink: {
-        type: Object
+    verifyLinkExpiration: {
+        type: String
+    },
+    verifyToken: {
+        type: String
     }
 });
 
@@ -78,6 +81,20 @@ let userModel = sequelize.define('User', {
     password: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    verified: {
+        type: Sequelize.BOOLEAN,
+        required: true
+    },
+    verifyLinkExpiration: {
+        type: Sequelize.STRING
+    },
+    verifyToken: {
+        type: Sequelize.STRING
     },
     status: {
         type: Sequelize.ENUM,

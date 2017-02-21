@@ -76,10 +76,8 @@ async function create(req, res) {
     _.assign(req.body,
         {
             verified: false,
-            verifyLink: {
-                token: token,
-                expired: moment().add('days', 1)
-            }
+            verifyLinkExpiration: moment().add(1, 'days').unix(),
+            verifyToken: token
         }
     );
     <% if (locals.useMongo) {%>
@@ -152,11 +150,16 @@ async function verifyEmail(req, res) {
     if (!user) {
         throw new errors.NotFoundError('User not found.');
     }
-    if ((moment() - req.query.token) > 0) {
+    if ((moment().unix() - user.verifyLinkExpiration) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
-    _.assign(user, {verified: true});
-    await user.save();
+    if (user.verifyToken === req.query.token) {
+        _.assign(user, {verified: true});
+        await user.save();
+    }
+    else {
+        throw new errors.SecurityError('Wrong token.');
+    }
     res.status(HTTPStatus.NO_CONTENT).send();
 <%}%>
 <% if (locals.useSequelize) {%>
@@ -173,11 +176,16 @@ async function verifyEmail(req, res) {
     if (!user) {
         throw new errors.NotFoundError('User not found.');
     }
-    if ((moment() - req.query.token) > 0) {
+    if ((moment().unix() - user.verifyLinkExpiration) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
-    _.assign(user, {verified: true});
-    await user.save();
+    if (user.verifyToken === req.query.token) {
+        _.assign(user, {verified: true});
+        await user.save();
+    }
+    else {
+        throw new errors.SecurityError('Wrong token.');
+    }
     res.status(HTTPStatus.NO_CONTENT).send();
 <%}%>
 }
@@ -199,10 +207,8 @@ async function getVerifyLink(req, res) {
     _.assign(user,
         {
             verified: false,
-            verifyLink: {
-                token: token,
-                expired: moment().add('days', 1)
-            }
+            verifyLinkExpiration: moment().add(1, 'days').unix(),
+            verifyToken: token
         }
     );
     await user.save();
@@ -228,10 +234,8 @@ async function getVerifyLink(req, res) {
     _.assign(user,
         {
             verified: false,
-            verifyLink: {
-                token: token,
-                expired: moment().add('days', 1)
-            }
+            verifyLinkExpiration: moment().add(1, 'days').unix(),
+            verifyToken: token
         }
     );
     await user.save();
