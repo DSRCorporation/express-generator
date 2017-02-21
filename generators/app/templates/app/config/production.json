@@ -1,7 +1,17 @@
 {
   "express": {
     "allowAllOrigins": true
-  },<% if (locals.useMongo) {%>
+  },
+  "storage": {
+    "type": "s3",
+    "config": {
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable",
+      "bucket": "<%=appName %>-static",
+      "basePath": ""
+    }
+  },
+  <% if (locals.useMongo) {%>
   "mongoose": {
     "uri": "override by environment variable"
   },<%}%>
