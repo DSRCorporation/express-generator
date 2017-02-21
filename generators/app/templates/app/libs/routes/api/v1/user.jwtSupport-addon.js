@@ -139,21 +139,21 @@ async function update(req, res) {
 }
 
 /**
- * GET /api/v1/user/:id/verify
+ * POST /api/v1/user/verify
  * @param req req
  * @param res res
  */
 
 async function verifyEmail(req, res) {
 <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.params.id);
+    let user = await models.User.findById(req.body.id);
     if (!user) {
         throw new errors.NotFoundError('User not found.');
     }
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
-    if (user.verifyToken === req.query.token) {
+    if (user.verifyToken === req.body.token) {
         _.assign(user, {verified: true});
         await user.save();
     }
@@ -167,7 +167,7 @@ async function verifyEmail(req, res) {
             // chain all your queries here. make sure you return them.
             return await models.User.find({
                 where: {
-                    id : req.params.id
+                    id : req.body.id
                 },
                 transaction: t
             });
@@ -179,7 +179,7 @@ async function verifyEmail(req, res) {
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
         throw new errors.SecurityError('The email verification link has expired.');
     }
-    if (user.verifyToken === req.query.token) {
+    if (user.verifyToken === req.body.token) {
         _.assign(user, {verified: true});
         await user.save();
     }
@@ -191,14 +191,14 @@ async function verifyEmail(req, res) {
 }
 
 /**
- * GET /api/v1/user/:id/getVerifyLink
+ * POST /api/v1/user/getVerifyLink
  * @param req req
  * @param res res
  */
 
 async function getVerifyLink(req, res) {
 <% if (locals.useMongo) {%>
-    let user = await models.User.findById(req.params.id),
+    let user = await models.User.findById(req.body.id),
         token = crypto.randomBytes(100).toString('hex');
     if (!user) {
         throw new errors.NotFoundError('User not found.');
@@ -220,7 +220,7 @@ async function getVerifyLink(req, res) {
             // chain all your queries here. make sure you return them.
             return await models.User.find({
                 where: {
-                    id : req.params.id
+                    id : req.body.id
                 },
                 transaction: t
             });

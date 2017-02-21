@@ -5,24 +5,18 @@
     "secured": true
   },
   "verifyEmail": {
-    "method": "get",
-    "url": "/:id/verify",
+    "method": "post",
+    "url": "/verify",
     "secured": false,
     "scheme": {
-      "params": {
+      "body": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
           "id": {
             "type": "string",
             "required": true
-          }
-        }
-      },
-      "query": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
+          },
           "token": {
             "type": "string",
             "required": true
@@ -32,11 +26,11 @@
     }
   },
   "getVerifyLink": {
-    "method": "get",
-    "url": "/:id/getVerifyLink",
+    "method": "post",
+    "url": "/getVerifyLink",
     "secured": false,
     "scheme": {
-      "params": {
+      "body": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
