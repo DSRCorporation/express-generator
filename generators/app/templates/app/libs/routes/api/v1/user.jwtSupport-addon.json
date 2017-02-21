@@ -31,6 +31,23 @@
       }
     }
   },
+  "getVerifyLink": {
+    "method": "get",
+    "url": "/:id/getVerifyLink",
+    "secured": false,
+    "scheme": {
+      "params": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
   "create": {
     "method": "post",
     "url": "/",

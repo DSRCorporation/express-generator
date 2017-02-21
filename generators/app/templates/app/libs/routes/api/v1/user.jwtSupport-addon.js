@@ -182,9 +182,68 @@ async function verifyEmail(req, res) {
 <%}%>
 }
 
+/**
+ * GET /api/v1/user/:id/getVerifyLink
+ * @param req req
+ * @param res res
+ */
+
+async function getVerifyLink(req, res) {
+<% if (locals.useMongo) {%>
+    let user = await models.User.findById(req.params.id),
+        token = crypto.randomBytes(100).toString('hex');
+    if (!user) {
+        throw new errors.NotFoundError('User not found.');
+    }
+
+    _.assign(user,
+        {
+            verified: false,
+            verifyLink: {
+                token: token,
+                expired: moment().add('days', 1)
+            }
+        }
+    );
+    await user.save();
+    await mailer.send('new-user', user.email, {login: user.login, token: token, id: user.id});
+    res.status(HTTPStatus.NO_CONTENT).send();
+<%}%>
+<% if (locals.useSequelize) {%>
+    let user = await sequelize.transaction(async t => {
+            // chain all your queries here. make sure you return them.
+            return await models.User.find({
+                where: {
+                    id : req.params.id
+                },
+                transaction: t
+            });
+        }
+    );
+    if (!user) {
+        throw new errors.NotFoundError('User not found.');
+    }
+    let token = crypto.randomBytes(100).toString('hex');
+
+    _.assign(user,
+        {
+            verified: false,
+            verifyLink: {
+                token: token,
+                expired: moment().add('days', 1)
+            }
+        }
+    );
+    await user.save();
+    await mailer.send('new-user', user.email, {login: user.login, token: token, id: user.id});
+    res.status(HTTPStatus.NO_CONTENT).send();
+<%}%>
+}
+
 module.exports = {
     get: get,
     create: create,
     update: update,
-    verifyEmail: verifyEmail
+    verifyEmail: verifyEmail,
+    getVerifyLink: getVerifyLink
 };
