@@ -2,7 +2,14 @@
   "express": {
     "allowAllOrigins": true,
     "serveStatic": true
-  },<% if (locals.useMongo) {%>
+  },
+  "storage": {
+    "type": "local",
+    "config": {
+      "basePath": "public"
+    }
+  },
+  <% if (locals.useMongo) {%>
   "mongoose": {
     "uri": "mongodb://localhost/<%=dbName%>"
   },<%}%>
