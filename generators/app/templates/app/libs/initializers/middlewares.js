@@ -25,10 +25,11 @@ module.exports = async app => {
     app.use(bodyParser.json({limit: config.limit}));
     app.use(bodyParser.xml({limit: config.limit}));
     app.use(bodyParser.urlencoded({extended: false, limit: config.limit}));
-    <% if (locals.ejsSupport) {%>
+    <%_ if (locals.ejsSupport) {_%>
     app.set('views', 'app/views');
     app.set('view engine', 'ejs');
-    <%}%>
+    <%_}_%>
+
     // CORS support
     if (config.allowAllOrigins) {
         app.use(middlewares.cors);

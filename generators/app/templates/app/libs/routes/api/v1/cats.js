@@ -4,12 +4,12 @@ const models = require("models"),
     HTTPStatus = require('http-status'),
     objectValidator = require('utils/object-validator'),
     errors = require('errors'),
-    <% if (locals.useMongo){%>
+    <%_ if (locals.useMongo){_%>
     mongooseTypes = require('mongoose').Types,
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     sequelize = require('utils/sequelize'),
-    <%}%>
+    <%_}_%>
     _ = require('utils/lodash-ext');
 
 /**
@@ -19,22 +19,24 @@ const models = require("models"),
  */
 
 async function list(req, res) {
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     let cats = await models.Cat.find({});
+
     res.json({
         cats: _.pickArrayExt(cats, ['id:_id', 'name', 'bossName', 'birthDate'])
     });
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     let cats = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.findAll({transaction: t});
             }
         );
+
     res.json({
         cats: _.pickArrayExt(cats, ['name', 'bossName', 'birthDate', 'id'])
     });
-    <%}%>
+    <%_}_%>
 }
 
 /**
@@ -44,19 +46,22 @@ async function list(req, res) {
  */
 
 async function get(req, res) {
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     let cat = await models.Cat.findById(req.params.id);
+
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     res.json({
         cat: _.pickExt(cat, ['id:_id', 'name', 'bossName', 'birthDate'])
     });
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     let cat = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.find({
@@ -67,13 +72,15 @@ async function get(req, res) {
                 });
             }
         );
+
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     res.json({
         cat: _.pickExt(cat, ['name', 'bossName', 'birthDate', 'id'])
     });
-    <%}%>
+    <%_}_%>
 }
 
 /**
@@ -99,16 +106,17 @@ async function create(req, res) {
     //It was made in order to not create empty fields in database
     _.removeEmptyFieldsExt(req.body, 'bossName birthDate', undefined);
 
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     let newCat = await models.Cat.create(req.body);
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     let newCat = await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
             return await models.Cat.create(req.body, {transaction: t});
         }
     );
-    <%}%>
+    <%_}_%>
+
     res.json({
         id: newCat.id
     });
@@ -134,11 +142,13 @@ async function update(req, res) {
         .validate();
     //@f:on
 
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     let cat = await models.Cat.findById(req.params.id);
+
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
@@ -149,8 +159,8 @@ async function update(req, res) {
     _.assign(cat, req.body);
 
     await cat.save();
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
             let cat = await models.Cat.find({
@@ -159,9 +169,11 @@ async function update(req, res) {
                 },
                 transaction: t
             });
+
             if (!cat) {
                 throw new errors.NotFoundError('Cat is not found.', req.params.id);
             }
+
             //it was made in order to delete empty fields from database
             _.removeEmptyFieldsExt(req.body, 'bossName birthDate', null);
 
@@ -170,7 +182,7 @@ async function update(req, res) {
             await cat.save({transaction: t});
         }
     );
-    <%}%>
+    <%_}_%>
 
     res.status(HTTPStatus.NO_CONTENT).send();
 }
@@ -182,17 +194,20 @@ async function update(req, res) {
  */
 
 async function remove(req, res) {
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     let cat = await models.Cat.findById(req.params.id);
+
     if (!cat) {
         throw new errors.NotFoundError('Cat is not found.', req.params.id);
     }
+
     await cat.remove();
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     await sequelize.transaction(async t => {
             // chain all your queries here. make sure you return them.
             let cat = await models.Cat.find({
@@ -201,13 +216,15 @@ async function remove(req, res) {
                 },
                 transaction: t
             });
+
             if (!cat) {
                 throw new errors.NotFoundError('Cat is not found.', req.params.id);
             }
+
             await cat.destroy({transaction: t});
         }
     );
-    <%}%>
+    <%_}_%>
 
     res.status(HTTPStatus.NO_CONTENT).send();
 }

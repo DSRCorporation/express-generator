@@ -3,10 +3,12 @@
 const logger = require('utils/logger').utils,
     config = require('utils/config'),
     errors = require('errors'),
-    <% if (locals.jwtSupport) {%>jwt = require('utils/jwt'),
+    <%_ if (locals.jwtSupport) {_%>
+    jwt = require('utils/jwt'),
     jwtTokenExpirationTime = config.get('security:jwtTokenExpirationTime'),
     models = require('models'),
-    jwtTokenReissueTime = config.get('security:jwtTokenReissueTime'),<%}%>
+    jwtTokenReissueTime = config.get('security:jwtTokenReissueTime'),
+    <%_}_%>
     httpStatus = require('http-status'),
     requestValidator = require('express-jsonschema'),
     moment = require('moment'),
@@ -110,16 +112,16 @@ async function checkSignedIn(req, res, next) {
         throw new errors.SecurityError('Incorrect token', decodedToken);
     }
 
-    <% if (locals.useMongo) {%>
+    <%_ if (locals.useMongo) {_%>
     let user = await models.User.findById(decodedToken.userId);
-    <%}%>
-    <% if (locals.useSequelize) {%>
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     let user = await models.User.find({
         where: {
             'id': decodedToken.userId
         }
     });
-    <%}%>
+    <%_}_%>
 
     if (!user) {
         throw new errors.NotFoundError('User is not found.');

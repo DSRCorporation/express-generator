@@ -12,10 +12,11 @@
       "secretAccessKey": "override by environment variable"
     }
   },
-  <% if (locals.useMongo) {%>
+  <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "uri": "override by environment variable"
-  },<%}%>
+  },
+  <%_}_%>
   "security": {
     "jwtSecret": "<%=jwtSecret %>"
   }
