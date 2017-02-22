@@ -25,8 +25,83 @@ docker-compose up
  - models
  - routes
  - utils
+- views 
 - root files
 
+#### Config
+Includes 4 files:
+- constants: contains application constants
+- defaults, development, production: containts settings dependent on current environment
+
+There is configuration for:
+- mongoose
+- sequelize
+- redis
+- express 
+- security
+- files storage
+- credentials for email service
+- logger
+
+For getting right config application uses nconf module.
+
+#### Libs
+##### Dictionaries
+Includes files with datasets for filling database on initialization.
+
+##### Errors
+Error classes:
+- AbstractError
+- AlreadyExistsError
+- EmailIsNotVerifiedError
+- InternalServerError
+- NotFoundError
+- SchemaValidationError
+- SecurityError
+- Validation Error
+
+##### Initializers
+- Dictionaries: fills data to database from libs/dictionaries
+- Middlewares: adds middlewares to express application
+- Models: initializes collections in database
+- Mongoose, Redis, Sequelize: configures connection to database
+- Routes: adds app routes by dint of routeBuilder
+
+##### Models
+Describes database schema
+
+##### Routes
+Includes two directories(api and views) and index.js file. Each directories contains two type of files: js and json.
+In js files described logic of routes, in json files described list of methods and request schema for each method.
+Index.js has a list endpoints. For each endpoint you must specify url by which it will be available and path to js and json file.
+
+##### Templates
+Contains EJS templates used for emails.
+
+##### Utils
+- config: helper for getting config
+- bcrypt: promisified version of bcrypt module
+- dictionaries-loader: helper for loading datasets to database from libs/dictionaries
+- flow-helpers: contains several helper functions
+- fs: promisified version of fs module
+- jwt: helper functions for authorization with JSON Web Token
+- lodash-ext: adds useful functons to lodash
+- logger: utility which allows to specify different logger level and settings for each environment
+- middlewares: contains method used by middleware initializer
+- module-packer: packs a folder in one module and allows to access files from folder by 'folder/filename'
+- mongoose: changes mongoose promise on promise described in 'utils/promise'
+- object-validator: utility for request validation
+- promise: 
+- redis: creates two clients for working with redis
+- sequelize: creates instance of database connection
+- route-builder: utility for adding routes to express app. Used in 'initializers/routes'
+- mailer: helper functions for sending emails.
+- storage-helpers: helper functions for saving files on local machine or AWS.
+- storage-helpers-local: helper functions for storage files on local machine
+- storage-helpers-s3: helper functions for working with Amazon storage
+
+#### Views
+Contains EJS templates used for express app routes.
 
 ## Features
 - Smart structure for Express based applications
@@ -38,6 +113,8 @@ docker-compose up
 - Ability to run the application in docker container
 - Application uses async/await feature with NodeJS 7.3.0,
   but you can also use it with NodeJS 6.9.5 LTS through Babel
+- Support local and AWS storage for files.
+- Support sending emails via fake transport or AWS.
 
 
 ## License
