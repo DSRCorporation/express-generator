@@ -79,26 +79,26 @@ Index.js has a list endpoints. For each endpoint you must specify url by which i
 Contains EJS templates used for emails.
 
 ##### Utils
-- config: helper for getting config
-- bcrypt: promisified version of bcrypt module
-- dictionaries-loader: helper for loading datasets to database from libs/dictionaries
-- flow-helpers: contains several helper functions
-- fs: promisified version of fs module
-- jwt: helper functions for authorization with JSON Web Token
-- lodash-ext: adds useful functons to lodash
-- logger: utility which allows to specify different logger level and settings for each environment
-- middlewares: contains method used by middleware initializer
-- module-packer: packs a folder in one module and allows to access files from folder by 'folder/filename'
-- mongoose: changes mongoose promise on promise described in 'utils/promise'
-- object-validator: utility for request validation
-- promise: 
-- redis: creates two clients for working with redis
-- sequelize: creates instance of database connection
-- route-builder: utility for adding routes to express app. Used in 'initializers/routes'
-- mailer: helper functions for sending emails.
-- storage-helpers: helper functions for saving files on local machine or AWS.
-- storage-helpers-local: helper functions for storage files on local machine
-- storage-helpers-s3: helper functions for working with Amazon storage
+- **config**: helper for getting config
+- **bcrypt**: promisified version of bcrypt module
+- **dictionaries-loader**: helper for loading datasets to database from libs/dictionaries
+- **flow-helpers**: contains several helper functions
+- **fs**: promisified version of fs module
+- **jwt**: helper functions for authorization with JSON Web Token
+- **lodash-ext**: adds useful functons to lodash
+- **logger**: utility which allows to specify different logger level and settings for each environment
+- **middlewares**: contains method used by middleware initializer
+- **module-packer**: packs a folder in one module and allows to access files from folder by 'folder/filename'
+- **mongoose**: changes mongoose promise on promise described in 'utils/promise'
+- **object-validator**: utility for request validation
+- **promise**: wrapper over promise libraries
+- **redis**: creates two clients for working with redis
+- **sequelize**: creates instance of database connection
+- **route-builder**: utility for adding routes to express app. Used in 'initializers/routes'
+- **mailer**: helper functions for sending emails
+- **storage-helpers**: helper functions for saving files on local machine or AWS
+- **storage-helpers-local**: helper functions for storage files on local machine
+- **storage-helpers-s3**: helper functions for working with Amazon storage
 
 #### Views
 Contains EJS templates used for express app routes.
@@ -113,8 +113,8 @@ Contains EJS templates used for express app routes.
 - Ability to run the application in docker container
 - Application uses async/await feature with NodeJS 7.3.0,
   but you can also use it with NodeJS 6.9.5 LTS through Babel
-- Support local and AWS storage for files.
-- Support sending emails via fake transport or AWS.
+- Support local and AWS storage for files
+- Support sending emails via fake transport or AWS
 
 
 ## License
