@@ -39,15 +39,15 @@ There is configuration for:
 - redis
 - express 
 - security
-- files storage
+- file storage
 - credentials for email service
 - logger
 
-For getting right config application uses nconf module.
+For getting right config nconf module is used.
 
 #### Libs
 ##### Dictionaries
-Includes files with datasets for filling database on initialization.
+Includes files with data set for populating database with initial data.
 
 ##### Errors
 Error classes:
@@ -61,7 +61,7 @@ Error classes:
 - Validation Error
 
 ##### Initializers
-- Dictionaries: fills data to database from libs/dictionaries
+- Dictionaries: fills data in database from libs/dictionaries
 - Middlewares: adds middlewares to express application
 - Models: initializes collections in database
 - Mongoose, Redis, Sequelize: configures connection to database
@@ -72,7 +72,8 @@ Describes database schema
 
 ##### Routes
 Includes two directories(api and views) and index.js file. Each directories contains two type of files: js and json.
-In js files described logic of routes, in json files described list of methods and request schema for each method.
+Business logic for routes is described in js files. Request validation schemas, request methods and configuration
+for applying conditional-applied middlewares are described in json files.
 Index.js has a list endpoints. For each endpoint you must specify url by which it will be available and path to js and json file.
 
 ##### Templates
@@ -87,12 +88,12 @@ Contains EJS templates used for emails.
 - **jwt**: helper functions for authorization with JSON Web Token
 - **lodash-ext**: adds useful functons to lodash
 - **logger**: utility which allows to specify different logger level and settings for each environment
-- **middlewares**: contains method used by middleware initializer
+- **middlewares**: contains methods used by middleware initializer
 - **module-packer**: packs a folder in one module and allows to access files from folder by 'folder/filename'
-- **mongoose**: changes mongoose promise on promise described in 'utils/promise'
-- **object-validator**: utility for request validation
+- **mongoose**: provides a pre-configured version of mongoose
+- **object-validator**: utility for request validation based on [validator](https://github.com/chriso/validator.js)
 - **promise**: wrapper over promise libraries
-- **redis**: creates two clients for working with redis
+- **redis**: creates two clients(regular and pub-sub) for working with redis
 - **sequelize**: creates instance of database connection
 - **route-builder**: utility for adding routes to express app. Used in 'initializers/routes'
 - **mailer**: helper functions for sending emails
