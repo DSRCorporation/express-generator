@@ -115,6 +115,7 @@ Contains EJS templates used for express app routes.
   but you can also use it with NodeJS 6.9.5 LTS through Babel
 - Support local and AWS storage for files
 - Support sending emails via fake transport or AWS
+- YARN for installing dependencies
 
 
 ## License
