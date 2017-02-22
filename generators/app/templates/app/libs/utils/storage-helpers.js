@@ -12,9 +12,7 @@ async function saveDataUrlAsync(dataUrl, path) {
     }
 
     return await saveAsync(
-        new Buffer(dataUrl.replace(/^data:image\/\w+;base64,/, ''), 'base64'),
-        path + '.' + ext[1],
-        'image/' + ext[1]);
+        new Buffer(dataUrl.replace(/^data:image\/\w+;base64,/, ''), 'base64'), `${path}.${ext[1]}`, `image/${ext[1]}`);
 }
 
 async function saveAsync(buffer, path, contentType) {
