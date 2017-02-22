@@ -26,7 +26,7 @@ module.exports = async app => {
     app.use(bodyParser.xml({limit: config.limit}));
     app.use(bodyParser.urlencoded({extended: false, limit: config.limit}));
     <%_ if (locals.ejsSupport) {_%>
-    app.set('views', 'app/views');
+    app.set('views', 'app/libs/views');
     app.set('view engine', 'ejs');
     <%_}_%>
 
