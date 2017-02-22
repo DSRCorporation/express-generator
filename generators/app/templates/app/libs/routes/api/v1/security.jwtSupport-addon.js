@@ -41,7 +41,7 @@ async function login(req, res) {
     }
 
     if (!user.verified) {
-        throw new errors.SecurityError('Email is not verified.');
+        throw new errors.EmailIsNotVerifiedError('Email is not verified.');
     }
 
     let token = await jwt.generateToken({
