@@ -4,8 +4,8 @@ const logger = require('utils/logger').app,
 module.exports = async app => {
     logger.info('Add routes.');
     routes.createRoutes(app.route);
-    <% if (locals.ejsSupport) {%>
+    <%_ if (locals.ejsSupport) {_%>
     routes.createViews(app.route);
-    <%}%>
+    <%_}_%>
     logger.info('Add routes done.');
 };

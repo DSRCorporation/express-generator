@@ -4,17 +4,23 @@
     {
       "login": "BarsicUser",
       "password": "sosiska",
-      "status": "ACTIVE"
+      "email": "barsic@sosiska.cat",
+      "status": "ACTIVE",
+      "verified": true
     },
     {
       "login": "PushokUser",
       "password": "sordelka",
-      "status": "ACTIVE"
+      "email": "pushok@sordelka.cat",
+      "status": "ACTIVE",
+      "verified": true
     },
     {
       "login": "MurkaUser",
       "password": "kotletka",
-      "status": "BLOCKED"
+      "email": "murka@kotletka.cat",
+      "status": "BLOCKED",
+      "verified": true
     }
   ]
 }

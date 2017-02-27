@@ -3,26 +3,48 @@
     "allowAllOrigins": true,
     "serveStatic": true
   },
+  "urls": {
+    "siteBase": "http://localhost:3030"
+  },
+  "email": {
+    "options": {
+      "host": "",
+      "port": 587,
+      "secure": false,
+      "ignoreTLS": true,
+      "auth": {
+        "user": "",
+        "pass": ""
+      }
+    }
+  },
   "storage": {
     "type": "local",
     "config": {
       "basePath": "public"
     }
   },
-  <% if (locals.useMongo) {%>
+  <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "uri": "mongodb://localhost/<%=dbName%>"
-  },<%}%>
-  <% if (locals.useSequelize) {%>
+  },
+  <%_}_%>
+  <%_ if (locals.useSequelize) {_%>
   "sequelize" : {
-    <% if (locals.usePostgres) {%>"uri": "postgres://postgres@localhost:5432/<%=dbName%>"<%}%>
-    <% if (locals.useMysql) {%>"uri": "mysql://root:root_password@localhost:3306/<%=dbName%>"<%}%>
-  },<%}%>
-  <% if (locals.includeRedis) {%>
+    <%_ if (locals.usePostgres) {_%>
+    "uri": "postgres://postgres@localhost:5432/<%=dbName%>"
+    <%_}_%>
+    <%_ if (locals.useMysql) {_%>
+    "uri": "mysql://root:root_password@localhost:3306/<%=dbName%>"
+    <%_}_%>
+  },
+  <%_}_%>
+  <%_ if (locals.includeRedis) {_%>
   "redis" : {
     "host": "localhost",
     "port": 6379
-  },<%}%>
+  },
+  <%_}_%>
   "security": {
     "jwtSecret": "<%=jwtSecret%>",
     "jwtTokenExpirationTime": 43200,

@@ -1,0 +1,16 @@
+<% var title = "New user" %>
+<% include ../common/header.ejs %>
+
+<div class="page__wrapper">
+    <div class="page__main">
+        <p>A new user <%%= login %%> has been created.</p>
+        <p>Please verify your Email Address by clicking the button below.</p>
+        <a href="<%%= urls.siteBase %%>/verify?token=<%%= token %%>&user=<%%= id %%>" class="button__confirm">Confirm my account</a>
+        <p class="step">
+            Sincerely yours, <br/>
+            The "Example" Team
+        </p>
+    </div>
+</div>
+
+<% include ../common/footer.ejs %>

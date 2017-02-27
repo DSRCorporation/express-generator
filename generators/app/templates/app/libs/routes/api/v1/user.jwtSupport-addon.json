@@ -4,10 +4,48 @@
     "url": "/",
     "secured": true
   },
+  "verifyEmail": {
+    "method": "post",
+    "url": "/verify",
+    "secured": false,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          },
+          "token": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
+  "getVerifyLink": {
+    "method": "post",
+    "url": "/getVerifyLink",
+    "secured": false,
+    "scheme": {
+      "body": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "required": true
+          }
+        }
+      }
+    }
+  },
   "create": {
     "method": "post",
     "url": "/",
-    "secured": true,
+    "secured": false,
     "scheme": {
       "body": {
         "type": "object",
@@ -18,6 +56,10 @@
             "required": true
           },
           "password": {
+            "type": "string",
+            "required": true
+          },
+          "email": {
             "type": "string",
             "required": true
           }

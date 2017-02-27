@@ -7,6 +7,10 @@
     "bluebird": "^3.2.2",
     "body-parser": "^1.14.2",
     "body-parser-xml": "^1.1.0",
+    "ejs": "^2.5.5",
+    "email-templates": "^2.3.2",
+    "nodemailer": "^2.5.0",
+    "nodemailer-ses-transport": "^1.4.0",
     <% if (locals.jwtSupport) {%>
     "bcrypt": "^0.8.3",
     <%}%>

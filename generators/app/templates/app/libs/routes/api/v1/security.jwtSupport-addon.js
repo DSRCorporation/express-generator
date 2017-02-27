@@ -24,8 +24,12 @@ async function login(req, res) {
         .validate();
     //@f:on
     let user = await models.User.findOne({
-        <% if (locals.useMongo) {%>login: req.body.login<%}%>
-        <% if (locals.useSequelize) {%>where: {login: req.body.login}<%}%>
+        <%_ if (locals.useMongo) {_%>
+        login: req.body.login
+        <%_}_%>
+        <%_ if (locals.useSequelize) {_%>
+        where: {login: req.body.login}
+        <%_}_%>
     });
 
     if (!user) {
@@ -36,9 +40,17 @@ async function login(req, res) {
         throw new errors.SecurityError('Login and password combination is not found.');
     }
 
+    if (!user.verified) {
+        throw new errors.EmailIsNotVerifiedError('Email is not verified.');
+    }
+
     let token = await jwt.generateToken({
-        <% if (locals.useMongo) {%>userId: user._id,<%}%>
-        <% if (locals.useSequelize) {%>userId: user.id,<%}%>
+        <%_ if (locals.useMongo) {_%>
+        userId: user._id,
+        <%_}_%>
+        <%_ if (locals.useSequelize) {_%>
+        userId: user.id,
+        <%_}_%>
         expiresIn: moment().unix() + jwtTokenExpirationTime
     });
 

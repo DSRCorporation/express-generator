@@ -2,7 +2,6 @@
 
 var Generator = require('yeoman-generator'),
     crypto = require('crypto'),
-    removeEmptyLines = require('gulp-remove-empty-lines'),
     rename = require('gulp-rename'),
     _ = require('lodash');
 
@@ -93,7 +92,6 @@ module.exports = class extends Generator {
 
     _copyingFiles(config) {
         config.jwtSecret = this._generateJwtSecret();
-        this.registerTransformStream(removeEmptyLines());
         this._addBaseProject(config);
         this._copyingAddOns(config);
     }

@@ -14,9 +14,15 @@ const app = require('express')(),
 async function main() {
 
     // Execute initializers
-    <% if (locals.useMongo) {%>await initializers.mongoose(app);<%}%>
-    <% if (locals.useSequelize) {%>await initializers.sequelize(app);<%}%>
-    <% if (locals.includeRedis) {%>await initializers.redis(app);<%}%>
+    <%_ if (locals.useMongo) {_%>
+    await initializers.mongoose(app);
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
+    await initializers.sequelize(app);
+    <%_}_%>
+    <%_ if (locals.includeRedis) {_%>
+    await initializers.redis(app);
+    <%_}_%>
     await initializers.models(app);
     await initializers.dictionaries(app);
     await initializers.middlewares(app);

@@ -2,6 +2,16 @@
   "express": {
     "allowAllOrigins": true
   },
+  "urls":{
+    "siteBase": "override by environment variable"
+  },
+  "email": {
+    "options": {
+      "transport": "ses",
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable"
+    }
+  },
   "storage": {
     "type": "s3",
     "config": {
@@ -11,10 +21,11 @@
       "basePath": ""
     }
   },
-  <% if (locals.useMongo) {%>
+  <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "uri": "override by environment variable"
-  },<%}%>
+  },
+  <%_}_%>
   "security": {
     "jwtSecret": "<%=jwtSecret %>"
   }

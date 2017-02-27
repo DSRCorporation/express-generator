@@ -1,11 +1,13 @@
 'use strict';
 
 const promise = require('utils/promise'),
-    <% if (locals.useMongo) {%>
-    mongoose = require('utils/mongoose'),<%}%>
-    <% if (locals.useSequelize) {%>
+    <%_ if (locals.useMongo) {_%>
+    mongoose = require('utils/mongoose'),
+    <%_}_%>
+    <%_ if (locals.useSequelize) {_%>
     sequelize = require('utils/sequelize'),
-    Sequelize = require('sequelize'),<%}%>
+    Sequelize = require('sequelize'),
+    <%_}_%>
     bcrypt = require('utils/bcrypt'),
     SALT_WORK_FACTOR = 10;
 
@@ -14,7 +16,7 @@ const promise = require('utils/promise'),
  * @type {*|Schema}
  */
 
-<% if (locals.useMongo) {%>
+<%_ if (locals.useMongo) {_%>
 let userSchema = new mongoose.Schema({
     login: {
         type: String,
@@ -26,12 +28,27 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true
+    },
     status: {
         type: String,
         enum: ['ACTIVE', 'BLOCKED'],
         default: 'ACTIVE',
         required: true
     },
+    verified: {
+        type: Boolean,
+        default: false,
+        required: true
+    },
+    verifyLinkExpiration: {
+        type: String
+    },
+    verifyToken: {
+        type: String
+    }
 });
 
 /**
@@ -57,8 +74,8 @@ userSchema.methods.comparePasswordAsync = async function (candidatePassword) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-<%}%>
-<% if (locals.useSequelize) {%>
+<%_}_%>
+<%_ if (locals.useSequelize) {_%>
 let userModel = sequelize.define('User', {
     login: {
         type: Sequelize.STRING,
@@ -67,6 +84,21 @@ let userModel = sequelize.define('User', {
     password: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    verified: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        required: true
+    },
+    verifyLinkExpiration: {
+        type: Sequelize.STRING
+    },
+    verifyToken: {
+        type: Sequelize.STRING
     },
     status: {
         type: Sequelize.ENUM,
@@ -94,7 +126,7 @@ userModel.addHook('beforeCreate', async user => {
 });
 
 module.exports = userModel;
-<%}%>
+<%_}_%>
 
 
 

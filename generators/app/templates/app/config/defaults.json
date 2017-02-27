@@ -6,16 +6,23 @@
     "staticUrl": "/public",
     "staticPath": "/public"
   },
-  <% if (locals.useMongo) {%>
+  "email": {
+    "addresses": {
+      "from": "noreply@example.com"
+    },
+    "defaults": {}
+  },
+  <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "options": {}
-  },<%}%>
-  <% if (locals.useSequelize) {%>
+  },
+  <%_}_%>
+  <%_ if (locals.useSequelize) {_%>
   "sequelize" : {
     "options": {}
   },
-  <%}%>
-  <% if (locals.includeRedis) {%>
+  <%_}_%>
+  <%_ if (locals.includeRedis) {_%>
   "redis": {
     "options": {
       "reconnect": {
@@ -23,7 +30,8 @@
         "timeout": 1000
       }
     }
-  },<%}%>
+  },
+  <%_}_%>
   "logger": {
     "app": {
       "console": {

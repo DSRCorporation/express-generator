@@ -7,9 +7,9 @@
 const logger = require('utils/logger').app,
     routeBuilder = require('utils/route-builder'),
     path = require('path'),
-    <% if (locals.ejsSupport) {%>
+    <%_ if (locals.ejsSupport) {_%>
     views = require('routes/views'),
-    <%}%>
+    <%_}_%>
     _ = require('lodash');
 
 function createRoutes(app) {
@@ -17,9 +17,15 @@ function createRoutes(app) {
     //API v1
     const endpoints = [
         {url: '/api/v1/system-info', file: '/api/v1/system-info'},
-        <% if (locals.jwtSupport) {%>{url: '/api/v1/user', file: '/api/v1/user'},<%}%>
-        <% if (locals.jwtSupport) {%>{url: '/api/v1/security', file: '/api/v1/security'},<%}%>
-        <% if (locals.includeRedis) {%>{url: '/api/v1/dogs', file: '/api/v1/dogs'},<%}%>
+        <%_ if (locals.jwtSupport) {_%>
+        {url: '/api/v1/user', file: '/api/v1/user'},
+        <%_}_%>
+        <%_ if (locals.jwtSupport) {_%>
+        {url: '/api/v1/security', file: '/api/v1/security'},
+        <%_}_%>
+        <%_ if (locals.includeRedis) {_%>
+        {url: '/api/v1/dogs', file: '/api/v1/dogs'},
+        <%_}_%>
         {url: '/api/v1/cats', file: '/api/v1/cats'}
     ];
 
@@ -30,7 +36,7 @@ function createRoutes(app) {
         });
 }
 
-<% if (locals.ejsSupport) {%>
+<%_ if (locals.ejsSupport) {_%>
 function createViews(app) {
     const endpoints = [
         {url: '/about', file: '/views/about'}
@@ -42,10 +48,10 @@ function createViews(app) {
             logger.info('Endpoint added:', endpoint.url);
         });
 }
-<%}%>
+<%_}_%>
 module.exports = {
-    <% if (locals.ejsSupport) {%>
+    <%_ if (locals.ejsSupport) {_%>
     createViews: createViews,
-    <%}%>
+    <%_}_%>
     createRoutes: createRoutes
 };

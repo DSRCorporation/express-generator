@@ -17,18 +17,18 @@ async function loadDictionaries() {
 async function _loadDictionary(dictionary) {
     logger.debug('dictionaries-loader._loadDictionary', dictionary.model);
 
-    <% if (locals.useSequelize) {%>
-        await models[dictionary.model].sync();
-    <%}%>
+    <%_ if (locals.useSequelize) {_%>
+    await models[dictionary.model].sync();
+    <%_}_%>
 
     if (!(await models[dictionary.model].count())) {
         logger.debug('dictionaries-loader._loadDictionary -> creation', dictionary.model);
-        <% if (locals.useMongo) {%>
-            await models[dictionary.model].create(dictionary.entities);
-        <%}%>
-        <% if (locals.useSequelize){%>
-            await models[dictionary.model].bulkCreate(dictionary.entities, {individualHooks: true});
-        <%}%>
+        <%_ if (locals.useMongo) {_%>
+        await models[dictionary.model].create(dictionary.entities);
+        <%_}_%>
+        <%_ if (locals.useSequelize){_%>
+        await models[dictionary.model].bulkCreate(dictionary.entities, {individualHooks: true});
+        <%_}_%>
     }
 
     logger.debug('dictionaries-loader._loadDictionary -> done', dictionary.model);
