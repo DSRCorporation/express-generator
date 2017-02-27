@@ -1,6 +1,7 @@
 'use strict';
 
 const errors = require('errors'),
+    constants = require('utils/config').constants,
     _ = require('lodash');
 
 function createFilters(query, scheme) {
@@ -12,7 +13,7 @@ function createFilters(query, scheme) {
                 switch (scheme[key]) {
                     case "startsWith":
                         <%_ if (locals.useMongo) {_%>
-                        filters[key] = new RegExp(_escapeRegexpString(query[key]), 'i');
+                        filters[key] = new RegExp(_.escapeRegExp(query[key]), 'i');
                         <%_}_%>
                         <%_ if (locals.usePostgres) {_%>
                         filters[key] = {$iLike: `${query[key]}%`}
@@ -40,12 +41,8 @@ function createFilters(query, scheme) {
 function createPaging(query) {
     return {
         skip: parseInt(query.skip) || 0,
-        limit: parseInt(query.limit) || 50
+        limit: parseInt(query.limit) || constants.query.limit
     };
-}
-
-function _escapeRegexpString(str) {
-    return str.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
 module.exports = {
