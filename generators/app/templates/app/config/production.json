@@ -12,6 +12,15 @@
       "secretAccessKey": "override by environment variable"
     }
   },
+  "storage": {
+    "type": "s3",
+    "config": {
+      "accessKeyId": "override by environment variable",
+      "secretAccessKey": "override by environment variable",
+      "bucket": "<%=appName %>-static",
+      "basePath": ""
+    }
+  },
   <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "uri": "override by environment variable"

@@ -18,6 +18,12 @@
       }
     }
   },
+  "storage": {
+    "type": "local",
+    "config": {
+      "basePath": "public"
+    }
+  },
   <%_ if (locals.useMongo) {_%>
   "mongoose": {
     "uri": "mongodb://localhost/<%=dbName%>"
