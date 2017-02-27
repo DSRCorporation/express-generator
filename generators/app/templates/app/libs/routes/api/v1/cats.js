@@ -67,7 +67,7 @@ async function list(req, res) {
     <%_ if (locals.useSequelize) {_%>
     let cats = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                return await models.Cat.findAll({
+                return await models.Cat.findAndCountAll({
                     where: entitiesFilter,
                     order: sortCondition,
                     offset: pagingFilter.skip,
@@ -78,7 +78,11 @@ async function list(req, res) {
         );
 
     res.json({
-        cats: _.pickArrayExt(cats, ['name', 'bossName', 'birthDate', 'id'])
+        offset: pagingFilter.skip,
+        limit: pagingFilter.limit,
+        count: cats.rows.length,
+        totalCount: cats.count,
+        cats: _.pickArrayExt(cats.rows, ['name', 'bossName', 'birthDate', 'id'])
     });
     <%_}_%>
 }
