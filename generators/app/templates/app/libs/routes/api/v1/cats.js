@@ -36,9 +36,14 @@ async function list(req, res) {
             name: 'startsWith',
             bossName: 'startsWith'
         }),
+        <%_ if (locals.useMongo) {_%>
         sortCondition = {
             [req.query.sort || 'name']: req.query.direction || 'asc'
         };
+        <%_}_%>
+        <%_ if (locals.useSequelize) {_%>
+        sortCondition = [[req.query.sort || 'name', req.query.direction ? req.query.direction.toUpperCase() : 'ASC']];
+        <%_}_%>
 
     <%_ if (locals.useMongo) {_%>
     let [cats, totalCount] = [
@@ -64,6 +69,9 @@ async function list(req, res) {
                 // chain all your queries here. make sure you return them.
                 return await models.Cat.findAll({
                     where: entitiesFilter,
+                    order: sortCondition,
+                    offset: pagingFilter.skip,
+                    limit: pagingFilter.limit,
                     transaction: t
                 });
             }
