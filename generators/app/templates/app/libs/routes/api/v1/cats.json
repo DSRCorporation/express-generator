@@ -2,7 +2,48 @@
   "list": {
     "method": "get",
     "url": "/",
-    "secured": false
+    "secured": false,
+    "scheme": {
+      "query": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "skip": {
+            "type": "string",
+            "required": false,
+            "pattern": "^[0-9]+$"
+          },
+          "limit": {
+            "type": "string",
+            "required": false,
+            "pattern": "^[0-9]+$"
+          },
+          "name": {
+            "type": "String"
+          },
+          "bossName": {
+            "type": "String"
+          },
+          "sort": {
+            "type": "string",
+            "required": false,
+            "enum": [
+              "name",
+              "bossName",
+              "birthDate"
+            ]
+          },
+          "direction": {
+            "type": "string",
+            "required": false,
+            "enum": [
+              "asc",
+              "desc"
+            ]
+          }
+        }
+      }
+    }
   },
   "get": {
     "method": "get",

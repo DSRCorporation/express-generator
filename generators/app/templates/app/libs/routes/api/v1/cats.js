@@ -2,6 +2,7 @@
 
 const models = require("models"),
     HTTPStatus = require('http-status'),
+    queryHelpers = require('utils/query-helpers'),
     objectValidator = require('utils/object-validator'),
     errors = require('errors'),
     <%_ if (locals.useMongo){_%>
@@ -19,17 +20,52 @@ const models = require("models"),
  */
 
 async function list(req, res) {
+    //@f:off
+    objectValidator.createValidator(req.query)
+        .field('name')
+            .optional()
+            .isLength('Name search must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .field('bossName')
+            .optional()
+            .isLength('Boss name search must be from 1 to 255 symbols.', {min: 1, max: 255})
+        .validate();
+    //@f:on
+
+    let pagingFilter = queryHelpers.createPaging(req.query),
+        entitiesFilter = queryHelpers.createFilters(req.query, {
+            name: 'startsWith',
+            bossName: 'startsWith'
+        }),
+        sortCondition = {
+            [req.query.sort || 'name']: req.query.direction || 'asc'
+        };
+
     <%_ if (locals.useMongo) {_%>
-    let cats = await models.Cat.find({});
+    let [cats, totalCount] = [
+        await models.Cat
+            .find(entitiesFilter)
+            .sort(sortCondition)
+            .skip(pagingFilter.skip)
+            .limit(pagingFilter.limit),
+        await models.Cat
+            .find(entitiesFilter).count()
+    ];
 
     res.json({
+        offset: pagingFilter.skip,
+        limit: pagingFilter.limit,
+        count: cats.length,
+        totalCount: totalCount,
         cats: _.pickArrayExt(cats, ['id:_id', 'name', 'bossName', 'birthDate'])
     });
     <%_}_%>
     <%_ if (locals.useSequelize) {_%>
     let cats = await sequelize.transaction(async t => {
                 // chain all your queries here. make sure you return them.
-                return await models.Cat.findAll({transaction: t});
+                return await models.Cat.findAll({
+                    where: entitiesFilter,
+                    transaction: t
+                });
             }
         );
 
