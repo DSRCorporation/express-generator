@@ -7,6 +7,7 @@ const models = require("models"),
     errors = require('errors'),
     <%_ if (locals.useMongo){_%>
     mongooseTypes = require('mongoose').Types,
+    promise = require('utils/promise'),
     <%_}_%>
     <%_ if (locals.useSequelize) {_%>
     sequelize = require('utils/sequelize'),
@@ -46,15 +47,15 @@ async function list(req, res) {
         <%_}_%>
 
     <%_ if (locals.useMongo) {_%>
-    let [cats, totalCount] = [
-        await models.Cat
+    let [cats, totalCount] = await promise.Promise.all([
+        models.Cat
             .find(entitiesFilter)
             .sort(sortCondition)
             .skip(pagingFilter.skip)
             .limit(pagingFilter.limit),
-        await models.Cat
+        models.Cat
             .find(entitiesFilter).count()
-    ];
+    ]);
 
     res.json({
         offset: pagingFilter.skip,
