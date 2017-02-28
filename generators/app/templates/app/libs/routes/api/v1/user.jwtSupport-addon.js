@@ -23,7 +23,7 @@ async function get(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.InternalServerError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.InternalServerError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     res.json({
@@ -43,7 +43,7 @@ async function get(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     res.json({
@@ -62,12 +62,12 @@ async function create(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('login')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Login')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Login')}), {min: 1, max: 255})
         .field('password')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Password')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Password')}), {min: 1, max: 255})
         .field('email')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Email')}), {min: 1, max: 255})
-            .isEmail(req.__('Please provide valid e-mail.'))
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Email')}), {min: 1, max: 255})
+            .isEmail(req.__mf('Please provide valid e-mail.'))
             .normalizeEmail({
                 lowercase: true,
                 remove_dots: false,
@@ -112,7 +112,7 @@ async function update(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('password')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Password')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Password')}), {min: 1, max: 255})
         .validate();
     //@f:on
 
@@ -120,7 +120,7 @@ async function update(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     _.assign(user, req.body);
@@ -137,7 +137,7 @@ async function update(req, res) {
             });
 
             if (!user) {
-                throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+                throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
             }
 
             _.assign(user, req.body);
@@ -160,11 +160,11 @@ async function verifyEmail(req, res) {
     let user = await models.User.findById(req.body.id);
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
-        throw new errors.SecurityError(req.__('The email verification link has expired.'));
+        throw new errors.SecurityError(req.__mf('The email verification link has expired.'));
     }
 
     if (user.verifyToken === req.body.token) {
@@ -172,7 +172,7 @@ async function verifyEmail(req, res) {
         await user.save();
     }
     else {
-        throw new errors.SecurityError(req.__('Wrong token.'));
+        throw new errors.SecurityError(req.__mf('Wrong token.'));
     }
 
     res.status(HTTPStatus.NO_CONTENT).send();
@@ -190,11 +190,11 @@ async function verifyEmail(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
-        throw new errors.SecurityError(req.__('The email verification link has expired.'));
+        throw new errors.SecurityError(req.__mf('The email verification link has expired.'));
     }
 
     if (user.verifyToken === req.body.token) {
@@ -202,7 +202,7 @@ async function verifyEmail(req, res) {
         await user.save();
     }
     else {
-        throw new errors.SecurityError(req.__('Wrong token.'));
+        throw new errors.SecurityError(req.__mf('Wrong token.'));
     }
 
     res.status(HTTPStatus.NO_CONTENT).send();
@@ -221,7 +221,7 @@ async function getVerifyLink(req, res) {
         token = crypto.randomBytes(100).toString('hex');
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     _.assign(user,
@@ -249,7 +249,7 @@ async function getVerifyLink(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     let token = crypto.randomBytes(100).toString('hex');

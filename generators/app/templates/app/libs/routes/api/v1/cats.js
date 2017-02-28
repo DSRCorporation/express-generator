@@ -25,10 +25,10 @@ async function list(req, res) {
     objectValidator.createValidator(req.query)
         .field('name')
             .optional()
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Name')}), {min: 1, max: 255})
         .field('bossName')
             .optional()
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Boss name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Boss name')}), {min: 1, max: 255})
         .validate();
     //@f:on
 
@@ -97,13 +97,13 @@ async function list(req, res) {
 async function get(req, res) {
     <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     let cat = await models.Cat.findById(req.params.id);
 
     if (!cat) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     res.json({
@@ -123,7 +123,7 @@ async function get(req, res) {
         );
 
     if (!cat) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     res.json({
@@ -142,13 +142,13 @@ async function create(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('name')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Name')}), {min: 1, max: 255})
         .field('bossName')
             .optional()
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Boss name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Boss name')}), {min: 1, max: 255})
         .field('birthDate')
             .optional()
-            .isDate(req.__('Invalid date.'))
+            .isDate(req.__mf('Invalid date.'))
         .validate();
     //@f:on
 
@@ -181,25 +181,25 @@ async function update(req, res) {
     //@f:off
     objectValidator.createValidator(req.body, {allowUndefined: true})
         .field('name')
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Name')}), {min: 1, max: 255})
         .field('bossName')
             .optional()
-            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Boss name')}), {min: 1, max: 255})
+            .isLength(req.__mf('{value} must be from 1 to 255 symbols.', {value: req.__mf('Boss name')}), {min: 1, max: 255})
         .field('birthDate')
             .optional()
-            .isDate(req.__('Invalid date.'))
+            .isDate(req.__mf('Invalid date.'))
         .validate();
     //@f:on
 
     <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     let cat = await models.Cat.findById(req.params.id);
 
     if (!cat) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     //it was made in order to delete empty fields from database
@@ -220,7 +220,7 @@ async function update(req, res) {
             });
 
             if (!cat) {
-                throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+                throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
             }
 
             //it was made in order to delete empty fields from database
@@ -245,13 +245,13 @@ async function update(req, res) {
 async function remove(req, res) {
     <%_ if (locals.useMongo) {_%>
     if (!mongooseTypes.ObjectId.isValid(req.params.id)) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     let cat = await models.Cat.findById(req.params.id);
 
     if (!cat) {
-        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+        throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
     }
 
     await cat.remove();
@@ -267,7 +267,7 @@ async function remove(req, res) {
             });
 
             if (!cat) {
-                throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('Cat')}), req.params.id);
+                throw new errors.NotFoundError(req.__mf('{value} is not found.', {value: req.__mf('Cat')}), req.params.id);
             }
 
             await cat.destroy({transaction: t});

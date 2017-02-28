@@ -18,9 +18,9 @@ async function login(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('login')
-            .isNotEmpty(req.__('{{value}} is required.', {value: req.__('Login')}))
+            .isNotEmpty(req.__mf('{value} is required.', {value: req.__mf('Login')}))
         .field('password')
-            .isNotEmpty(req.__('{{value}} is required.', {value: req.__('Password')}))
+            .isNotEmpty(req.__mf('{value} is required.', {value: req.__mf('Password')}))
         .validate();
     //@f:on
     let user = await models.User.findOne({
@@ -33,15 +33,15 @@ async function login(req, res) {
     });
 
     if (!user) {
-        throw new errors.SecurityError(req.__('Login and password combination is not found.'));
+        throw new errors.SecurityError(req.__mf('Login and password combination is not found.'));
     }
 
     if (!(await user.comparePasswordAsync(req.body.password))) {
-        throw new errors.SecurityError(req.__('Login and password combination is not found.'));
+        throw new errors.SecurityError(req.__mf('Login and password combination is not found.'));
     }
 
     if (!user.verified) {
-        throw new errors.EmailIsNotVerifiedError(req.__('Email is not verified.'));
+        throw new errors.EmailIsNotVerifiedError(req.__mf('Email is not verified.'));
     }
 
     let token = await jwt.generateToken({
