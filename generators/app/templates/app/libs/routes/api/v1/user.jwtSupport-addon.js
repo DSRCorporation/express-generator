@@ -23,7 +23,7 @@ async function get(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.InternalServerError('No user for request.');
+        throw new errors.InternalServerError(req.__('No user for request.'));
     }
 
     res.json({
@@ -43,7 +43,7 @@ async function get(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError('No user for request.');
+        throw new errors.NotFoundError(req.__('No user for request.'));
     }
 
     res.json({
@@ -62,12 +62,12 @@ async function create(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('login')
-            .isLength('Login must be from 1 to 255 symbols.', {min: 1, max: 255})
+            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Login')), {min: 1, max: 255})
         .field('password')
-            .isLength('Password must be from 1 to 255 symbols.', {min: 1, max: 255})
+            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Password')), {min: 1, max: 255})
         .field('email')
-            .isLength('Email field must be from 1 to 255 symbols.', {min: 1, max: 255})
-            .isEmail('Please provide valid e-mail.')
+            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Email')), {min: 1, max: 255})
+            .isEmail(req.__('Please provide valid e-mail.'))
             .normalizeEmail({
                 lowercase: true,
                 remove_dots: false,
@@ -112,7 +112,7 @@ async function update(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('password')
-            .isLength('Password must be from 1 to 255 symbols.', {min: 1, max: 255})
+            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Password')), {min: 1, max: 255})
         .validate();
     //@f:on
 
@@ -120,7 +120,7 @@ async function update(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.NotFoundError('No user for request.');
+        throw new errors.NotFoundError(req.__('No user for request.'));
     }
 
     _.assign(user, req.body);
@@ -137,7 +137,7 @@ async function update(req, res) {
             });
 
             if (!user) {
-                throw new errors.NotFoundError('No user for request.');
+                throw new errors.NotFoundError(req.__('No user for request.'));
             }
 
             _.assign(user, req.body);
@@ -160,11 +160,11 @@ async function verifyEmail(req, res) {
     let user = await models.User.findById(req.body.id);
 
     if (!user) {
-        throw new errors.NotFoundError('User not found.');
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
-        throw new errors.SecurityError('The email verification link has expired.');
+        throw new errors.SecurityError(req.__('The email verification link has expired.'));
     }
 
     if (user.verifyToken === req.body.token) {
@@ -172,7 +172,7 @@ async function verifyEmail(req, res) {
         await user.save();
     }
     else {
-        throw new errors.SecurityError('Wrong token.');
+        throw new errors.SecurityError(req.__('Wrong token.'));
     }
 
     res.status(HTTPStatus.NO_CONTENT).send();
@@ -190,11 +190,11 @@ async function verifyEmail(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError('User not found.');
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
-        throw new errors.SecurityError('The email verification link has expired.');
+        throw new errors.SecurityError(req.__('The email verification link has expired.'));
     }
 
     if (user.verifyToken === req.body.token) {
@@ -202,7 +202,7 @@ async function verifyEmail(req, res) {
         await user.save();
     }
     else {
-        throw new errors.SecurityError('Wrong token.');
+        throw new errors.SecurityError(req.__('Wrong token.'));
     }
 
     res.status(HTTPStatus.NO_CONTENT).send();
@@ -221,7 +221,7 @@ async function getVerifyLink(req, res) {
         token = crypto.randomBytes(100).toString('hex');
 
     if (!user) {
-        throw new errors.NotFoundError('User not found.');
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     _.assign(user,
@@ -249,7 +249,7 @@ async function getVerifyLink(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError('User not found.');
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     let token = crypto.randomBytes(100).toString('hex');

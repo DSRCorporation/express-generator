@@ -1,0 +1,19 @@
+{
+	"Name": "Name",
+	"%s must be from 1 to 255 symbols.": "%s must be from 1 to 255 symbols.",
+	"Boss name": "Boss name",
+	"Cat": "Cat",
+	"%s is not found.": "%s is not found.",
+	"Invalid date.": "Invalid date.",
+	"%s is required.": "%s is required.",
+	"Login": "Login",
+	"Password": "Password",
+	"Login and password combination is not found.": "Login and password combination is not found.",
+	"Email is not verified.": "Email is not verified.",
+	"No user for request.": "No user for request.",
+	"Email": "Email",
+	"Please provide valid e-mail.": "Please provide valid e-mail.",
+	"The email verification link has expired.": "The email verification link has expired.",
+	"Wrong token.": "Wrong token.",
+	"User": "User"
+}
