@@ -25,8 +25,8 @@ async function getCats() {
 
 async function get(req, res) {
     res.render('about', {
-        title: 'Cats page',
-        message: 'All we have are cats',
+        title: req.__('Cats page'),
+        message: req.__('All we have are cats'),
         cats: await getCats()
     });
 }

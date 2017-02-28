@@ -15,5 +15,8 @@
 	"Please provide valid e-mail.": "Please provide valid e-mail.",
 	"The email verification link has expired.": "The email verification link has expired.",
 	"Wrong token.": "Wrong token.",
-	"User": "User"
+	"User": "User",
+	"Cats page": "Cats page",
+	"All we have are cats": "All we have are cats",
+	"Birth date": "Birth date"
 }

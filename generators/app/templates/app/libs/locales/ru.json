@@ -15,5 +15,8 @@
   "Please provide valid e-mail.": "Пожалуйста, предоставьте действительный почтовый ящик.",
   "The email verification link has expired.": "Ссылка для подтверждения почты истекла.",
   "Wrong token.": "Неправильный токен.",
-  "User": "Пользователь"
+  "User": "Пользователь",
+  "Cats page": "Страница котов",
+  "All we have are cats": "Все, что у нас есть - это коты",
+  "Birth date": "Дата рождения"
 }
