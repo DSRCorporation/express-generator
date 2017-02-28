@@ -23,7 +23,7 @@ async function get(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.InternalServerError(req.__('%s is not found.', req.__('User')));
+        throw new errors.InternalServerError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     res.json({
@@ -43,7 +43,7 @@ async function get(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     res.json({
@@ -62,11 +62,11 @@ async function create(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('login')
-            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Login')), {min: 1, max: 255})
+            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Login')}), {min: 1, max: 255})
         .field('password')
-            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Password')), {min: 1, max: 255})
+            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Password')}), {min: 1, max: 255})
         .field('email')
-            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Email')), {min: 1, max: 255})
+            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Email')}), {min: 1, max: 255})
             .isEmail(req.__('Please provide valid e-mail.'))
             .normalizeEmail({
                 lowercase: true,
@@ -112,7 +112,7 @@ async function update(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('password')
-            .isLength(req.__('%s must be from 1 to 255 symbols.', req.__('Password')), {min: 1, max: 255})
+            .isLength(req.__('{{value}} must be from 1 to 255 symbols.', {value: req.__('Password')}), {min: 1, max: 255})
         .validate();
     //@f:on
 
@@ -120,7 +120,7 @@ async function update(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     _.assign(user, req.body);
@@ -137,7 +137,7 @@ async function update(req, res) {
             });
 
             if (!user) {
-                throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+                throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
             }
 
             _.assign(user, req.body);
@@ -160,7 +160,7 @@ async function verifyEmail(req, res) {
     let user = await models.User.findById(req.body.id);
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
@@ -190,7 +190,7 @@ async function verifyEmail(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     if ((moment().unix() - user.verifyLinkExpiration) > 0) {
@@ -221,7 +221,7 @@ async function getVerifyLink(req, res) {
         token = crypto.randomBytes(100).toString('hex');
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     _.assign(user,
@@ -249,7 +249,7 @@ async function getVerifyLink(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
+        throw new errors.NotFoundError(req.__('{{value}} is not found.', {value: req.__('User')}));
     }
 
     let token = crypto.randomBytes(100).toString('hex');

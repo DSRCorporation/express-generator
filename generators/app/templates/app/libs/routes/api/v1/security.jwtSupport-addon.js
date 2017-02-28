@@ -18,9 +18,9 @@ async function login(req, res) {
     //@f:off
     objectValidator.createValidator(req.body)
         .field('login')
-            .isNotEmpty(req.__('%s is required.', req.__('Login')))
+            .isNotEmpty(req.__('{{value}} is required.', {value: req.__('Login')}))
         .field('password')
-            .isNotEmpty(req.__('%s is required.', req.__('Password')))
+            .isNotEmpty(req.__('{{value}} is required.', {value: req.__('Password')}))
         .validate();
     //@f:on
     let user = await models.User.findOne({
