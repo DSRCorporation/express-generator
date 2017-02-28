@@ -4,7 +4,7 @@ const logger = require('utils/logger').app,
     config = require('utils/config').get('express'),
     middlewares = require('utils/middlewares'),
     express = require('express'),
-    i18n = require('utils/localization'),
+    i18n = require('i18n'),
     cookieParser = require('cookie-parser'),
     expressWinston = require('express-winston'),
     bodyParser = require('body-parser'),
@@ -27,6 +27,12 @@ module.exports = async app => {
     app.use(bodyParser.json({limit: config.limit}));
     app.use(bodyParser.xml({limit: config.limit}));
     app.use(bodyParser.urlencoded({extended: false, limit: config.limit}));
+
+    i18n.configure({
+        locales:['en', 'ru'],
+        directory: path.join(__dirname, '../locales')
+    });
+
     app.use(i18n.init);
     app.use(cookieParser());
     <%_ if (locals.ejsSupport) {_%>
