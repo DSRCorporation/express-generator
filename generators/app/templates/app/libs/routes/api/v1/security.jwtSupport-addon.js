@@ -33,7 +33,7 @@ async function login(req, res) {
     });
 
     if (!user) {
-        throw new errors.SecurityError(req.__mf('Login and password combination is not found.'));
+        throw new errors.SecurityError(req.__mf('{value} is not found.', {value: req.__mf('User')}));
     }
 
     if (!(await user.comparePasswordAsync(req.body.password))) {
