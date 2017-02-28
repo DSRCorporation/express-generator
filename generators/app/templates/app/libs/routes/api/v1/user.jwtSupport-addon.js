@@ -23,7 +23,7 @@ async function get(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.InternalServerError(req.__('No user for request.'));
+        throw new errors.InternalServerError(req.__('%s is not found.', req.__('User')));
     }
 
     res.json({
@@ -43,7 +43,7 @@ async function get(req, res) {
     );
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('No user for request.'));
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     res.json({
@@ -120,7 +120,7 @@ async function update(req, res) {
     let user = await models.User.findById(req.userId);
 
     if (!user) {
-        throw new errors.NotFoundError(req.__('No user for request.'));
+        throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
     }
 
     _.assign(user, req.body);
@@ -137,7 +137,7 @@ async function update(req, res) {
             });
 
             if (!user) {
-                throw new errors.NotFoundError(req.__('No user for request.'));
+                throw new errors.NotFoundError(req.__('%s is not found.', req.__('User')));
             }
 
             _.assign(user, req.body);
