@@ -1,0 +1,22 @@
+{
+  "Name": "Имя",
+  "{value} must be from 1 to 255 symbols.": "{value} должно содержать от 1 до 255 символов.",
+  "Boss name": "Имя владельца",
+  "Cat": "Кот",
+  "{value} is not found.": "{value} не найден.",
+  "Invalid date.": "Некорректная дата.",
+  "{value} is required.": "{value} - обязательное поле.",
+  "Login": "Логин",
+  "Password": "Пароль",
+  "Login and password combination is not found.": "Данная комбинация логина и пароля не найдена.",
+  "Email is not verified.": "Почта не подтверждена.",
+  "No user for request.": "Пользователь отсутствует в запросе.",
+  "Email": "Почта",
+  "Please provide valid e-mail.": "Пожалуйста, предоставьте действительный почтовый ящик.",
+  "The email verification link has expired.": "Ссылка для подтверждения почты истекла.",
+  "Wrong token.": "Неправильный токен.",
+  "User": "Пользователь",
+  "Cats page": "Страница котов",
+  "All we have are cats": "Все, что у нас есть - это коты",
+  "Birth date": "Дата рождения"
+}

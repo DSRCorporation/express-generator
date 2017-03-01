@@ -6,9 +6,9 @@
         <h1><%%= message %%> ^ↀᴥↀ^</h1>
         <ul>
             <%% cats.forEach(function(cat) { %%>
-            <li><b>Name</b>: <%%= cat.name %%> </br>
-                <b>Boss</b>: <%%= cat.bossName %%> </br>
-                <b>Birth date</b>: <%%= cat.birthDate %%>
+            <li><b><%%=__('Name') %%></b>: <%%= cat.name %%> </br>
+                <b><%%=__('Boss name') %%></b>: <%%= cat.bossName %%> </br>
+                <b><%%=__('Birth date') %%></b>: <%%= cat.birthDate %%>
             </li>
             <%% }); %%>
         </ul>
