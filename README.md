@@ -1,3 +1,5 @@
+# DEPRECATED! DO NOT USE IT!
+
 # Yeoman generator for Express/NodeJS by DSR Corporation
 An [Express](http://expressjs.com/) generator for Yeoman.
 
